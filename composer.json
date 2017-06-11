@@ -1,0 +1,24 @@
+{
+    "name": "jackiedo/cart",
+    "description": "A small package use to create cart (shopping, whishlist, recent views...) in Laravel",
+    "keywords": ["shoppingcart", "shopping", "cart", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jackie Do",
+            "email": "anhvudo@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "illuminate/session": "4.2.*",
+        "illuminate/events": "4.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Jackiedo\\Cart\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
