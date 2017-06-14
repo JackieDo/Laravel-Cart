@@ -3,16 +3,13 @@
 use Illuminate\Support\Facades\Facade;
 
 /**
- * The Cart facade
+ * The Cart facade.
  *
- * Adapted from https://github.com/Crinsane/LaravelShoppingcart
- *
- * @package JackieDo/Cart
+ * @package Jackiedo\Cart
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class Cart extends Facade
 {
-
     /**
      * Get the registered name of the component.
      *

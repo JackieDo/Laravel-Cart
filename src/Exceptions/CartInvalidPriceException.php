@@ -1,14 +1,16 @@
 <?php namespace Jackiedo\Cart\Exceptions;
 
+use Exception;
+
 /**
- * CartInvalidRawIDException
+ * CartInvalidPriceException
  *
  * Adapted from https://github.com/Crinsane/LaravelShoppingcart
  *
  * @package JackieDo/Cart
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class CartInvalidRawIDException extends \Exception
+class CartInvalidPriceException extends Exception
 {
     //
 }

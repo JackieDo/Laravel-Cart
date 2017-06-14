@@ -3,11 +3,9 @@
 use Illuminate\Support\ServiceProvider;
 
 /**
- * CartServiceProvider
+ * The CartServiceProvider class
  *
- * Adapted from https://github.com/Crinsane/LaravelShoppingcart
- *
- * @package JackieDo/Cart
+ * @package Jackiedo\Cart
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class CartServiceProvider extends ServiceProvider
@@ -27,7 +25,8 @@ class CartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('jackiedo/cart');
+        // Bootstrap handles
+        $this->configHandle();
     }
 
     /**
@@ -37,7 +36,7 @@ class CartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['cart'] = $this->app->share(function ($app) {
+        $this->app->singleton('cart', function ($app) {
             return new Cart($app['session'], $app['events']);
         });
     }
@@ -49,6 +48,25 @@ class CartServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('cart');
+        return [
+            'cart',
+        ];
+    }
+
+    /**
+     * Loading and publishing package's config
+     *
+     * @return void
+     */
+    protected function configHandle()
+    {
+        $packageConfigPath = __DIR__.'/Config/config.php';
+        $appConfigPath     = config_path('cart.php');
+
+        $this->mergeConfigFrom($packageConfigPath, 'cart');
+
+        $this->publishes([
+            $packageConfigPath => $appConfigPath,
+        ], 'config');
     }
 }

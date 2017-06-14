@@ -1,14 +1,16 @@
 <?php namespace Jackiedo\Cart\Exceptions;
 
+use Exception;
+
 /**
- * CartInvalidItemException
+ * CartInvalidItemIdException
  *
  * Adapted from https://github.com/Crinsane/LaravelShoppingcart
  *
  * @package JackieDo/Cart
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class CartInvalidItemException extends \Exception
+class CartInvalidItemIdException extends Exception
 {
     //
 }
