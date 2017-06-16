@@ -102,4 +102,16 @@ trait CanUseCart
     {
         return property_exists($this, 'price') ? $this->price : ((property_exists($this, 'cartPriceField')) ? $this->getAttribute($this->cartPriceField) : 0);
     }
+
+    /**
+     * Find a model by its identifier
+     *
+     * @param  int  $id  The identifier of model
+     *
+     * @return \Illuminate\Support\Collection|static|null
+     */
+    public function findById($id)
+    {
+        return $this->find($id);
+    }
 }

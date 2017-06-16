@@ -186,6 +186,8 @@ class Cart
      *
      * @param  string  $cartItemId  ID of an item in the cart
      *
+     * @throws Jackiedo\Cart\Exceptions\CartInvalidItemIdException
+     *
      * @return Jackiedo\Cart\CartItem
      */
     public function get($cartItemId)

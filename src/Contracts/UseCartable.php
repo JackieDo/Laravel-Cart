@@ -68,4 +68,13 @@ interface UseCartable
      * @return Illuminate\Support\Collection
      */
     public function searchInCart($cartInstance = null, array $options = []);
+
+    /**
+     * Find a model by its identifier
+     *
+     * @param  int  $id  The identifier of model
+     *
+     * @return \Illuminate\Support\Collection|static|null
+     */
+    public function findById($id);
 }

@@ -1,6 +1,6 @@
 # Laravel Cart
-[![Latest Stable Version](https://poser.pugx.org/jackiedo/cart/v/stable)](https://packagist.org/packages/jackiedo/cart)
 [![Total Downloads](https://poser.pugx.org/jackiedo/cart/downloads)](https://packagist.org/packages/jackiedo/cart)
+[![Latest Stable Version](https://poser.pugx.org/jackiedo/cart/v/stable)](https://packagist.org/packages/jackiedo/cart)
 [![Latest Unstable Version](https://poser.pugx.org/jackiedo/cart/v/unstable)](https://packagist.org/packages/jackiedo/cart)
 [![License](https://poser.pugx.org/jackiedo/cart/license)](https://packagist.org/packages/jackiedo/cart)
 

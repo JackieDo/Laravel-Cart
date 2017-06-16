@@ -24,6 +24,8 @@ class CartItem extends Collection
      * @param  array   $options     Array of additional options, such as 'size' or 'color'
      * @param  mixed   $associated  The model or the FQN of model that will be associated
      *
+     * @throws Jackiedo\Cart\Exceptions\CartInvalidArgumentException
+     *
      * @return Jackiedo\Cart\CartItem;
      */
     public function init($rawId, $title, $qty, $price, array $options = [], $associated = null)
@@ -65,12 +67,14 @@ class CartItem extends Collection
      *
      * @param  string  $property  Property name.
      *
+     * @throws Jackiedo\Cart\Exceptions\CartUnknownModelException
+     *
      * @return mixed
      */
     public function __get($property)
     {
         if ($property === 'model') {
-            $model = with(new $this->associated)->find($this->raw_id);
+            $model = with(new $this->associated)->findById($this->raw_id);
 
             if (!$model) {
                 throw new CartUnknownModelException("The supplied associated model from ".$this->associated." does not exist.");
