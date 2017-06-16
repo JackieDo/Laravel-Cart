@@ -11,102 +11,94 @@ use Jackiedo\Cart\Facades\Cart;
 trait CanUseCart
 {
     /**
-     * Add the Cartable item to the cart
+     * Add the UseCartable item to the cart
      *
+     * @param  string|null  $cartInstance  The cart instance name
      * @param  int          $qty           Quantities of item want to add to the cart
      * @param  array        $options       Array of additional options, such as 'size' or 'color'
-     * @param  string|null  $cartInstance  The cart instance name
      *
      * @return Jackiedo\Cart\CartItem
      */
-    public function addToCart($qty, $options = [], $cartInstance = null)
+    public function addToCart($cartInstance = null, $qty = 1, $options = [])
     {
-        $id    = $this->getCartableId();
-        $title = $this->getCartableTitle();
-        $price = $this->getCartablePrice();
+        $id    = $this->getUseCartableId();
+        $title = $this->getUseCartableTitle();
+        $price = $this->getUseCartablePrice();
 
-        return Cart::instance($cartInstance)->associate(__CLASS__)->add($id, $title, $qty, $this->price, $options);
+        return Cart::instance($cartInstance)->add($this, $qty, $options);
     }
 
     /**
-     * Update the Cartable item in the cart
+     * Determine the UseCartable item has in the cart
      *
-     * @param  int|array    $attributes    New quantity of item or array of attributes to update
      * @param  string|null  $cartInstance  The cart instance name
+     * @param  array        $options       Array of additional options, such as 'size' or 'color'
      *
-     * @return Jackiedo\Cart\CartItem|null
+     * @return boolean
      */
-    public function updateInCart($attributes, $cartInstance = null)
+    public function hasInCart($cartInstance = null, array $options = [])
     {
-        $id = $this->getCartableId();
+        $foundInCart = $this->searchInCart($cartInstance);
 
-        $cart = Cart::instance($cartInstance);
-
-        $findInCart = $cart->search([
-            'raw_id'     => $id,
-            'associated' => __CLASS__
-        ]);
-
-        if (!$findInCart->isEmpty()) {
-            $cartItemId = $findInCart->first()->id;
-
-            return $cart->update($cartItemId, $attributes);
-        }
+        return ($foundInCart->isEmpty()) ? false : true;
     }
 
     /**
-     * Remove the Cartable item out of the cart
+     * Get all the UseCartable item in the cart
      *
      * @param  string|null  $cartInstance  The cart instance name
      *
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Illuminate\Support\Collection
      */
-    public function removeFromCart($cartInstance = null)
+    public function allFromCart($cartInstance = null)
     {
-        $id = $this->getCartableId();
-
-        $cart = Cart::instance($cartInstance);
-
-        $findInCart = $cart->search([
-            'raw_id'     => $id,
-            'associated' => __CLASS__
-        ]);
-
-        if (!$findInCart->isEmpty()) {
-            $cartItemId = $findInCart->first()->id;
-
-            $cart->remove($cartItemId);
-        }
-
-        return $this;
+        return $this->searchInCart($cartInstance = null);
     }
 
     /**
-     * Get the identifier of the Cartable item.
+     * Get the UseCartable items in the cart with given additional options
+     *
+     * @param  string|null  $cartInstance  The cart instance name
+     * @param  array        $options       Array of additional options, such as 'size' or 'color'
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function searchInCart($cartInstance = null, array $options = [])
+    {
+        return Cart::instance($cartInstance)->search([
+            'raw_id'     => $this->getUseCartableId(),
+            'title'      => $this->getUseCartableTitle(),
+            'options'    => $options,
+            'associated' => __CLASS__
+        ]);
+    }
+
+    /**
+     * Get the identifier of the UseCartable item.
      *
      * @return int|string
      */
-    public function getCartableId()
+    public function getUseCartableId()
     {
         return method_exists($this, 'getKey') ? $this->getKey() : $this->id;
     }
 
     /**
-     * Get the title of the Cartable item.
+     * Get the title of the UseCartable item.
      *
      * @return string
      */
-    public function getCartableTitle()
+    public function getUseCartableTitle()
     {
         return property_exists($this, 'title') ? $this->title : ((property_exists($this, 'cartTitleField')) ? $this->getAttribute($this->cartTitleField) : 'Unknown');
     }
 
     /**
-     * Get the price of the Cartable item.
+     * Get the price of the UseCartable item.
      *
      * @return float
      */
-    public function getCartablePrice()
+    public function getUseCartablePrice()
     {
         return property_exists($this, 'price') ? $this->price : ((property_exists($this, 'cartPriceField')) ? $this->getAttribute($this->cartPriceField) : 0);
     }

@@ -1,11 +1,10 @@
 <?php namespace Jackiedo\Cart;
 
 use Closure;
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
 use Jackiedo\Cart\Exceptions\CartInvalidItemIdException;
-use Jackiedo\Cart\Exceptions\CartUnknownModelException;
 
 /**
  * The Cart class.
@@ -19,7 +18,7 @@ class Cart
     /**
      * Default instance name
      */
-    const DEFAULT_INSTANCE = 'main';
+    const DEFAULT_INSTANCE = 'default';
 
     /**
      * Session class instance
@@ -42,13 +41,11 @@ class Cart
      */
     protected $instance;
 
-    protected $associatedModel;
-
     /**
      * Constructor
      *
-     * @param  Illuminate\Session\SessionManager  $session  Session class instance
-     * @param  Illuminate\Events\Dispatcher       $event    Event class instance
+     * @param  Illuminate\Session\SessionManager       $session  Session class instance
+     * @param  Illuminate\Contracts\Events\Dispatcher  $event    Event class instance
      *
      * @return void;
      */
@@ -87,27 +84,9 @@ class Cart
     }
 
     /**
-     * Prepare for associating an item in the cart with a special model.
-     *
-     * @param  mixed  $model  The model or the FQN of model that will be associated
-     *
-     * @return Jackiedo\Cart\Cart
-     */
-    public function associate($model)
-    {
-        if (is_string($model) && ! class_exists($model)) {
-            throw new CartUnknownModelException("The supplied model {$model} does not exist.");
-        }
-
-        $this->associatedModel = is_string($model) ? $model : get_class($model);
-
-        return $this;
-    }
-
-    /**
      * Add an item to the cart
      *
-     * @param  string|int  $rawId    Unique ID of item before insert to the cart
+     * @param  string|int  $rawId    Associated model or Unique ID of item before insert to the cart
      * @param  string      $title    Name of item
      * @param  int         $qty      Quantities of item want to add to the cart
      * @param  float       $price    Price of one item
@@ -124,7 +103,7 @@ class Cart
 
         if ($cartContent->has($cartItem->id)) {
             // If item is already exists in the cart, we will increase qty of item
-            $cartItem = $this->updateQty($cartItem->id, $cartContent->get($cartItem->id)->qty + $qty);
+            $cartItem = $this->updateQty($cartItem->id, $cartContent->get($cartItem->id)->qty + $cartItem->qty);
         } else {
             // If item is not exists in the cart, we will put new item to the cart
             $this->event->fire('cart.adding', [$cartItem, $cartContent]);
@@ -148,15 +127,13 @@ class Cart
      */
     public function update($cartItemId, $attributes)
     {
-        $cartItem = $this->get($cartItemId);
-
         if (is_array($attributes)) {
-            $item = $this->updateCartItem($cartItemId, $attributes);
+            $cartItem = $this->updateCartItem($cartItemId, $attributes);
         } else {
-            $item = $this->updateQty($cartItemId, $attributes);
+            $cartItem = $this->updateQty($cartItemId, $attributes);
         }
 
-        return $item;
+        return $cartItem;
     }
 
     /**
@@ -168,36 +145,20 @@ class Cart
      */
     public function remove($cartItemId)
     {
-        $cartItem = $this->get($cartItemId);
-
         $cartContent = $this->getContent();
 
-        $this->event->fire('cart.removing', [$cartItem, $cartContent]);
+        if ($cartContent->has($cartItemId)) {
+            $cartItem = $this->get($cartItemId);
 
-        $cartContent->forget($cartItemId);
-        $this->updateCartSession($cartContent);
+            $this->event->fire('cart.removing', [$cartItem, $cartContent]);
 
-        $this->event->fire('cart.removed', [$cartItem, $cartContent]);
+            $cartContent->forget($cartItemId);
+            $this->updateCartSession($cartContent);
 
-        return $this;
-    }
-
-    /**
-     * Get an item in the cart by its ID.
-     *
-     * @param  string  $cartItemId  ID of an item in the cart
-     *
-     * @return Jackiedo\Cart\CartItem|null
-     */
-    public function get($cartItemId)
-    {
-        $cartContent = $this->getContent();
-
-        if (! $cartContent->has($cartItemId)) {
-            throw new CartInvalidItemIdException("The cart does not contain id {$cartItemId}.");
+            $this->event->fire('cart.removed', [$cartItem, $cartContent]);
         }
 
-        return $cartContent->get($cartItemId);
+        return $this;
     }
 
     /**
@@ -221,6 +182,36 @@ class Cart
     }
 
     /**
+     * Get an item in the cart by its ID.
+     *
+     * @param  string  $cartItemId  ID of an item in the cart
+     *
+     * @return Jackiedo\Cart\CartItem
+     */
+    public function get($cartItemId)
+    {
+        $cartContent = $this->getContent();
+
+        if (! $cartContent->has($cartItemId)) {
+            throw new CartInvalidItemIdException("The cart does not contain id {$cartItemId}.");
+        }
+
+        return $cartContent->get($cartItemId);
+    }
+
+    /**
+     * Alias of get() method
+     *
+     * @param  string  $cartItemId  ID of an item in the cart
+     *
+     * @return Jackiedo\Cart\CartItem
+     */
+    public function find($cartItemId)
+    {
+        return $this->get($cartItemId);
+    }
+
+    /**
      * Remove all items in the cart
      *
      * @return Jackiedo\Cart\Cart
@@ -236,6 +227,16 @@ class Cart
         $this->event->fire('cart.destroyed', $cartContent);
 
         return $this;
+    }
+
+    /**
+     * Alias of destroy() method
+     *
+     * @return Jackiedo\Cart\Cart
+     */
+    public function removeAll()
+    {
+        return $this->destroy();
     }
 
     /**
@@ -301,7 +302,7 @@ class Cart
      *
      * @param  \Closure|array  $filter    A closure or an array with item's attributes
      * @param  boolean         $allScope  Determine that the filter is satisfied for all
-     *                                    or only one of the cart item attributes
+     *                                    attributes simultaneously or in combination.
      *
      * @return Illuminate\Support\Collection;
      */
@@ -441,20 +442,8 @@ class Cart
      */
     protected function genCartItem($rawId, $title, $qty, $price, array $options = [])
     {
-        $cartItem = new CartItem($rawId, $title, $qty, $price, $options, $this->associatedModel);
+        $cartItem = new CartItem;
 
-        $this->resetAssociatedModel();
-
-        return $cartItem;
-    }
-
-    /**
-     * Reset associated model
-     *
-     * @return void;
-     */
-    protected function resetAssociatedModel()
-    {
-        $this->associatedModel = null;
+        return $cartItem->init($rawId, $title, $qty, $price, $options);
     }
 }

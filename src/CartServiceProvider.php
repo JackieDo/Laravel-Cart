@@ -26,7 +26,6 @@ class CartServiceProvider extends ServiceProvider
     public function boot()
     {
         // Bootstrap handles
-        $this->configHandle();
     }
 
     /**
@@ -36,9 +35,7 @@ class CartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('cart', function ($app) {
-            return new Cart($app['session'], $app['events']);
-        });
+        $this->app->bind('cart', 'Jackiedo\Cart\Cart');
     }
 
     /**
@@ -51,22 +48,5 @@ class CartServiceProvider extends ServiceProvider
         return [
             'cart',
         ];
-    }
-
-    /**
-     * Loading and publishing package's config
-     *
-     * @return void
-     */
-    protected function configHandle()
-    {
-        $packageConfigPath = __DIR__.'/Config/config.php';
-        $appConfigPath     = config_path('cart.php');
-
-        $this->mergeConfigFrom($packageConfigPath, 'cart');
-
-        $this->publishes([
-            $packageConfigPath => $appConfigPath,
-        ], 'config');
     }
 }

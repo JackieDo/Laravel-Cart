@@ -3,14 +3,12 @@
 use Exception;
 
 /**
- * CartInvalidPriceException
- *
- * Adapted from https://github.com/Crinsane/LaravelShoppingcart
+ * CartInvalidArgumentException
  *
  * @package JackieDo/Cart
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class CartInvalidPriceException extends Exception
+class CartInvalidArgumentException extends Exception
 {
     //
 }

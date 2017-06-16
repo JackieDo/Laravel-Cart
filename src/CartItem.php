@@ -1,9 +1,9 @@
 <?php namespace Jackiedo\Cart;
 
 use Illuminate\Support\Collection;
-use Jackiedo\Cart\Exceptions\CartInvalidItemException;
-use Jackiedo\Cart\Exceptions\CartInvalidPriceException;
-use Jackiedo\Cart\Exceptions\CartInvalidQtyException;
+use Jackiedo\Cart\Contracts\UseCartable;
+use Jackiedo\Cart\Exceptions\CartInvalidArgumentException;
+use Jackiedo\Cart\Exceptions\CartUnknownModelException;
 
 /**
  * The CartItem class
@@ -15,14 +15,7 @@ class CartItem extends Collection
 {
 
     /**
-     * The Eloquent model that item is associated with.
-     *
-     * @var string
-     */
-    protected $model = null;
-
-    /**
-     * Create a cart item instance
+     * Initialize a well-formed cart item instance
      *
      * @param  mixed   $rawId       Unique ID of item before insert to the cart
      * @param  string  $title       Name of item
@@ -31,34 +24,40 @@ class CartItem extends Collection
      * @param  array   $options     Array of additional options, such as 'size' or 'color'
      * @param  mixed   $associated  The model or the FQN of model that will be associated
      *
-     * @return void;
+     * @return Jackiedo\Cart\CartItem;
      */
-    public function __construct($rawId, $title, $qty, $price, array $options = [], $associated = null)
+    public function init($rawId, $title, $qty, $price, array $options = [], $associated = null)
     {
-        if (empty($rawId) || empty($title)) {
-            throw new CartInvalidItemException('Invalid item raw id or item title argument.');
+        if ($rawId instanceof UseCartable) {
+            list($rawId, $title, $qty, $price, $options, $associated) = $this->parseFromUseCartable($rawId, $title, $qty);
+        }
+
+        if (empty($rawId)) {
+            throw new CartInvalidArgumentException("The item identifier argument is not allowed to be empty.");
+        }
+
+        if (empty($title)) {
+            throw new CartInvalidArgumentException("The item title argument is not allowed to be empty.");
         }
 
         if (! is_numeric($qty) || $qty < 1) {
-            throw new CartInvalidQtyException('Invalid item quantity argument.');
+            throw new CartInvalidArgumentException("The item quantity argument must be an integer type greater than 1.");
         }
 
         if (! is_numeric($price) || $price < 0) {
-            throw new CartInvalidPriceException('Invalid item price argument.');
+            throw new CartInvalidArgumentException("The item quantity argument must be an float type greater than 0.");
         }
 
-        $attributes = [
-            'id'         => $this->generateId($rawId, $associated, $options),
-            'raw_id'     => $rawId,
-            'title'      => $title,
-            'qty'        => intval($qty),
-            'price'      => floatval($price),
-            'subtotal'   => $this->calculcateSubTotal($qty, $price),
-            'options'    => new CartItemOptions($options),
-            'associated' => $associated,
-        ];
+        $this->put('id', $this->genId($rawId, $associated, $options));
+        $this->put('raw_id', $rawId);
+        $this->put('title', $title);
+        $this->put('qty', intval($qty));
+        $this->put('price', floatval($price));
+        $this->put('subtotal', $this->calcSubTotal($qty, $price));
+        $this->put('options', new CartItemOptions($options));
+        $this->put('associated', $associated);
 
-        parent::__construct($attributes);
+        return $this;
     }
 
     /**
@@ -71,16 +70,25 @@ class CartItem extends Collection
     public function __get($property)
     {
         if ($property === 'model') {
-            return with(new $this->associated)->find($this->raw_id);
+            $model = with(new $this->associated)->find($this->raw_id);
+
+            if (!$model) {
+                throw new CartUnknownModelException("The supplied associated model from ".$this->associated." does not exist.");
+            }
+
+            return $model;
         }
 
-        if ($this->has($property)) {
-            return $this->get($property);
-        }
-
-        return;
+        return $this->get($property);
     }
 
+    /**
+     * Update info of cart item
+     *
+     * @param  array  $attributes
+     *
+     * @return Jackiedo\Cart\CartItem
+     */
     public function update(array $attributes)
     {
         // Don't allow update manually following attributes: id, raw_id, subtotal, associated
@@ -123,6 +131,27 @@ class CartItem extends Collection
     }
 
     /**
+     * Get data for initializing item from instance of UseCartable
+     *
+     * @param  object  $useCartableInstance
+     * @param  int     $qty
+     * @param  array   $options
+     *
+     * @return array
+     */
+    protected function parseFromUseCartable($useCartableInstance, $qty, $options)
+    {
+        $rawId      = $useCartableInstance->getUseCartableId();
+        $title      = $useCartableInstance->getUseCartableTitle();
+        $qty        = $qty ?: 1;
+        $price      = $useCartableInstance->getUseCartablePrice();
+        $options    = (!is_array($options)) ? [] : $options;
+        $associated = get_class($useCartableInstance);
+
+        return [$rawId, $title, $qty, $price, $options, $associated];
+    }
+
+    /**
      * Generate an unique id for the cart item
      *
      * @param  string  $rawId    Unique ID of item before insert to the cart
@@ -130,24 +159,42 @@ class CartItem extends Collection
      *
      * @return string
      */
-    protected function generateId($rawId, $associated, $options = [])
+    protected function genId($rawId, $associated, $options = [])
     {
         ksort($options);
         return md5($rawId . serialize($associated) . serialize($options));
     }
 
+    /**
+     * Update ID for the cart item
+     *
+     * @return void
+     */
     protected function updateId()
     {
-        $this->put('id', $this->generateId($this->raw_id, $this->associate, $this->options->all()));
+        $this->put('id', $this->genId($this->raw_id, $this->associate, $this->options->all()));
     }
 
-    protected function calculcateSubTotal($qty, $price)
+    /**
+     * Calculate sub total price from qty and price of the cart item
+     *
+     * @param  int    $qty
+     * @param  float  $price
+     *
+     * @return float
+     */
+    protected function calcSubTotal($qty, $price)
     {
         return intval($qty) * floatval($price);
     }
 
+    /**
+     * Re calculate sub total price
+     *
+     * @return void
+     */
     protected function updateSubTotal()
     {
-        $this->put('subtotal', $this->calculcateSubTotal($this->qty, $this->price));
+        $this->put('subtotal', $this->calcSubTotal($this->qty, $this->price));
     }
 }
