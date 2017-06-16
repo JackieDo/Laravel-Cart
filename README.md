@@ -33,6 +33,7 @@ Look at one of the following topics to learn more about Laravel Cart
     - [Event and listener](#event-and-listener)
     - [Exceptions](#exceptions)
 * [License](#license)
+* [Thanks from author](#thanks-for-use)
 
 ## Versions and compatibility
 Currently, Laravel Cart have two branchs compatible with Laravel 4.x and 5.x as follow:
@@ -48,7 +49,6 @@ Currently, Laravel Cart have two branchs compatible with Laravel 4.x and 5.x as 
 You can install this package through [Composer](https://getcomposer.org).
 
 - First, edit your project's `composer.json` file to require `jackiedo/cart`:
-
 ```php
 ...
 "require": {
@@ -58,13 +58,11 @@ You can install this package through [Composer](https://getcomposer.org).
 ```
 
 - Next step, we run Composer update commend from the Terminal on your project source directory:
-
 ```shell
 $ composer update
 ```
 
 - Once update operation completes, the third step is add the service provider. Open `config/app.php`, and add a new item to the section `providers`:
-
 ```php
 ...
 'providers' => array(
@@ -75,8 +73,7 @@ $ composer update
 
 > Note: From Laravel 5.1, you should write as `Jackiedo\Cart\CartServiceProvider::class`
 
-And the final step is add the following line to the section `aliases` in file `config/app.php`:
-
+- And the final step is add the following line to the section `aliases` in file `config/app.php`:
 ```php
 'aliases' => array(
     ...
@@ -84,51 +81,56 @@ And the final step is add the following line to the section `aliases` in file `c
 ),
 ```
 
-> Note: From Laravel 5.1, you should write as `Jackiedo\Cart\Facades\Cart::class`
+> **Note:** From Laravel 5.1, you should write as `Jackiedo\Cart\Facades\Cart::class`
 
 ## Basic usage
 
 ### The Cart facade
-Laravel Cart has a facade is stored at `Jackiedo\Cart\Facades\Cart`. You can do any cart operation through this facade.
+Laravel Cart has a facade with name is `Jackiedo\Cart\Facades\Cart`. You can do any cart operation through this facade.
 
 ### Named your cart instances
-Laravel Cart supports multiple instances of the cart. This is useful for using different carts for different management purposes, such as shopping cart, whishlist items, recently views... The way this works is like this:
+Laravel Cart supports multiple instances of the cart. This is useful for using different carts for different management purposes, such as shopping cart, whishlist items, recently views...
 
-Whenever you create a shopping cart, you should name it so that it can be distinguished from other carts. You can set name for an instance of the cart by calling `Cart::instance($newInstance)`. From this point of time, the active instance of the cart will have a specified name, so whenever you perform a cart operation, you must specify a specific cart.
+Whenever you create a shopping cart, you should name it so that it can be distinguished from other carts. You can set name for an instance of the cart by calling `Cart::instance($instanceName)`. From this point of time, the active instance of the cart will have a specified name, so whenever you perform a cart operation, you must specify a specific cart.
 
 Example:
-
 ```php
 Cart::instance('shopping');
 ```
 
-If you want to switch instances, you just call `Cart::instance($otherInstance)` again, and you're working with the other instance.
+If you want to switch between instances, you just call `Cart::instance($otherName)` again, and you're working with the other instance.
 
 So a little example:
-
 ```php
 // Create new instance of the cart with named is `shopping`
 $cart = Cart::instance('shopping');
 
-// Perform an example method with this instance
-$cart->doExampleMethod();
+// Perform a something with this instance
+$cart->doSomething();
 
-// Switch to  whishlist cart and do another method
-$info = Cart::instance('wishlist')->doExampleMethod();
+// Switch to `whishlist` cart and do something
+Cart::instance('wishlist')->doSomething();
 
+// Do another thing also with `whishlist` cart
+Cart::doAnother();
+
+// Switch to `recent-view` cart and do something
+Cart::instance('recent-view')->doSomething();
+
+// Go back to work with `shopping` cart
+Cart::instance('shopping')->doSomething();
 ...
 ```
 
 **Note:**
-> Keep in mind that the cart stays in the last set instance for as long as you don't set a different one during script execution.
-
-> The default cart instance is called `default`, so when you're not using instances, example `Cart::doExampleMethod();` is the same as `Cart::instance('default')->doExampleMethod();`
+- The default cart instance is called `default`, so when you're not using instances, example `Cart::doSomething();` is the same as `Cart::instance('default')->doSomething();`
+- Keep in mind that the cart stays in the last set instance for as long as you don't set a different one during script execution.
 
 ### Get current cart instance
-You can easily get cuurent cart instance name by calling `Cart::getInstance()` method.
+You can easily get current cart instance name by calling `Cart::getInstance()` method.
 
 ### Add an item to cart
-Adding an item to the cart is really simple, you just use the add() method, which accepts a variety of parameters.
+Adding an item to the cart is really simple, you just use the `Cart::add()` method, which accepts a variety of parameters.
 
 ```php
 /**
@@ -142,40 +144,59 @@ Adding an item to the cart is really simple, you just use the add() method, whic
  *
  * @return Jackiedo\Cart\CartItem
  */
-Cart::add($rawId, $title[, int $qty = 1[, float $price = 0[, array $options = array()]]]);
+Cart::add($rawId, $title[, $qty = 1[, $price = 0[, $options = array()]]]);
 ```
 
 Example:
-
 ```php
-// Add an product to the cart
-$shoppingCartItem = Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 5, 20.00, ['color' => 'red', 'size' => 'M']);
+// Add an article to the `recent-view` cart
+$recentView = Cart::instance('recent-view')->add('AID0782000', 'An example article');
 
-// Collection CartItem: {
-//    id       : '8a48aa7c8e5202841ddaf767bb4d10da'
-//    raw_id   : 37
-//    title    : 'Polo T-shirt for men'
-//    qty      : 5
-//    price    : 20.00
-//    subtotal : 100.00
-//    options  : Collection CartItemOptions : {
-//                   color : 'red'
-//                   size  : 'M'
-//               }
-// }
+// Add an product to the `shopping` cart
+$shoppingCartItem = Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 5, 17.5, ['color' => 'red', 'size' => 'M']);
+```
 
-// Get id of cart item. This ID is used to distinguish items with different attributes in the cart.
-$thisCartItemId = $shoppingCartItem->id;      // 8a48aa7c8e5202841ddaf767bb4d10da
+The result of this method is an instance of `Jackiedo\Cart\CartItem` class (extended from `Illuminate\Support\Collection`) and has structured as follows:
+```
+{
+    id         : "3fbdcdad4cbcee36f36ee15d89505d54",
+    raw_id     : 37,
+    title      : "Polo T-shirt for men",
+    qty        : 5,
+    price      : 17.5,
+    subtotal   : 87.5,
+    options    : {
+        color : "red",
+        size  : "M"
+    },
+    associated : null
+}
+```
 
-// Get sub total price of cart item
-$thisSubTotal = $shoppingCartItem->subtotal;  // 100.00
+So, you can access it's property by method `get()` of Laravel Collection instance.
 
-// Add an article to recently view
-$recentView = Cart::instance('recent-view')->add(2, 'Example article');
+Example:
+```php
+// Get id of the cart item. This ID is used to distinguish items with different attributes in the cart.
+$thisCartItemId = $shoppingCartItem->get('id');  // 3fbdcdad4cbcee36f36ee15d89505d54
+```
+
+But with some enhancements to this CartItem class, you can more easily access entity attributes in a more succinct way:
+
+Example:
+```php
+// Get id of this cart item
+$thisCartItemId = $shoppingCartItem->id;            // 3fbdcdad4cbcee36f36ee15d89505d54
+
+// Get sub total price of this cart item
+$thisSubTotal = $shoppingCartItem->subtotal;        // 87.5
+
+// Get color option of this cart item
+$thisSubTotal = $shoppingCartItem->options->color;  // red
 ...
 ```
 
-> Cart item ID is used to distinguish items with different attributes in the cart. So with the same product, but when you add to the cart with different options, you will have different cart items with different IDs.
+> **Note:** Cart item's ID is used to distinguish items with different attributes in the cart. So with the same product, but when you add to the cart with different options, you will have different cart items with different IDs.
 
 ### Update cart item
 Update the specified cart item with given quantity or attributes. To do this, you need a cart item ID.
@@ -189,23 +210,22 @@ Update the specified cart item with given quantity or attributes. To do this, yo
  *
  * @return Jackiedo\Cart\CartItem|null
  */
-Cart::update(string $cartItemId, int $quantity);
-Cart::update(string $cartItemId, array $attributes);
+Cart::update($cartItemId, $quantity);
+Cart::update($cartItemId, $attributes);
 ```
 
 Example:
-
 ```php
-$cartItemId = '8a48aa7c8e5202841ddaf767bb4d10da';
+$cartItemId = "3fbdcdad4cbcee36f36ee15d89505d54";
 
 // Update title and options
-$cartItem = Cart::instance('shopping')->update($cartItemId, ['title' => 'New item name', 'options' => ['color' => 'yellow']]);
+$cartItem = Cart::instance('shopping')->update($cartItemId, ['title' => 'New item title', 'options' => ['color' => 'yellow']]);
 
 // or only update quantity
 $cartItem = Cart::instance('shopping')->update($cartItemId, 10);
 ```
 
-> Note: You can only update attributes about title, quantity, price and options. Whenever you update cart item's info, the cart item's ID can be changed.
+> **Note:** You can only update attributes about title, quantity, price and options. Whenever you update cart item's info, the cart item's ID can be changed.
 
 ### Get the specified cart item
 Get the specified cart item with given cart item's ID
@@ -222,22 +242,24 @@ Cart::get($cartItemId);
 ```
 
 Example:
-
 ```php
-$item = Cart::instance('shopping')->get('8a48aa7c8e5202841ddaf767bb4d10da');
+$item = Cart::instance('shopping')->get('3fbdcdad4cbcee36f36ee15d89505d54');
+```
 
-// Collection CartItem: {
-//    id       : '8a48aa7c8e5202841ddaf767bb4d10da'
-//    raw_id   : 37
-//    title    : 'Polo T-shirt for men'
-//    qty      : 5
-//    price    : 20.00
-//    subtotal : 100.00
-//    options  : Collection CartItemOptions : {
-//                   color : 'red'
-//                   size  : 'M'
-//               }
-// }
+```
+{
+    id         : "3fbdcdad4cbcee36f36ee15d89505d54",
+    raw_id     : 37,
+    title      : "New item title",
+    qty        : 5,
+    price      : 17.5,
+    subtotal   : 87.5,
+    options    : {
+        color : "yellow",
+        size  : "M"
+    },
+    associated : null
+}
 ```
 
 ### Get all cart items
@@ -253,37 +275,41 @@ Cart::all();
 ```
 
 Example:
-
 ```php
 $items = Cart::instance('shopping')->all();
+```
 
-// Collection $items: {
-//     8a48aa7c8e5202841ddaf767bb4d10da: {
-//         id: '8a48aa7c8e5202841ddaf767bb4d10da',
-//         raw_id: 37,
-//         title: 'New item name',
-//         qty: 5,
-//         price: 100.00,
-//         subtotal: 500.00,
-//         options: {
-//             'color': 'yellow',
-//             'size': 'M'
-//         }
-//     },
-//     4c48ajh68e5202841ed52767bb4d10fc: {
-//         id: '4c48ajh68e5202841ed52767bb4d10fc',
-//         raw_id: 42,
-//         title: 'Men T-Shirt Apolo',
-//         qty: 1,
-//         price: 1000.00,
-//         subtotal: 1000.00,
-//         options: {
-//             'color': 'red',
-//             'size': 'L'
-//         }
-//     }
-//     ...
-// }
+And the results may have the following structure:
+
+```
+{
+    562e261883ba74c800c739494f62667b: {
+        id         : "562e261883ba74c800c739494f62667b",
+        raw_id     : 37,
+        title      : "Polo T-shirt for men",
+        qty        : 1,
+        price      : 17.5,
+        subtotal   : 17.5,
+        options    : {
+            color : "yellow",
+            size  : "L"
+        },
+        associated : null
+    },
+    3fbdcdad4cbcee36f36ee15d89505d54: {
+        id         : "3fbdcdad4cbcee36f36ee15d89505d54",
+        raw_id     : 37,
+        title      : "Polo T-shirt for men",
+        qty        : 5,
+        price      : 17.5,
+        subtotal   : 87.5,
+        options    : {
+            color      : "red",
+            size       : "M"
+        },
+        associated : null
+    }
+}
 ```
 
 ### Get total price of all cart items
@@ -299,7 +325,6 @@ Cart::total();
 ```
 
 Example:
-
 ```php
 $total = Cart::instance('shopping')->total();
 ```
@@ -317,7 +342,6 @@ Cart::countItems();
 ```
 
 Example:
-
 ```php
 Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 5, 100.00, ['color' => 'red', 'size' => 'M']);
 Cart::add(37, 'Polo T-shirt for men', 1, 100.00, ['color' => 'red', 'size' => 'M']);
@@ -328,7 +352,7 @@ $items = Cart::countItems();  // 2 (Polo T-shirt for men, Another example produc
 ```
 
 ### Count quantities of all cart items
-Return the number of cart items.
+Return the number of quantities for all items in the cart.
 
 ```php
 /**
@@ -340,7 +364,6 @@ Cart::countQuantities();
 ```
 
 Example:
-
 ```php
 Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 5, 100.00, ['color' => 'red', 'size' => 'M']);
 Cart::add(37, 'Polo T-shirt for men', 1, 100.00, ['color' => 'red', 'size' => 'M']);
@@ -366,10 +389,9 @@ To search cart items in the cart, you must provide array of the cart item's attr
 Cart::search($filter[, boolean $allScope = true]);
 ```
 
-> Note: The `$allScope` parameter use to determine that the filter is satisfied for all attributes simultaneously or in combination.
+> **Note:** The `$allScope` parameter use to determine that the filter is satisfied for all attributes simultaneously or in combination.
 
 Example:
-
 ```php
 // Get all cart items that have color is red
 $items = Cart::instance('shopping')->search([
@@ -410,7 +432,6 @@ Cart::remove($cartItemId);
 ```
 
 Example:
-
 ```php
 Cart::instance('shopping')->remove('8a48aa7c8e5202841ddaf767bb4d10da');
 ```
@@ -428,7 +449,6 @@ Cart::destroy()
 ```
 
 Example:
-
 ```php
 Cart::instance('shopping')->destroy();
 ```
@@ -436,18 +456,50 @@ Cart::instance('shopping')->destroy();
 ## Advanced usage
 
 ### Collections
-As you might have seen, all result of cart content (response by methods such as `Cart::all()`, `Cart::search()`), every cart item (response by methods such as `Cart::add()`, `Cart::get()`, `Cart::update()`) and cart item's options (is property of one cart item) are return a Laravel Collection, so all methods you can call on a Laravel Collection are also available on the them.
+You need to know that all result of cart content (response by methods such as `Cart::all()`, `Cart::search()`), every cart item (response by methods such as `Cart::add()`, `Cart::get()`, `Cart::update()`) and cart item's options (is property of one cart item) are return a Laravel Collection, so all methods you can call on a Laravel Collection are also available on them.
 
 Example:
-
 ```php
 $count = Cart::instance('shopping')->all()->count();
 ```
 
 And another example (group by attribute):
-
 ```php
-$all = Cart::instance('shopping')->all()->groupBy('title');
+$groupByTitle = Cart::instance('shopping')->all()->groupBy('title');
+```
+
+And may be you will see:
+```
+{
+    Polo neck T-shirt for men: [
+        {
+            id         : "e4656c2e79429b833b5569062f599cab",
+            raw_id     : 1,
+            title      : "Polo neck T-shirt for men",
+            qty        : 5,
+            price      : 17.5,
+            subtotal   : 87.5,
+            options    : {
+                color : "yellow",
+                size  : "M"
+            },
+            associated : "App\Product"
+        },
+        {
+            id         : "3fbdcdad4cbcee36f36ee15d89505d54",
+            raw_id     : 1,
+            title      : "Polo neck T-shirt for men",
+            qty        : 10,
+            price      : 17.5,
+            subtotal   : 175,
+            options    : {
+                color : "red",
+                size  : "M"
+            },
+            associated : "App\Product"
+        }
+    ]
+}
 ```
 
 ### Eloquent model association
@@ -491,7 +543,6 @@ Cart::add($model[, int $qty = 1[, array $options = array()]]);
 ```
 
 Example:
-
 ```php
 // Get your model
 $product = Product::find(1);
@@ -501,20 +552,23 @@ $cartItem = Cart::instance('shopping')->add($product, 5);
 
 // Or you can do this by another way
 $cartItem = $product->addToCart('shopping', 5);
+```
 
-// Collection CartItem: {
-//    id         : "8a48aa7c8e5202841ddaf767bb4d10da"
-//    raw_id     : 37
-//    title      : "Polo T-shirt for men"
-//    qty        : 5
-//    price      : 20.00
-//    subtotal   : 100.00
-//    options    : Collection CartItemOptions : {
-//                     color : "red"
-//                     size  : "M"
-//                 }
-//    associated : "App\Product"
-// }
+And the result will be:
+```
+{
+    id         : "3fbdcdad4cbcee36f36ee15d89505d54",
+    raw_id     : 1,
+    title      : "Polo neck T-shirt for men",
+    qty        : 5,
+    price      : 17.5,
+    subtotal   : 87.5,
+    options    : {
+        color : "red",
+        size  : "M"
+    },
+    associated : "App\Product"
+}
 ```
 
 Please, notice the associated attribute of the cart item. Do you see the value is `App\Product`? Wow! now you can be able to directly access your model from this cart item instance through `model` property. Example:
@@ -546,7 +600,7 @@ class Product extends Model implements UseCartable {
 
 ```
 
-#### Some other method for associated model
+#### Some other methods for associated model
 
 ```php
 /**
@@ -580,7 +634,6 @@ public function searchInCart($cartInstance = null, array $options = []);
 ```
 
 Example:
-
 ```php
 $product = Product::find(1);
 return ($product->hasInCart('shopping')) ? 'Yes' : 'No';
@@ -591,8 +644,8 @@ At the above, we knew how to do a searching for items in the cart. And because i
 
 ```php
 $results = Cart::instance('shopping')->search(function ($cartItem) {
-    return $cartItem->id === 1 && $cartItem->associated === "Product";
-});
+        return $cartItem->id === 1 && $cartItem->associated === "Product";
+    });
 ```
 
 You can refer to Collection on the Laravel homepage.
@@ -613,25 +666,27 @@ class TestCartController extends Controller {
 
     protected $cart;
 
-    protected $request;
-
-    public function __construct(Cart $cart, Request $request)
+    public function __construct(Cart $cart)
     {
         $this->cart = $cart;
-        $this->request = $request;
     }
 
     public function content()
     {
-        $cartInstance = $this->request->input('instance');
+        $cart = $this->cart->instance('shopping')->all();
+    }
 
-        return $this->cart->instance($cartInstance)->all();
+    public function add()
+    {
+        $product = Product::find(1);
+        $cartItem = $this->cart->instance('shopping')->add($product, 5);
     }
 }
 
 ```
 
 ### Event and listener
+The Laravel Cart package has events build in. Currently, there are eight events available for you to listen for.
 
 | Event Name        | Fired                                        | Parameters          |
 | ----------------- | -------------------------------------------- | ------------------- |
@@ -644,22 +699,27 @@ class TestCartController extends Controller {
 | *cart.destroying* | When a cart is being destroyed.              | ($cart);            |
 | *cart.destroyed*  | When a cart was destroyed.                   | ($cart);            |
 
-You can easily handle these events, for example:
-
+You can easily handle these events. For example, we can listen events through the Event facade (I usually use this way with Laravel 4+. But now, in Laravel 5+, we have a better way to listen):
 ```php
-Event::on('cart.adding', function($attributes, $cart){
-    // code
-});
+<?php
+
+use Illuminate\Support\Facades\Event;
+...
+    Event::on('cart.adding', function($cartItem, $cart){
+        // code
+    });
+...
+
 ```
 
 ### Exceptions
-The Cart package will throw exceptions if something goes wrong. This way it's easier to debug your code using the Laravel Cart package or to handle the error based on the type of exceptions. The Laravel Cart packages can throw the following exceptions:
+The Laravel Cart package will throw exceptions if something goes wrong. This way it's easier to debug your code using the Laravel Cart package or to handle the error based on the type of exceptions. The Laravel Cart packages can throw the following exceptions:
 
 | Exception                         | Reason                                                                     |
 | --------------------------------- | -------------------------------------------------------------------------- |
-| *CartInvalidArgumentException*    | When you misses or enter invalid argument (such as title, qty...).         |
+| *CartInvalidArgumentException*    | When you missed or entered invalid argument (such as title, qty...).       |
 | *CartInvalidItemIdException*      | When the `$cartItemId` that got passed doesn't exists in the current cart. |
-| *CartUnknownModelException*       | When an model is associated to a cart item row is not exists.              |
+| *CartUnknownModelException*       | When an associated model of the cart item row doesn't exists.              |
 
 ## License
 [MIT](LICENSE) © Jackie Do
