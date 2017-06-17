@@ -66,7 +66,7 @@ trait CanUseCart
     public function searchInCart($cartInstance = null, array $options = [])
     {
         return Cart::instance($cartInstance)->search([
-            'raw_id'     => $this->getUseCartableId(),
+            'id'         => $this->getUseCartableId(),
             'title'      => $this->getUseCartableTitle(),
             'options'    => $options,
             'associated' => __CLASS__

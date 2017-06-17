@@ -3,7 +3,7 @@
 use Illuminate\Support\Collection;
 use Jackiedo\Cart\Contracts\UseCartable;
 use Jackiedo\Cart\Exceptions\CartInvalidArgumentException;
-use Jackiedo\Cart\Exceptions\CartUnknownModelException;
+use Jackiedo\Cart\Exceptions\CartInvalidModelException;
 
 /**
  * The CartItem class
@@ -17,7 +17,7 @@ class CartItem extends Collection
     /**
      * Initialize a well-formed cart item instance
      *
-     * @param  mixed   $rawId       Unique ID of item before insert to the cart
+     * @param  mixed   $id          Unique ID of item before insert to the cart
      * @param  string  $title       Name of item
      * @param  int     $qty         Number of item
      * @param  float   $price       Unit price of one item
@@ -28,13 +28,13 @@ class CartItem extends Collection
      *
      * @return Jackiedo\Cart\CartItem;
      */
-    public function init($rawId, $title, $qty, $price, array $options = [], $associated = null)
+    public function init($id, $title, $qty, $price, array $options = [], $associated = null)
     {
-        if ($rawId instanceof UseCartable) {
-            list($rawId, $title, $qty, $price, $options, $associated) = $this->parseFromUseCartable($rawId, $title, $qty);
+        if ($id instanceof UseCartable) {
+            list($id, $title, $qty, $price, $options, $associated) = $this->parseFromUseCartable($id, $title, $qty);
         }
 
-        if (empty($rawId)) {
+        if (empty($id)) {
             throw new CartInvalidArgumentException("The item identifier argument is not allowed to be empty.");
         }
 
@@ -50,8 +50,8 @@ class CartItem extends Collection
             throw new CartInvalidArgumentException("The item quantity argument must be an float type greater than 0.");
         }
 
-        $this->put('id', $this->genId($rawId, $associated, $options));
-        $this->put('raw_id', $rawId);
+        $this->put('hash', $this->genHash($id, $associated, $options));
+        $this->put('id', $id);
         $this->put('title', $title);
         $this->put('qty', intval($qty));
         $this->put('price', floatval($price));
@@ -67,17 +67,17 @@ class CartItem extends Collection
      *
      * @param  string  $property  Property name.
      *
-     * @throws Jackiedo\Cart\Exceptions\CartUnknownModelException
+     * @throws Jackiedo\Cart\Exceptions\CartInvalidModelException
      *
      * @return mixed
      */
     public function __get($property)
     {
         if ($property === 'model') {
-            $model = with(new $this->associated)->findById($this->raw_id);
+            $model = with(new $this->associated)->findById($this->id);
 
             if (!$model) {
-                throw new CartUnknownModelException("The supplied associated model from ".$this->associated." does not exist.");
+                throw new CartInvalidModelException("The supplied associated model from ".$this->get('associated')." does not exist.");
             }
 
             return $model;
@@ -95,8 +95,8 @@ class CartItem extends Collection
      */
     public function update(array $attributes)
     {
-        // Don't allow update manually following attributes: id, raw_id, subtotal, associated
-        $attributes = array_except($attributes, ['id', 'raw_id', 'subtotal', 'associated']);
+        // Don't allow update manually following attributes: hash, id, subtotal, associated
+        $attributes = array_only($attributes, ['title', 'qty', 'price', 'options']);
 
         // Format data
         foreach ($attributes as $key => $value) {
@@ -126,9 +126,9 @@ class CartItem extends Collection
             $this->updateSubTotal();
         }
 
-        // Regenerate ID
+        // Update hash
         if (count(array_intersect(array_keys($attributes), ['options'])) > 0) {
-            $this->updateId();
+            $this->updateHash();
         }
 
         return $this;
@@ -145,38 +145,38 @@ class CartItem extends Collection
      */
     protected function parseFromUseCartable($useCartableInstance, $qty, $options)
     {
-        $rawId      = $useCartableInstance->getUseCartableId();
+        $id         = $useCartableInstance->getUseCartableId();
         $title      = $useCartableInstance->getUseCartableTitle();
         $qty        = $qty ?: 1;
         $price      = $useCartableInstance->getUseCartablePrice();
         $options    = (!is_array($options)) ? [] : $options;
         $associated = get_class($useCartableInstance);
 
-        return [$rawId, $title, $qty, $price, $options, $associated];
+        return [$id, $title, $qty, $price, $options, $associated];
     }
 
     /**
-     * Generate an unique id for the cart item
+     * Generate the unique identifier for the cart item
      *
-     * @param  string  $rawId    Unique ID of item before insert to the cart
+     * @param  string  $id       Unique ID of item before insert to the cart
      * @param  array   $options  Array of additional options, such as 'size' or 'color'
      *
      * @return string
      */
-    protected function genId($rawId, $associated, $options = [])
+    protected function genHash($id, $associated, $options = [])
     {
         ksort($options);
-        return md5($rawId . serialize($associated) . serialize($options));
+        return md5($id . serialize($associated) . serialize($options));
     }
 
     /**
-     * Update ID for the cart item
+     * Update unique identifier for the cart item
      *
      * @return void
      */
-    protected function updateId()
+    protected function updateHash()
     {
-        $this->put('id', $this->genId($this->raw_id, $this->associate, $this->options->all()));
+        $this->put('hash', $this->genHash($this->id, $this->associate, $this->options->all()));
     }
 
     /**

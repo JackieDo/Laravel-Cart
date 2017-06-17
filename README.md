@@ -86,7 +86,7 @@ Cart::instance('shopping');
 
 If you want to switch between instances, you just call `Cart::instance($otherName)` again, and you're working with the other instance.
 
-So a little example:
+Example:
 ```php
 // Create new instance of the cart with named is `shopping`
 $cart = Cart::instance('shopping');
@@ -122,7 +122,7 @@ Adding an item to the cart is really simple, you just use the `Cart::add()` meth
 /**
  * Add an item to the cart
  *
- * @param  string|int  $rawId    Associated model or Unique ID of item before insert to the cart
+ * @param  string|int  $id       Associated model or Unique ID of item before insert to the cart
  * @param  string      $title    Name of item
  * @param  int         $qty      Quantities of item want to add to the cart
  * @param  float       $price    Price of one item
@@ -130,7 +130,7 @@ Adding an item to the cart is really simple, you just use the `Cart::add()` meth
  *
  * @return Jackiedo\Cart\CartItem
  */
-Cart::add($rawId, $title[, $qty = 1[, $price = 0[, $options = array()]]]);
+Cart::add($id, $title[, $qty = 1[, $price = 0[, $options = array()]]]);
 ```
 
 Example:
@@ -145,8 +145,8 @@ $shoppingCartItem = Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 
 The result of this method is an instance of `Jackiedo\Cart\CartItem` class (extended from `Illuminate\Support\Collection`) and has structured as follows:
 ```
 {
-    id         : "3fbdcdad4cbcee36f36ee15d89505d54",
-    raw_id     : 37,
+    hash       : "6afbeca78618c01954c98fbd473fd176",
+    id         : 37,
     title      : "Polo T-shirt for men",
     qty        : 5,
     price      : 17.5,
@@ -163,16 +163,16 @@ So, you can access it's property by method `get()` of Laravel Collection instanc
 
 Example:
 ```php
-// Get id of the cart item. This ID is used to distinguish items with different attributes in the cart.
-$thisCartItemId = $shoppingCartItem->get('id');  // 3fbdcdad4cbcee36f36ee15d89505d54
+// Get title of the cart item
+$thisCartItemId = $shoppingCartItem->get('title');  // Polo T-shirt for men
 ```
 
 But with some enhancements to this CartItem class, you can more easily access entity attributes in a more succinct way:
 
 Example:
 ```php
-// Get id of this cart item
-$thisCartItemId = $shoppingCartItem->id;            // 3fbdcdad4cbcee36f36ee15d89505d54
+// Get title of the cart item
+$thisCartItemId = $shoppingCartItem->hash;          // Polo T-shirt for men
 
 // Get sub total price of this cart item
 $thisSubTotal = $shoppingCartItem->subtotal;        // 87.5
@@ -182,60 +182,63 @@ $thisSubTotal = $shoppingCartItem->options->color;  // red
 ...
 ```
 
-> **Note:** Cart item's ID is used to distinguish items with different attributes in the cart. So with the same product, but when you add to the cart with different options, you will have different cart items with different IDs.
+> **Note:** In the visible attributes of each cart item returned from the cart, there is an important type of information, called a hash. The hash of the cart item is used to distinguish items with different attributes in the cart. So with the same item, when you add to the cart with different attributes, you will have cart items with different hash.
+```
 
 ### Update cart item
-Update the specified cart item with given quantity or attributes. To do this, you need a cart item ID.
+Update the specified cart item with given quantity or attributes. To do this, you need hash information of cart item.
 
 ```php
 /**
  * Update an item in the cart with the given ID.
  *
- * @param  string     $cartItemId  ID of an item in the cart
- * @param  int|array  $attributes  New quantity of item or array of attributes to update
+ * @param  string     $itemHash    The unique identifier of the cart item
+ * @param  int|array  $attributes  New quantity of item or array of new attributes to update
  *
  * @return Jackiedo\Cart\CartItem|null
  */
-Cart::update($cartItemId, $quantity);
-Cart::update($cartItemId, $attributes);
+Cart::update($itemHash, $quantity);
+Cart::update($itemHash, $attributes);
 ```
 
 Example:
 ```php
-$cartItemId = "3fbdcdad4cbcee36f36ee15d89505d54";
+$itemHash = "6afbeca78618c01954c98fbd473fd176";
 
 // Update title and options
-$cartItem = Cart::instance('shopping')->update($cartItemId, ['title' => 'New item title', 'options' => ['color' => 'yellow']]);
+$cartItem = Cart::instance('shopping')->update($itemHash, ['title' => 'New item title', 'options' => ['color' => 'yellow']]);
 
 // or only update quantity
-$cartItem = Cart::instance('shopping')->update($cartItemId, 10);
+$cartItem = Cart::instance('shopping')->update($itemHash, 10);
 ```
 
-> **Note:** You can only update attributes about title, quantity, price and options. Whenever you update cart item's info, the cart item's ID can be changed.
+> **Note:** You can only update attributes about title, quantity, price and options. Whenever you update cart item's info, the hash of cart item can be changed.
 
 ### Get the specified cart item
-Get the specified cart item with given cart item's ID
+Get the specified cart item with given hash of cart item
 
 ```php
 /**
  * Get an item in the cart by its ID.
  *
- * @param  string  $cartItemId  ID of an item in the cart
+ * @param  string  $itemHash  The unique identifier of the cart item
+ *
+ * @throws Jackiedo\Cart\Exceptions\CartInvalidHashException
  *
  * @return Jackiedo\Cart\CartItem
  */
-Cart::get($cartItemId);
+Cart::get($itemHash);
 ```
 
 Example:
 ```php
-$item = Cart::instance('shopping')->get('3fbdcdad4cbcee36f36ee15d89505d54');
+$item = Cart::instance('shopping')->get('c2bb42b0b2a16eb1fb477b68822448de');
 ```
 
 ```
 {
-    id         : "3fbdcdad4cbcee36f36ee15d89505d54",
-    raw_id     : 37,
+    hash       : "c2bb42b0b2a16eb1fb477b68822448de",
+    id         : 37,
     title      : "New item title",
     qty        : 5,
     price      : 17.5,
@@ -266,12 +269,11 @@ $items = Cart::instance('shopping')->all();
 ```
 
 And the results may have the following structure:
-
 ```
 {
-    562e261883ba74c800c739494f62667b: {
-        id         : "562e261883ba74c800c739494f62667b",
-        raw_id     : 37,
+    c2bb42b0b2a16eb1fb477b68822448de: {
+        hash       : "c2bb42b0b2a16eb1fb477b68822448de",
+        id         : 37,
         title      : "Polo T-shirt for men",
         qty        : 1,
         price      : 17.5,
@@ -282,9 +284,9 @@ And the results may have the following structure:
         },
         associated : null
     },
-    3fbdcdad4cbcee36f36ee15d89505d54: {
-        id         : "3fbdcdad4cbcee36f36ee15d89505d54",
-        raw_id     : 37,
+    6afbeca78618c01954c98fbd473fd176: {
+        hash       : "6afbeca78618c01954c98fbd473fd176",
+        id         : 37,
         title      : "Polo T-shirt for men",
         qty        : 5,
         price      : 17.5,
@@ -364,18 +366,19 @@ To search cart items in the cart, you must provide array of the cart item's attr
 
 ```php
 /**
- * Search if the cart has a item
+ * Search the cart items with given filter
  *
  * @param  Closure|array  $filter    A closure or an array with item's attributes
- * @param  boolean        $allScope  Determine that the filter is satisfied for all
- *                                   attributes simultaneously or in combination.
+ * @param  boolean        $allScope  Indicates that the results returned must satisfy
+ *                                   all the conditions of the filter at the same time
+ *                                   or that only parts of the filter.
  *
  * @return Illuminate\Support\Collection;
  */
-Cart::search($filter[, boolean $allScope = true]);
+Cart::search($filter[, $allScope = true]);
 ```
 
-> **Note:** The `$allScope` parameter use to determine that the filter is satisfied for all attributes simultaneously or in combination.
+> **Note:** The `$allScope` parameter use to indicates that the results returned must satisfy all the conditions of the filter at the same time or that only parts of the filter.
 
 Example:
 ```php
@@ -394,9 +397,9 @@ $items = Cart::instance('shopping')->search([
     ]
 ]);
 
-// Get all cart items that have raw_id is [10], OR size is [M]
+// Get all cart items that have id is [10], OR size is [M]
 $items = Cart::instance('shopping')->search([
-    'raw_id'  => 10,
+    'id'      => 10,
     'options' => [
         'size' => 'M'
     ]
@@ -404,22 +407,22 @@ $items = Cart::instance('shopping')->search([
 ```
 
 ### Remove the specified cart item
-Remove the specified cart item by its ID.
+Remove the specified cart item by its hash.
 
 ```php
 /**
- * Remove an item in the cart with the given ID out of the cart.
+ * Remove an cart item with the given hash out of the cart.
  *
- * @param  string  $cartItemId  ID of an item in the cart
+ * @param  string  $itemHash  The unique identifier of the cart item
  *
  * @return Jackiedo\Cart\Cart
  */
-Cart::remove($cartItemId);
+Cart::remove($itemHash);
 ```
 
 Example:
 ```php
-Cart::instance('shopping')->remove('8a48aa7c8e5202841ddaf767bb4d10da');
+Cart::instance('shopping')->remove('6afbeca78618c01954c98fbd473fd176');
 ```
 
 ### Destroy your cart
@@ -454,49 +457,15 @@ And another example (group by attribute):
 $groupByTitle = Cart::instance('shopping')->all()->groupBy('title');
 ```
 
-And may be you will see:
-```
-{
-    Polo neck T-shirt for men: [
-        {
-            id         : "e4656c2e79429b833b5569062f599cab",
-            raw_id     : 1,
-            title      : "Polo neck T-shirt for men",
-            qty        : 5,
-            price      : 17.5,
-            subtotal   : 87.5,
-            options    : {
-                color : "yellow",
-                size  : "M"
-            },
-            associated : "Product"
-        },
-        {
-            id         : "3fbdcdad4cbcee36f36ee15d89505d54",
-            raw_id     : 1,
-            title      : "Polo neck T-shirt for men",
-            qty        : 10,
-            price      : 17.5,
-            subtotal   : 175,
-            options    : {
-                color : "red",
-                size  : "M"
-            },
-            associated : "Product"
-        }
-    ]
-}
-```
-
 ### Eloquent model association
 A special feature of Laravel Cart is association an Eloquent model with the cart item in the cart. Let's say you have a `Product` model in your application. With this feature, you can tell the cart that an item in the cart, is associated to a instance `Product` model. That way, you can access your instance of model right from instance of `CartItem`!
 
 To be ready for this, Laravel Cart has one interface (with namespace is `Jackiedo\Cart\Contracts\UseCartable`) and one trait (with namespace is `Jackiedo\Cart\Traits\CanUseCart`). The rest is you just apply for your Eloquent model.
 
 #### Preparing for association:
-It's easily to do this. Your model just only implements the `UseCartable` interface and use the `CanUseCart` trait:
+It's easily to do this. Your Eloquent model just only need implements the `UseCartable` interface and use the `CanUseCart` trait.
 ```php
-<?php
+<?php;
 
 use Jackiedo\Cart\Contracts\UseCartable; // Interface
 use Jackiedo\Cart\Traits\CanUseCart;     // Trait
@@ -514,13 +483,11 @@ If your model implemented the UseCartable interface and you uses your model to a
 
 ```php
 /**
- * Add an model to the cart and make association
+ * Add an item to the cart
  *
- * @param  string|int  $rawId    Associated model or Unique ID of item before insert to the cart
- * @param  string      $title    Name of item
- * @param  int         $qty      Quantities of item want to add to the cart
- * @param  float       $price    Price of one item
- * @param  array       $options  Array of additional options, such as 'size' or 'color'
+ * @param  object  $model    The UseCartable instance
+ * @param  int     $qty      Quantities of instance want to add to the cart
+ * @param  array   $options  Array of additional options, such as 'size' or 'color'
  *
  * @return Jackiedo\Cart\CartItem
  */
@@ -542,8 +509,8 @@ $cartItem = $product->addToCart('shopping', 5);
 And the result will be:
 ```
 {
-    id         : "3fbdcdad4cbcee36f36ee15d89505d54",
-    raw_id     : 1,
+    hash       : "3fbdcdad4cbcee36f36ee15d89505d54",
+    id         : 1,
     title      : "Polo neck T-shirt for men",
     qty        : 5,
     price      : 17.5,
@@ -628,7 +595,7 @@ At the above, we knew how to do a searching for items in the cart. And because i
 
 ```php
 $results = Cart::instance('shopping')->search(function ($cartItem) {
-        return $cartItem->id === 1 && $cartItem->associated === "Product";
+        return $cartItem->hash === 1 && $cartItem->associated === "Product";
     });
 ```
 
@@ -664,11 +631,11 @@ use Illuminate\Support\Facades\Event;
 ### Exceptions
 The Laravel Cart package will throw exceptions if something goes wrong. This way it's easier to debug your code using the Laravel Cart package or to handle the error based on the type of exceptions. The Laravel Cart packages can throw the following exceptions:
 
-| Exception                         | Reason                                                                     |
-| --------------------------------- | -------------------------------------------------------------------------- |
-| *CartInvalidArgumentException*    | When you missed or entered invalid argument (such as title, qty...).       |
-| *CartInvalidItemIdException*      | When the `$cartItemId` that got passed doesn't exists in the current cart. |
-| *CartUnknownModelException*       | When an associated model of the cart item row doesn't exists.              |
+| Exception                      | Reason                                                                     |
+| ------------------------------ | -------------------------------------------------------------------------- |
+| *CartInvalidArgumentException* | When you missed or entered invalid argument (such as title, qty...).       |
+| *CartInvalidHashException*     | When the hash information you provided doesn't exists in the current cart. |
+| *CartInvalidModelException*    | When an associated model of the cart item row doesn't exists.              |
 
 ## License
 [MIT](LICENSE) © Jackie Do
