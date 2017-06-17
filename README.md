@@ -43,18 +43,14 @@ Currently, Laravel Cart have two branchs compatible with Laravel 4.x and 5.x as 
 | [v1.0](https://github.com/JackieDo/Laravel-Cart/tree/v1.0) | 4.x              |
 | [v2.0](https://github.com/JackieDo/Laravel-Cart/tree/v2.0) | 5.x              |
 
-> This documentation is use for Laravel 5+. If you use Laravel 4.x, you should read at [here](https://github.com/JackieDo/Laravel-Cart/tree/v1.0)
+> **Note:** This documentation is use for Laravel 5+. If you use Laravel 4.x, you should read at [here](https://github.com/JackieDo/Laravel-Cart/tree/v1.0)
 
 ## Installation
 You can install this package through [Composer](https://getcomposer.org).
 
-- First, edit your project's `composer.json` file to require `jackiedo/cart`:
-```php
-...
-"require": {
-    ...
-    "jackiedo/cart": "2.*"
-},
+- First, edit your project's `composer.json` file to require `jackiedo/cart`. Add following line to the section `require`:
+```
+"jackiedo/cart": "2.*"
 ```
 
 - Next step, we run Composer update commend from the Terminal on your project source directory:
@@ -67,7 +63,7 @@ $ composer update
 'Jackiedo\Cart\CartServiceProvider',
 ```
 
-> Note: From Laravel 5.1, you should write as `Jackiedo\Cart\CartServiceProvider::class,`
+> **Note:** From Laravel 5.1, you should write as `Jackiedo\Cart\CartServiceProvider::class,`
 
 - And the final step is add the following line to the section `aliases` in file `config/app.php`:
 ```
