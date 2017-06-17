@@ -1,4 +1,5 @@
 # Laravel Cart
+[![Build Status](https://api.travis-ci.org/JackieDo/Laravel-Cart.svg?branch=v1.0)](https://travis-ci.org/JackieDo/Laravel-Cart)
 [![Total Downloads](https://poser.pugx.org/jackiedo/cart/downloads)](https://packagist.org/packages/jackiedo/cart)
 [![Latest Stable Version](https://poser.pugx.org/jackiedo/cart/v/stable)](https://packagist.org/packages/jackiedo/cart)
 [![Latest Unstable Version](https://poser.pugx.org/jackiedo/cart/v/unstable)](https://packagist.org/packages/jackiedo/cart)
