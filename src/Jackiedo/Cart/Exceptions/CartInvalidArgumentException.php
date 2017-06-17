@@ -3,12 +3,12 @@
 use Exception;
 
 /**
- * CartUnknownModelException
+ * CartInvalidArgumentException
  *
  * @package JackieDo/Cart
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class CartUnknownModelException extends Exception
+class CartInvalidArgumentException extends Exception
 {
     //
 }
