@@ -3,9 +3,9 @@
 use Illuminate\Support\ServiceProvider;
 
 /**
- * CartServiceProvider
+ * The CartServiceProvider class
  *
- * @package JackieDo/Cart
+ * @package Jackiedo\Cart
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class CartServiceProvider extends ServiceProvider
@@ -25,7 +25,7 @@ class CartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('jackiedo/cart');
+        // Bootstrap handles
     }
 
     /**
@@ -35,9 +35,7 @@ class CartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['cart'] = $this->app->share(function ($app) {
-            return new Cart($app['session'], $app['events']);
-        });
+        $this->app->bind('cart', 'Jackiedo\Cart\Cart');
     }
 
     /**
@@ -47,6 +45,8 @@ class CartServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('cart');
+        return [
+            'cart',
+        ];
     }
 }
