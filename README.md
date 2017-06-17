@@ -48,7 +48,7 @@ Currently, Laravel Cart have two branchs compatible with Laravel 4.x and 5.x as 
 ## Installation
 You can install this package through [Composer](https://getcomposer.org).
 
-- First, edit your project's `composer.json` file to require `jackiedo/cart`. Add following line to the section `require`:
+- First, edit your project's `composer.json` file to require `jackiedo/cart`. Add following line to the `require` section:
 ```
 "jackiedo/cart": "2.*"
 ```
@@ -58,14 +58,16 @@ You can install this package through [Composer](https://getcomposer.org).
 $ composer update
 ```
 
-- Once update operation completes, the third step is add the service provider. Open `config/app.php`, and add a new item to the section `providers`:
+> **Note:** Instead of performing the above two steps, you can perform faster with the command line `$ composer require jackiedo/cart:2.*` from Terminal
+
+- Once update operation completes, the third step is add the service provider. Open `config/app.php`, and add a new item to the `providers` section:
 ```
 'Jackiedo\Cart\CartServiceProvider',
 ```
 
 > **Note:** From Laravel 5.1, you should write as `Jackiedo\Cart\CartServiceProvider::class,`
 
-- And the final step is add the following line to the section `aliases` in file `config/app.php`:
+- And the final step is add the following line to the `aliases` section in file `config/app.php`:
 ```
 'Cart' => 'Jackiedo\Cart\Facades\Cart',
 ```
@@ -293,8 +295,8 @@ And the results may have the following structure:
         price      : 17.5,
         subtotal   : 87.5,
         options    : {
-            color      : "red",
-            size       : "M"
+            color : "red",
+            size  : "M"
         },
         associated : null
     }
