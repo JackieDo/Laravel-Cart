@@ -1,7 +1,7 @@
 <?php namespace Jackiedo\Cart;
 
 use Closure;
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
 use Jackiedo\Cart\Exceptions\CartInvalidItemIdException;
@@ -44,8 +44,8 @@ class Cart
     /**
      * Constructor
      *
-     * @param  Illuminate\Session\SessionManager  $session  Session class instance
-     * @param  Illuminate\Events\Dispatcher       $event    Event class instance
+     * @param  Illuminate\Session\SessionManager       $session  Session class instance
+     * @param  Illuminate\Contracts\Events\Dispatcher  $event    Event class instance
      *
      * @return void;
      */
@@ -276,13 +276,7 @@ class Cart
             return $cartContent->count();
         }
 
-        $count = 0;
-
-        foreach ($cartContent as $cartItem) {
-            $count += $cartItem->qty;
-        }
-
-        return $count;
+        return $cartContent->sum('qty');
     }
 
     /**

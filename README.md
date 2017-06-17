@@ -29,6 +29,7 @@ Look at one of the following topics to learn more about Laravel Cart
     - [Collections](#collections)
     - [Eloquent model association](#eloquent-model-association)
     - [Custom search building](#custom-search-building)
+    - [Dependency injection](#dependency-injection)
     - [Event and listener](#event-and-listener)
     - [Exceptions](#exceptions)
 * [License](#license)
@@ -42,14 +43,14 @@ Currently, Laravel Cart have two branchs compatible with Laravel 4.x and 5.x as 
 | [v1.0](https://github.com/JackieDo/Laravel-Cart/tree/v1.0) | 4.x              |
 | [v2.0](https://github.com/JackieDo/Laravel-Cart/tree/v2.0) | 5.x              |
 
-> **Note:** This documentation is use for Laravel 4.x. If you use Laravel 5+, you should read at [here](https://github.com/JackieDo/Laravel-Cart/tree/v2.0)
+> **Note:** This documentation is use for Laravel 5+. If you use Laravel 4.x, you should read at [here](https://github.com/JackieDo/Laravel-Cart/tree/v1.0)
 
 ## Installation
 You can install this package through [Composer](https://getcomposer.org).
 
 - First, edit your project's `composer.json` file to require `jackiedo/cart`. Add following line to the `require` section:
 ```
-"jackiedo/cart": "1.*"
+"jackiedo/cart": "2.*"
 ```
 
 - Next step, we run Composer update commend from the Terminal on your project source directory:
@@ -57,17 +58,21 @@ You can install this package through [Composer](https://getcomposer.org).
 $ composer update
 ```
 
-> **Note:** Instead of performing the above two steps, you can perform faster with the command line `$ composer require jackiedo/cart:1.*` from Terminal
+> **Note:** Instead of performing the above two steps, you can perform faster with the command line `$ composer require jackiedo/cart:2.*` from Terminal
 
-- Once update operation completes, the third step is add the service provider. Open `app/config/app.php`, and add a new item to the `providers` section:
+- Once update operation completes, the third step is add the service provider. Open `config/app.php`, and add a new item to the `providers` section:
 ```
 'Jackiedo\Cart\CartServiceProvider',
 ```
 
-- And the final step is add the following line to the `aliases` section in file `app/config/app.php`:
+> **Note:** From Laravel 5.1, you should write as `Jackiedo\Cart\CartServiceProvider::class,`
+
+- And the final step is add the following line to the `aliases` section in file `config/app.php`:
 ```
 'Cart' => 'Jackiedo\Cart\Facades\Cart',
 ```
+
+> **Note:** From Laravel 5.1, you should write as `'Cart' => Jackiedo\Cart\Facades\Cart::class,`
 
 ## Basic usage
 
@@ -469,7 +474,7 @@ And may be you will see:
                 color : "yellow",
                 size  : "M"
             },
-            associated : "Product"
+            associated : "App\Product"
         },
         {
             id         : "3fbdcdad4cbcee36f36ee15d89505d54",
@@ -482,7 +487,7 @@ And may be you will see:
                 color : "red",
                 size  : "M"
             },
-            associated : "Product"
+            associated : "App\Product"
         }
     ]
 }
@@ -494,14 +499,16 @@ A special feature of Laravel Cart is association an Eloquent model with the cart
 To be ready for this, Laravel Cart has one interface (with namespace is `Jackiedo\Cart\Contracts\UseCartable`) and one trait (with namespace is `Jackiedo\Cart\Traits\CanUseCart`). The rest is you just apply for your Eloquent model.
 
 #### Preparing for association:
-It's easily to do this. Your model just only implements the `UseCartable` interface and use the `CanUseCart` trait:
+It's easily to do this. Your Eloquent model just only need implements the `UseCartable` interface and use the `CanUseCart` trait.
 ```php
-<?php
+<?php namespace App;
+
+use Illuminate\Database\Eloquent\Model;
 
 use Jackiedo\Cart\Contracts\UseCartable; // Interface
 use Jackiedo\Cart\Traits\CanUseCart;     // Trait
 
-class Product extends Eloquent implements UseCartable {
+class Product extends Model implements UseCartable {
     use CanUseCart;
 
     ...
@@ -552,11 +559,11 @@ And the result will be:
         color : "red",
         size  : "M"
     },
-    associated : "Product"
+    associated : "App\Product"
 }
 ```
 
-Please, notice the associated attribute of the cart item. Do you see the value is `Product`? Wow! now you can be able to directly access your model from this cart item instance through `model` property. Example:
+Please, notice the associated attribute of the cart item. Do you see the value is `App\Product`? Wow! now you can be able to directly access your model from this cart item instance through `model` property. Example:
 
 ```php
 return $cartItem->model->name; // Get name of your product
@@ -568,12 +575,13 @@ When your model implemented the UseCartable interface and you uses your model to
 But if your Eloquent model doesn't have these attributes (for example, your model field used to store product's name is not a `title` but `name`), you need to reconfigure it so that automatic information retrieval is done correctly. You can do this easily by placing your Eloquent model in two attributes:
 
 ```php
-<?php;
+<?php namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Jackiedo\Cart\Contracts\UseCartable;
 use Jackiedo\Cart\Traits\CanUseCart;
 
-class Product extends Eloquent implements UseCartable {
+class Product extends Model implements UseCartable {
     use CanUseCart;
 
     protected $cartTitleField = 'name';        // Your correctly field for product's title
@@ -634,6 +642,41 @@ $results = Cart::instance('shopping')->search(function ($cartItem) {
 
 You can refer to Collection on the Laravel homepage.
 
+### Dependency injection
+In version 2.x of this package, it's possibly to use dependency injection to inject an instance of the Cart class into your controller or other class. Example:
+
+```php
+<?php namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Product;
+use Illuminate\Http\Request;
+use Jackiedo\Cart\Cart;
+
+class TestCartController extends Controller {
+
+    protected $cart;
+
+    public function __construct(Cart $cart)
+    {
+        $this->cart = $cart;
+    }
+
+    public function content()
+    {
+        $cart = $this->cart->instance('shopping')->all();
+    }
+
+    public function add()
+    {
+        $product = Product::find(1);
+        $cartItem = $this->cart->instance('shopping')->add($product, 5);
+    }
+}
+
+```
+
 ### Event and listener
 The Laravel Cart package has events build in. Currently, there are eight events available for you to listen for.
 
@@ -648,7 +691,7 @@ The Laravel Cart package has events build in. Currently, there are eight events 
 | *cart.destroying* | When a cart is being destroyed.              | ($cart);            |
 | *cart.destroyed*  | When a cart was destroyed.                   | ($cart);            |
 
-You can easily handle these events. For example, we can listen events through the Event facade:
+You can easily handle these events. For example, we can listen events through the Event facade (I usually use this way with Laravel 4+. But now, in Laravel 5+, we have a better way to listen):
 ```php
 <?php
 
