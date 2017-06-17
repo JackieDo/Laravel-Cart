@@ -52,7 +52,7 @@ trait CanUseCart
      */
     public function allFromCart($cartInstance = null)
     {
-        return $this->searchInCart($cartInstance = null);
+        return $this->searchInCart($cartInstance);
     }
 
     /**
