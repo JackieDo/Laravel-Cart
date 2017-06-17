@@ -16,7 +16,6 @@ Look at one of the following topics to learn more about Laravel Cart
     - [Named your cart instances](#named-your-cart-instances)
     - [Get current cart instance](#get-current-cart-instance)
     - [Add an item to cart](#add-an-item-to-cart)
-    - [Get hash information of the cart item](#get-hash-information-of-the-cart-item)
     - [Update cart item](#update-cart-item)
     - [Get the specified cart item](#get-the-specified-cart-item)
     - [Get all cart items](#get-all-cart-items)
