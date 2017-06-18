@@ -8,9 +8,9 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false">
+         syntaxCheck="true">
     <testsuites>
-        <testsuite name="Package Test Suite">
+        <testsuite name="Source code syntax test suite">
             <directory suffix=".php">./src/</directory>
         </testsuite>
     </testsuites>
