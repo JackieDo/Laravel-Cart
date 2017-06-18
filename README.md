@@ -14,8 +14,8 @@ Look at one of the following topics to learn more about Laravel Cart
 * [Installation](#installation)
 * [Basic usage](#basic-usage)
     - [The Cart facade](#the-cart-facade)
-    - [Named your cart instances](#named-your-cart-instances)
-    - [Get current cart instance](#get-current-cart-instance)
+    - [Name your carts](#name-your-carts)
+    - [Get name of current cart](#get-name-of-current-cart)
     - [Add an item to cart](#add-an-item-to-cart)
     - [Update cart item](#update-cart-item)
     - [Get the specified cart item](#get-the-specified-cart-item)
@@ -75,7 +75,7 @@ $ composer update
 ### The Cart facade
 Laravel Cart has a facade with name is `Jackiedo\Cart\Facades\Cart`. You can do any cart operation through this facade.
 
-### Named your cart instances
+### Name your carts
 Laravel Cart supports multiple instances of the cart. This is useful for using different carts for different management purposes, such as shopping cart, whishlist items, recently views...
 
 Whenever you create a shopping cart, you should name it so that it can be distinguished from other carts. You can set name for an instance of the cart by calling `Cart::instance($instanceName)`. From this point of time, the active instance of the cart will have a specified name, so whenever you perform a cart operation, you must specify a specific cart.
@@ -113,7 +113,7 @@ Cart::instance('shopping')->doSomething();
 - The default cart instance is called `default`, so when you're not using instances, example `Cart::doSomething();` is the same as `Cart::instance('default')->doSomething();`
 - Keep in mind that the cart stays in the last set instance for as long as you don't set a different one during script execution.
 
-### Get current cart instance
+### Get name of current cart
 You can easily get current cart instance name by calling `Cart::getInstance()` method.
 
 ### Add an item to cart
@@ -173,7 +173,7 @@ But with some enhancements to this CartItem class, you can more easily access en
 Example:
 ```php
 // Get title of the cart item
-$thisCartItemId = $shoppingCartItem->hash;          // Polo T-shirt for men
+$thisCartItemId = $shoppingCartItem->title;         // Polo T-shirt for men
 
 // Get sub total price of this cart item
 $thisSubTotal = $shoppingCartItem->subtotal;        // 87.5
@@ -479,7 +479,7 @@ class Product extends Eloquent implements UseCartable {
 
 ```
 
-#### Make a association
+#### Make an association
 If your model implemented the UseCartable interface and you uses your model to add the item to the cart, it will associate automatically.
 
 ```php
