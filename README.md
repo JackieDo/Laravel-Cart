@@ -189,7 +189,6 @@ $thisSubTotal = $shoppingCartItem->options->color;  // red
 ```
 
 > **Note:** In the visible attributes of each cart item returned from the cart, there is an important type of information, called a hash. The hash of the cart item is used to distinguish items with different attributes in the cart. So with the same item, when you add to the cart with different attributes, you will have cart items with different hash.
-```
 
 ### Update cart item
 Update the specified cart item with given quantity or attributes. To do this, you need hash information of cart item.
