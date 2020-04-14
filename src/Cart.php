@@ -3,6 +3,7 @@
 use Closure;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Session\SessionManager;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Jackiedo\Cart\Exceptions\CartInvalidHashException;
 
@@ -344,8 +345,8 @@ class Cart
 
             case (is_array($filter) && !$allScope):
                 $filtered = $this->getContent()->filter(function ($cartItem) use ($filter) {
-                    $attrIntersects = $cartItem->intersect(array_except($filter, 'options'));
-                    $optionIntersects = $cartItem->options->intersect(array_get($filter, 'options', []));
+                    $attrIntersects = $cartItem->intersect(Arr::except($filter, 'options'));
+                    $optionIntersects = $cartItem->options->intersect(Arr::get($filter, 'options', []));
 
                     return (!$attrIntersects->isEmpty() || !$optionIntersects->isEmpty());
                 });

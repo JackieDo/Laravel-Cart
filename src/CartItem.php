@@ -1,5 +1,6 @@
 <?php namespace Jackiedo\Cart;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Jackiedo\Cart\Contracts\UseCartable;
 use Jackiedo\Cart\Exceptions\CartInvalidArgumentException;
@@ -96,7 +97,7 @@ class CartItem extends Collection
     public function update(array $attributes)
     {
         // Don't allow update manually following attributes: hash, id, subtotal, associated
-        $attributes = array_only($attributes, ['title', 'qty', 'price', 'options']);
+        $attributes = Arr::only($attributes, ['title', 'qty', 'price', 'options']);
 
         // Format data
         foreach ($attributes as $key => $value) {
