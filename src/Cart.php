@@ -450,4 +450,23 @@ class Cart
 
         return $cartItem->init($id, $title, $qty, $price, $options);
     }
+
+    /**
+     * Fire an event and call the listeners.
+     *
+     * @param  string|object  $event
+     * @param  mixed  $payload
+     * @param  bool  $halt
+     * @return array|null
+     */
+    protected function fireEvent($event, $payload = [], $halt = false)
+    {
+        $eventDispatcher = $this->event;
+
+        if (method_exists($eventDispatcher, 'dispatch')) {
+            return $eventDispatcher->dispatch($event, $payload, $halt);
+        }
+
+        return $eventDispatcher->fire($event, $payload, $halt);
+    }
 }
