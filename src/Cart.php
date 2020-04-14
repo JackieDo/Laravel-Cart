@@ -107,12 +107,12 @@ class Cart
             $cartItem = $this->updateQty($cartItem->hash, $cartContent->get($cartItem->hash)->qty + $cartItem->qty);
         } else {
             // If item is not exists in the cart, we will put new item to the cart
-            $this->event->fire('cart.adding', [$cartItem, $cartContent]);
+            $this->fireEvent('cart.adding', [$cartItem, $cartContent]);
 
             $cartContent->put($cartItem->hash, $cartItem);
             $this->updateCartSession($cartContent);
 
-            $this->event->fire('cart.added', [$cartItem, $cartContent]);
+            $this->fireEvent('cart.added', [$cartItem, $cartContent]);
         }
 
         return $cartItem;
@@ -151,12 +151,12 @@ class Cart
         if ($cartContent->has($itemHash)) {
             $cartItem = $this->get($itemHash);
 
-            $this->event->fire('cart.removing', [$cartItem, $cartContent]);
+            $this->fireEvent('cart.removing', [$cartItem, $cartContent]);
 
             $cartContent->forget($itemHash);
             $this->updateCartSession($cartContent);
 
-            $this->event->fire('cart.removed', [$cartItem, $cartContent]);
+            $this->fireEvent('cart.removed', [$cartItem, $cartContent]);
         }
 
         return $this;
@@ -223,11 +223,11 @@ class Cart
     {
         $cartContent = $this->getContent();
 
-        $this->event->fire('cart.destroying', $cartContent);
+        $this->fireEvent('cart.destroying', $cartContent);
 
         $this->session->remove($this->instance);
 
-        $this->event->fire('cart.destroyed', $cartContent);
+        $this->fireEvent('cart.destroyed', $cartContent);
 
         return $this;
     }
@@ -403,7 +403,7 @@ class Cart
 
         $cartItem = $cartContent->get($itemHash);
 
-        $this->event->fire('cart.updating', [$cartItem, $cartContent]);
+        $this->fireEvent('cart.updating', [$cartItem, $cartContent]);
 
         $cartContent->pull($itemHash);
         $cartItem->update($attributes);
@@ -416,7 +416,7 @@ class Cart
         $cartContent->put($cartItem->hash, $cartItem);
         $this->updateCartSession($cartContent);
 
-        $this->event->fire('cart.updated', [$cartItem, $cartContent]);
+        $this->fireEvent('cart.updated', [$cartItem, $cartContent]);
 
         return $cartItem;
     }
