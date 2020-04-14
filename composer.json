@@ -11,18 +11,28 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-        "illuminate/session": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-        "illuminate/events": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*"
+        "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+        "illuminate/session": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+        "illuminate/events": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~4.0|~6.0",
         "orchestra/testbench": "~3.0",
-        "mockery/mockery": "~0.9"
+        "mockery/mockery": "~0.9|~1.0"
     },
     "autoload": {
         "psr-4": {
             "Jackiedo\\Cart\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jackiedo\\Cart\\CartServiceProvider"
+            ],
+            "aliases": {
+                "Cart": "Jackiedo\\Cart\\Facades\\Cart"
+            }
         }
     },
     "minimum-stability": "stable"
