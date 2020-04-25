@@ -5,7 +5,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/jackiedo/cart/v/unstable)](https://packagist.org/packages/jackiedo/cart)
 [![License](https://poser.pugx.org/jackiedo/cart/license)](https://packagist.org/packages/jackiedo/cart)
 
-A small package use to create cart (such as shopping, wishlist, recent views...) in Laravel application.
+A small package use to create and manage carts (such as shopping, recently viewed, compared items...) in Laravel application.
 
 # Overview
 Look at one of the following topics to learn more about Laravel Cart
@@ -49,19 +49,16 @@ Currently, Laravel Cart have two branchs compatible with Laravel 4.x and 5.x as 
 ## Installation
 You can install this package through [Composer](https://getcomposer.org).
 
-- First, edit your project's `composer.json` file to require `jackiedo/cart`. Add following line to the `require` section:
-```
-"jackiedo/cart": "2.*"
-```
+- First, at the root of your application directory, run the following command:
 
-- Next step, we run Composer update commend from the Terminal on your project source directory:
-```shell
-$ composer update
+```
+$ composer require jackiedo/cart:2.*
 ```
 
-> **Note:** Instead of performing the above two steps, you can perform faster with the command line `$ composer require jackiedo/cart:2.*` from Terminal
+If you are using Laravel 5.4 or earlier, you must perform these two steps:
 
-- Once update operation completes, the third step is add the service provider. Open `config/app.php`, and add a new item to the `providers` section:
+- The second step is add the service provider. Open `config/app.php`, and add a new item to the `providers` section:
+
 ```
 'Jackiedo\Cart\CartServiceProvider',
 ```
@@ -69,6 +66,7 @@ $ composer update
 > **Note:** From Laravel 5.1, you should write as `Jackiedo\Cart\CartServiceProvider::class,`
 
 - And the final step is add the following line to the `aliases` section in file `config/app.php`:
+
 ```
 'Cart' => 'Jackiedo\Cart\Facades\Cart',
 ```
@@ -78,21 +76,34 @@ $ composer update
 ## Basic usage
 
 ### The Cart facade
-Laravel Cart has a facade with name is `Jackiedo\Cart\Facades\Cart`. You can do any cart operation through this facade.
-
-### Name your carts
-Laravel Cart supports multiple instances of the cart. This is useful for using different carts for different management purposes, such as shopping cart, whishlist items, recently views...
-
-Whenever you create a shopping cart, you should name it so that it can be distinguished from other carts. You can set name for an instance of the cart by calling `Cart::instance($instanceName)`. From this point of time, the active instance of the cart will have a specified name, so whenever you perform a cart operation, you must specify a specific cart.
+Laravel Cart has a facade with name is `Jackiedo\Cart\Facades\Cart`. You can do any cart operation through this facade:
 
 Example:
+
 ```php
-Cart::instance('shopping');
+<?php YourNamespace;
+
+use Jackiedo\Cart\Facades\Cart;
+
+class YourClass
+{
+...
+    $variable = Cart::doSomething();
+...
+}
+```
+
+### Name your carts
+Laravel Cart supports multiple instances of the cart. This is useful for using different carts for different management purposes, such as shopping cart, recently viewed, compared items...
+
+Whenever you create a cart, you should name it so that it can be distinguished from other carts. You can set name for an instance of the cart by calling `Cart::instance($name)`. From this point of time, the active instance of the cart will have a specified name, so whenever you perform a cart operation, you must specify a specific cart.
+
+```php
+$cart = Cart::instance('shopping');
 ```
 
 If you want to switch between instances, you just call `Cart::instance($otherName)` again, and you're working with the other instance.
 
-Example:
 ```php
 // Create new instance of the cart with named is `shopping`
 $cart = Cart::instance('shopping');
@@ -100,14 +111,14 @@ $cart = Cart::instance('shopping');
 // Perform a something with this instance
 $cart->doSomething();
 
-// Switch to `whishlist` cart and do something
+// Switch to `compared_items` cart and do something
 Cart::instance('wishlist')->doSomething();
 
-// Do another thing also with `whishlist` cart
+// Do another thing also with `compared_items` cart
 Cart::doAnother();
 
-// Switch to `recent-view` cart and do something
-Cart::instance('recent-view')->doSomething();
+// Switch to `recently_viewed` cart and do something
+Cart::instance('recently_viewed')->doSomething();
 
 // Go back to work with `shopping` cart
 Cart::instance('shopping')->doSomething();
@@ -115,14 +126,18 @@ Cart::instance('shopping')->doSomething();
 ```
 
 **Note:**
-- The default cart instance is called `default`, so when you're not using instances, example `Cart::doSomething();` is the same as `Cart::instance('default')->doSomething();`
-- Keep in mind that the cart stays in the last set instance for as long as you don't set a different one during script execution.
+- There is always a default cart name called `default`, so when you're not using the `instance` method, example `Cart::doSomething();`, is the same as `Cart::instance('default')->doSomething();`
+- Keep in mind that the current cart stays in the last set instance for as long as you don't set a different one during script execution.
 
 ### Get name of current cart
-You can easily get current cart instance name by calling `Cart::getInstance()` method.
+You can easily get current cart instance name by calling `getInstance()` method.
+
+```php
+$cartName = Cart::getInstance();
+```
 
 ### Add an item to cart
-Adding an item to the cart is really simple, you just use the `Cart::add()` method, which accepts a variety of parameters.
+Adding an item to the cart is really simple, you just use the `add()` method, which accepts a variety of parameters.
 
 ```php
 /**
@@ -140,15 +155,17 @@ Cart::add($id, $title[, $qty = 1[, $price = 0[, $options = array()]]]);
 ```
 
 Example:
+
 ```php
-// Add an article to the `recent-view` cart
-$recentView = Cart::instance('recent-view')->add('AID0782000', 'An example article');
+// Add an article to the `recently_viewed` cart
+$recentlyViewed = Cart::instance('recently_viewed')->add('AID0782000', 'An example article');
 
 // Add an product to the `shopping` cart
 $shoppingCartItem = Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 5, 17.5, ['color' => 'red', 'size' => 'M']);
 ```
 
 The result of this method is an instance of `Jackiedo\Cart\CartItem` class (extended from `Illuminate\Support\Collection`) and has structured as follows:
+
 ```
 {
     hash       : "6afbeca78618c01954c98fbd473fd176",
@@ -168,30 +185,32 @@ The result of this method is an instance of `Jackiedo\Cart\CartItem` class (exte
 So, you can access it's property by method `get()` of Laravel Collection instance.
 
 Example:
+
 ```php
 // Get title of the cart item
-$thisCartItemId = $shoppingCartItem->get('title');  // Polo T-shirt for men
+$cartItemTitle = $shoppingCartItem->get('title');  // Polo T-shirt for men
 ```
 
 But with some enhancements to this CartItem class, you can more easily access entity attributes in a more succinct way:
 
 Example:
+
 ```php
 // Get title of the cart item
-$thisCartItemId = $shoppingCartItem->title;         // Polo T-shirt for men
+$cartItemTitle = $shoppingCartItem->title;           // Polo T-shirt for men
 
 // Get sub total price of this cart item
-$thisSubTotal = $shoppingCartItem->subtotal;        // 87.5
+$cartItemTitle = $shoppingCartItem->subtotal;        // 87.5
 
 // Get color option of this cart item
-$thisSubTotal = $shoppingCartItem->options->color;  // red
+$cartItemTitle = $shoppingCartItem->options->color;  // red
 ...
 ```
 
 > **Note:** In the visible attributes of each cart item returned from the cart, there is an important type of information, called a hash. The hash of the cart item is used to distinguish items with different attributes in the cart. So with the same item, when you add to the cart with different attributes, you will have cart items with different hash.
 
 ### Update cart item
-Update the specified cart item with given quantity or attributes. To do this, you need hash information of cart item.
+Update the specified cart item with given quantity or attributes. To do this, you need hash information of cart item and then use the `update()` method.
 
 ```php
 /**
@@ -207,6 +226,7 @@ Cart::update($itemHash, $attributes);
 ```
 
 Example:
+
 ```php
 $itemHash = "6afbeca78618c01954c98fbd473fd176";
 
@@ -215,9 +235,12 @@ $cartItem = Cart::instance('shopping')->update($itemHash, ['title' => 'New item 
 
 // or only update quantity
 $cartItem = Cart::instance('shopping')->update($itemHash, 10);
+
+// the hash of cart item will be changed
+$newItemHash = $cartItem->hash;
 ```
 
-> **Note:** You can only update attributes about title, quantity, price and options. Whenever you update cart item's info, the hash of cart item can be changed.
+> **Note:** You can only update the `title`, `qty`, `price` and `options` attributes. Whenever you update cart item's info, the hash of cart item can be changed.
 
 ### Get the specified cart item
 Get the specified cart item with given hash of cart item
@@ -236,6 +259,7 @@ Cart::get($itemHash);
 ```
 
 Example:
+
 ```php
 $item = Cart::instance('shopping')->get('c2bb42b0b2a16eb1fb477b68822448de');
 ```
@@ -269,6 +293,7 @@ Cart::all();
 ```
 
 Example:
+
 ```php
 $items = Cart::instance('shopping')->all();
 ```
@@ -318,6 +343,7 @@ Cart::total();
 ```
 
 Example:
+
 ```php
 $total = Cart::instance('shopping')->total();
 ```
@@ -335,6 +361,7 @@ Cart::countItems();
 ```
 
 Example:
+
 ```php
 Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 5, 100.00, ['color' => 'red', 'size' => 'M']);
 Cart::add(37, 'Polo T-shirt for men', 1, 100.00, ['color' => 'red', 'size' => 'M']);
@@ -357,6 +384,7 @@ Cart::countQuantities();
 ```
 
 Example:
+
 ```php
 Cart::instance('shopping')->add(37, 'Polo T-shirt for men', 5, 100.00, ['color' => 'red', 'size' => 'M']);
 Cart::add(37, 'Polo T-shirt for men', 1, 100.00, ['color' => 'red', 'size' => 'M']);
@@ -386,6 +414,7 @@ Cart::search($filter[, $allScope = true]);
 > **Note:** The `$allScope` parameter use to indicates that the results returned must satisfy all the conditions of the filter at the same time or that only parts of the filter.
 
 Example:
+
 ```php
 // Get all cart items that have color is red
 $items = Cart::instance('shopping')->search([
@@ -426,6 +455,7 @@ Cart::remove($itemHash);
 ```
 
 Example:
+
 ```php
 Cart::instance('shopping')->remove('6afbeca78618c01954c98fbd473fd176');
 ```
@@ -443,6 +473,7 @@ Cart::destroy()
 ```
 
 Example:
+
 ```php
 Cart::instance('shopping')->destroy();
 ```
@@ -453,16 +484,19 @@ Cart::instance('shopping')->destroy();
 You need to know that all result of cart content (response by methods such as `Cart::all()`, `Cart::search()`), every cart item (response by methods such as `Cart::add()`, `Cart::get()`, `Cart::update()`) and cart item's options (is property of one cart item) are return a Laravel Collection, so all methods you can call on a Laravel Collection are also available on them.
 
 Example:
+
 ```php
 $count = Cart::instance('shopping')->all()->count();
 ```
 
 And another example (group by attribute):
+
 ```php
 $groupByTitle = Cart::instance('shopping')->all()->groupBy('title');
 ```
 
 And may be you will see:
+
 ```
 {
     Polo neck T-shirt for men: [
@@ -503,6 +537,7 @@ To be ready for this, Laravel Cart has one interface (with namespace is `Jackied
 
 #### Preparing for association:
 It's easily to do this. Your Eloquent model just only need implements the `UseCartable` interface and use the `CanUseCart` trait.
+
 ```php
 <?php namespace App;
 
@@ -536,6 +571,7 @@ Cart::add($model[, int $qty = 1[, array $options = array()]]);
 ```
 
 Example:
+
 ```php
 // Get your model
 $product = Product::find(1);
@@ -548,6 +584,7 @@ $cartItem = $product->addToCart('shopping', 5);
 ```
 
 And the result will be:
+
 ```
 {
     hash       : "3fbdcdad4cbcee36f36ee15d89505d54",
@@ -627,6 +664,7 @@ public function searchInCart($cartInstance = null, array $options = []);
 ```
 
 Example:
+
 ```php
 $product = Product::find(1);
 return ($product->hasInCart('shopping')) ? 'Yes' : 'No';
@@ -692,27 +730,34 @@ The Laravel Cart package has events build in. Currently, there are eight events 
 | *cart.destroying* | When a cart is being destroyed.              | ($cart);            |
 | *cart.destroyed*  | When a cart was destroyed.                   | ($cart);            |
 
-You can easily handle these events. For example, we can listen events through the Event facade (I usually use this way with Laravel 4+. But now, in Laravel 5+, we have a better way to listen, please refer at [Laravel homepage](http://laravel.com)):
+For example, we can listen events through the Event facade.
+
 ```php
 <?php
 
 use Illuminate\Support\Facades\Event;
 ...
-    Event::on('cart.adding', function($cartItem, $cart){
-        // code
+    Event::listen('cart.adding', function($cartItem, $cart){
+        if ($cart->getInstance() == 'shopping') {
+            ...
+        }
     });
 ...
-
 ```
+
+**Note:**
+- The parameters of events are actual entities. Be careful when working with them. It is possible to change the values ​​in the cart.
+- See more about Laravel Events [here](https://laravel.com/docs/5.8/events).
 
 ### Exceptions
 The Laravel Cart package will throw exceptions if something goes wrong. This way it's easier to debug your code using the Laravel Cart package or to handle the error based on the type of exceptions. The Laravel Cart packages can throw the following exceptions:
 
-| Exception                      | Reason                                                                     |
-| ------------------------------ | -------------------------------------------------------------------------- |
-| *CartInvalidArgumentException* | When you missed or entered invalid argument (such as title, qty...).       |
-| *CartInvalidHashException*     | When the hash information you provided doesn't exists in the current cart. |
-| *CartInvalidModelException*    | When an associated model of the cart item row doesn't exists.              |
+| Exception                        | Reason                                                                     |
+| -------------------------------- | -------------------------------------------------------------------------- |
+| *CartInvalidArgumentException*   | When you missed or entered invalid argument (such as title, qty...).       |
+| *CartInvalidHashException*       | When the hash information you provided doesn't exists in the current cart. |
+| *CartInvalidAssociatedException* | When the associated class doesn't exists.                                  |
+| *CartInvalidModelException*      | When the associated model of the cart item row doesn't exists.             |
 
 ## License
 [MIT](LICENSE) © Jackie Do
