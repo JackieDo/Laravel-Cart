@@ -4,6 +4,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Jackiedo\Cart\Contracts\UseCartable;
 use Jackiedo\Cart\Exceptions\CartInvalidArgumentException;
+use Jackiedo\Cart\Exceptions\CartInvalidAssociatedException;
 use Jackiedo\Cart\Exceptions\CartInvalidModelException;
 
 /**
@@ -68,6 +69,7 @@ class CartItem extends Collection
      *
      * @param  string  $property  Property name.
      *
+     * @throws Jackiedo\Cart\Exceptions\CartInvalidAssociatedException
      * @throws Jackiedo\Cart\Exceptions\CartInvalidModelException
      *
      * @return mixed
@@ -75,10 +77,17 @@ class CartItem extends Collection
     public function __get($property)
     {
         if ($property === 'model') {
-            $model = with(new $this->associated)->findById($this->id);
+            $associated = $this->associated;
+            $id         = $this->id;
+
+            if (! class_exists($associated)) {
+                throw new CartInvalidAssociatedException("The [" . $associated . "] class does not exist.");
+            }
+
+            $model = with(new $associated)->findById($id);
 
             if (!$model) {
-                throw new CartInvalidModelException("The supplied associated model from ".$this->get('associated')." does not exist.");
+                throw new CartInvalidModelException("The supplied associated model from [" . $associated . "] does not exist.");
             }
 
             return $model;
@@ -177,7 +186,7 @@ class CartItem extends Collection
      */
     protected function updateHash()
     {
-        $this->put('hash', $this->genHash($this->id, $this->associate, $this->options->all()));
+        $this->put('hash', $this->genHash($this->id, $this->associated, $this->options->all()));
     }
 
     /**
