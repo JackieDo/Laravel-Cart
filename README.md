@@ -27,3 +27,9 @@ You can find documentation of all versions with the links below:
 * [Version 1.0](https://github.com/JackieDo/Laravel-Cart/tree/v1.0)
 * [Version 2.0](https://github.com/JackieDo/Laravel-Cart/tree/v2.0)
 * [Version 3.0](https://github.com/JackieDo/Laravel-Cart/wiki)
+
+# Testing
+The package has been tested through more than 120 test cases with Travis CI on PHP versions 5.6 (Laravel 5.4) and 7.2 (Laravel 7.x). Detailed information about test cases please see [here](https://travis-ci.org/github/JackieDo/Laravel-Cart).
+
+# License
+[MIT](LICENSE) © Jackie Do
