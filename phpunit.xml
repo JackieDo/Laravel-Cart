@@ -7,11 +7,13 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="true">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Package Test Suite">
-            <directory suffix=".php">./tests/</directory>
+            <file>./tests/CartTest.php</file>
+            <file>./tests/ItemTest.php</file>
+            <file>./tests/ActionTest.php</file>
+            <file>./tests/TaxTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

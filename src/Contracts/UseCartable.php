@@ -32,49 +32,49 @@ interface UseCartable
     /**
      * Add the UseCartable item to the cart
      *
-     * @param  string|null  $cartInstance  The cart instance name
-     * @param  int          $qty           Quantities of item want to add to the cart
-     * @param  array        $options       Array of additional options, such as 'size' or 'color'
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
+     * @param  array                     $attributes The additional attributes
+     * @param  boolean                   $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\CartItem
+     * @return Jackiedo\Cart\Item|null
      */
-    public function addToCart($cartInstance = null, $qty = 1, $options = []);
+    public function addToCart($cartOrName, array $attributes = [], $withEvent = true);
 
     /**
-     * Determine the UseCartable item has in the cart
+     * Determines the UseCartable item has in the cart
      *
-     * @param  string|null  $cartInstance  The cart instance name
-     * @param  array        $options       Array of additional options, such as 'size' or 'color'
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
+     * @param  array                     $filter     Array of additional filter
      *
      * @return boolean
      */
-    public function hasInCart($cartInstance = null, array $options = []);
+    public function hasInCart($cartOrName, array $filter = []);
 
     /**
      * Get all the UseCartable item in the cart
      *
-     * @param  string|null  $cartInstance  The cart instance name
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
      *
-     * @return Illuminate\Support\Collection
+     * @return array
      */
-    public function allFromCart($cartInstance = null);
+    public function allFromCart($cartOrName);
 
     /**
-     * Get the UseCartable items in the cart with given additional options
+     * Get the UseCartable items in the cart with given additional filter
      *
-     * @param  string|null  $cartInstance  The cart instance name
-     * @param  array        $options       Array of additional options, such as 'size' or 'color'
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
+     * @param  array                     $filter     Array of additional filter
      *
-     * @return Illuminate\Support\Collection
+     * @return array
      */
-    public function searchInCart($cartInstance = null, array $options = []);
+    public function searchInCart($cartOrName, array $filter = []);
 
     /**
      * Find a model by its identifier
      *
-     * @param  int  $id  The identifier of model
+     * @param  int $id The identifier of model
      *
-     * @return \Illuminate\Support\Collection|static|null
+     * @return Illuminate\Support\Collection|static|null
      */
     public function findById($id);
 }
