@@ -1,7 +1,7 @@
 {
     "name": "jackiedo/cart",
-    "description": "A small package use to create cart (shopping, whishlist, recent views...) in Laravel",
-    "keywords": ["shoppingcart", "shopping", "cart", "laravel"],
+    "description": "A package used to create and manage carts (such as shopping, recently viewed, compared items...) in Laravel application.",
+    "keywords": ["cart", "shoppingcart", "shopping", "laravel"],
     "license": "MIT",
     "authors": [
         {
