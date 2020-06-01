@@ -59,7 +59,7 @@ class Action implements CartNode
         // Stores the creator
         $this->storeCreator(0, function($creator, $caller) {
             $cart                      = $this->getCart();
-            $this->enabledBuiltinTax   = $cart->enabledBuiltinTax();
+            $this->enabledBuiltinTax   = $cart->isEnabledBuiltinTax();
             $this->attributes['rules'] = $cart->getConfig('default_action_rules', []);
         });
 

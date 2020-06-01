@@ -181,11 +181,11 @@ class CartTest extends TestCase
 
         $config->set('cart.use_builtin_tax', !$configStatus);
         $cart1 = $cart->newInstance('cart1');
-        $this->assertEquals(!$configStatus, $cart1->enabledBuiltinTax());
+        $this->assertEquals(!$configStatus, $cart1->isEnabledBuiltinTax());
 
         $config->set('cart.use_builtin_tax', $configStatus);
         $cart2 = $cart->newInstance('cart2');
-        $this->assertEquals($configStatus, $cart2->enabledBuiltinTax());
+        $this->assertEquals($configStatus, $cart2->isEnabledBuiltinTax());
     }
 
     /**
@@ -238,10 +238,10 @@ class CartTest extends TestCase
         $cart = $this->initCart();
 
         $cart->useBuiltinTax();
-        $this->assertTrue($cart->enabledBuiltinTax());
+        $this->assertTrue($cart->isEnabledBuiltinTax());
 
         $cart->useBuiltinTax(false);
-        $this->assertFalse($cart->enabledBuiltinTax());
+        $this->assertFalse($cart->isEnabledBuiltinTax());
     }
 
     /**
@@ -255,7 +255,7 @@ class CartTest extends TestCase
         $cart = $this->initCart();
 
         $cart->useBuiltinTax();
-        $this->assertTrue($cart->enabledBuiltinTax());
+        $this->assertTrue($cart->isEnabledBuiltinTax());
 
         $cart->addItem([
             'id'    => 1,
@@ -263,7 +263,7 @@ class CartTest extends TestCase
         ]);
 
         $cart->useBuiltinTax(false);
-        $this->assertTrue($cart->enabledBuiltinTax());
+        $this->assertTrue($cart->isEnabledBuiltinTax());
     }
 
     /**
@@ -278,11 +278,11 @@ class CartTest extends TestCase
 
         $cart->useForCommercial(true);
         $cart->useBuiltinTax(true);
-        $this->assertTrue($cart->enabledBuiltinTax());
+        $this->assertTrue($cart->isEnabledBuiltinTax());
 
         $cart->useForCommercial(false);
         $cart->useBuiltinTax(true);
-        $this->assertFalse($cart->enabledBuiltinTax());
+        $this->assertFalse($cart->isEnabledBuiltinTax());
     }
 
     /**

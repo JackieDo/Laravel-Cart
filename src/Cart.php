@@ -314,7 +314,7 @@ class Cart
      *
      * @return boolean
      */
-    public function enabledBuiltinTax()
+    public function isEnabledBuiltinTax()
     {
         if (!$this->getConfig('use_for_commercial', false)) {
             return false;
@@ -622,7 +622,7 @@ class Cart
      */
     public function applyTax(array $attributes = [], $withEvent = true)
     {
-        if (!$this->enabledBuiltinTax()) {
+        if (!$this->isEnabledBuiltinTax()) {
             return null;
         }
 
@@ -755,7 +755,7 @@ class Cart
      */
     public function getTaxableAmount()
     {
-        if (!$this->enabledBuiltinTax()) {
+        if (!$this->isEnabledBuiltinTax()) {
             return 0;
         }
 
@@ -776,7 +776,7 @@ class Cart
      */
     public function getTaxRate()
     {
-        if (!$this->enabledBuiltinTax()) {
+        if (!$this->isEnabledBuiltinTax()) {
             return 0;
         }
 
@@ -790,7 +790,7 @@ class Cart
      */
     public function getTaxAmount()
     {
-        if (!$this->enabledBuiltinTax()) {
+        if (!$this->isEnabledBuiltinTax()) {
             return 0;
         }
 
@@ -820,7 +820,7 @@ class Cart
     {
         $details           = new Details;
         $isCommercialCart  = $this->isCommercialCart();
-        $enabledBuiltinTax = $this->enabledBuiltinTax();
+        $enabledBuiltinTax = $this->isEnabledBuiltinTax();
         $itemsContainer    = $this->getItemsContainer();
 
         $details->put('type', 'cart');

@@ -73,7 +73,7 @@ class Item implements CartNode
         $this->storeCreator(0, function($creator, $caller) {
             $cart                    = $creator->getCreator();
             $this->inCommercialCart  = $cart->isCommercialCart();
-            $this->enabledBuiltinTax = $cart->enabledBuiltinTax();
+            $this->enabledBuiltinTax = $cart->isEnabledBuiltinTax();
         });
 
         // Validate and initialize properties
