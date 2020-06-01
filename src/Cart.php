@@ -326,20 +326,27 @@ class Cart
     /**
      * Remove cart from session
      *
-     * @return $this
+     * @param  boolean $withEvent Enable firing the event
+     *
+     * @return boolean
      */
-    public function destroy()
+    public function destroy($withEvent = true)
     {
-        $eventResponse = $this->fireEvent('cart.destroying', clone $this);
+        if ($withEvent) {
+            $eventResponse = $this->fireEvent('cart.destroying', clone $this);
 
-        if ($eventResponse === false) {
-            return $this;
+            if ($eventResponse === false) {
+                return false;
+            }
         }
 
         session()->forget($this->getSessionPath());
-        $this->fireEvent('cart.destroyed', clone $this);
 
-        return $this;
+        if ($withEvent) {
+            $this->fireEvent('cart.destroyed');
+        }
+
+        return true;
     }
 
     /**

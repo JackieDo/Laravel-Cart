@@ -154,10 +154,11 @@ class ItemsContainer extends Container
             }
         }
 
+        $cart = $item->getCart();
         $this->forget($itemHash);
 
         if ($withEvent) {
-            $this->fireEvent('cart.item.removed', [$item]);
+            $this->fireEvent('cart.item.removed', [$itemHash, clone $cart]);
         }
 
         return $this;

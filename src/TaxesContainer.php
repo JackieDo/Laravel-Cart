@@ -184,10 +184,11 @@ class TaxesContainer extends Container
             }
         }
 
+        $cart = $tax->getCart();
         $this->forget($taxHash);
 
         if ($withEvent) {
-            $this->fireEvent('cart.tax.removed', [$tax]);
+            $this->fireEvent('cart.tax.removed', [$taxHash, clone $cart]);
         }
 
         return $this;

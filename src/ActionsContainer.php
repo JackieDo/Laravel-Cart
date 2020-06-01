@@ -192,10 +192,11 @@ class ActionsContainer extends Container
             }
         }
 
+        $cart = $action->getCart();
         $this->forget($actionHash);
 
         if ($withEvent) {
-            $this->fireEvent('cart.action.removed', [$action]);
+            $this->fireEvent('cart.action.removed', [$actionHash, clone $cart]);
         }
 
         return $this;
