@@ -1,6 +1,7 @@
 <?php namespace Jackiedo\Cart\Traits;
 
-use Jackiedo\Cart\Facades\Cart;
+use Jackiedo\Cart\Cart;
+use Jackiedo\Cart\Facades\Cart as CartFacade;
 
 /**
  * The CanUseCart traits
@@ -13,64 +14,63 @@ trait CanUseCart
     /**
      * Add the UseCartable item to the cart
      *
-     * @param  string|null  $cartInstance  The cart instance name
-     * @param  int          $qty           Quantities of item want to add to the cart
-     * @param  array        $options       Array of additional options, such as 'size' or 'color'
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
+     * @param  array                     $attributes The additional attributes
+     * @param  boolean                   $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\CartItem
+     * @return Jackiedo\Cart\Item|null
      */
-    public function addToCart($cartInstance = null, $qty = 1, $options = [])
+    public function addToCart($cartOrName, array $attributes = [], $withEvent = true)
     {
-        $id    = $this->getUseCartableId();
-        $title = $this->getUseCartableTitle();
-        $price = $this->getUseCartablePrice();
+        $cart = ($cartOrName instanceof Cart) ? $cartOrName : CartFacade::newInstance($cartOrName);
 
-        return Cart::instance($cartInstance)->add($this, $qty, $options);
+        return $cart->addItem(array_merge($attributes, ['model' => $this]), $withEvent);
     }
 
     /**
-     * Determine the UseCartable item has in the cart
+     * Determines the UseCartable item has in the cart
      *
-     * @param  string|null  $cartInstance  The cart instance name
-     * @param  array        $options       Array of additional options, such as 'size' or 'color'
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
+     * @param  array                     $filter     Array of additional filter
      *
      * @return boolean
      */
-    public function hasInCart($cartInstance = null, array $options = [])
+    public function hasInCart($cartOrName, array $filter = [])
     {
-        $foundInCart = $this->searchInCart($cartInstance);
+        $foundInCart = $this->searchInCart($cartOrName, $filter);
 
-        return ($foundInCart->isEmpty()) ? false : true;
+        return !empty($foundInCart);
     }
 
     /**
      * Get all the UseCartable item in the cart
      *
-     * @param  string|null  $cartInstance  The cart instance name
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
      *
-     * @return Illuminate\Support\Collection
+     * @return array
      */
-    public function allFromCart($cartInstance = null)
+    public function allFromCart($cartOrName)
     {
-        return $this->searchInCart($cartInstance);
+        return $this->searchInCart($cartOrName);
     }
 
     /**
      * Get the UseCartable items in the cart with given additional options
      *
-     * @param  string|null  $cartInstance  The cart instance name
-     * @param  array        $options       Array of additional options, such as 'size' or 'color'
+     * @param  Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
+     * @param  array                     $filter     Array of additional filter
      *
-     * @return Illuminate\Support\Collection
+     * @return array
      */
-    public function searchInCart($cartInstance = null, array $options = [])
+    public function searchInCart($cartOrName, array $filter = [])
     {
-        return Cart::instance($cartInstance)->search([
-            'id'         => $this->getUseCartableId(),
-            'title'      => $this->getUseCartableTitle(),
-            'options'    => $options,
-            'associated' => __CLASS__
+        $cart   = ($cartOrName instanceof Cart) ? $cartOrName : CartFacade::newInstance($cartOrName);
+        $filter = array_merge($filter, [
+            'id'               => $this->getUseCartableId(),
+            'associated_class' => __CLASS__
         ]);
+
+        return $cart->getItems($filter, true);
     }
 
     /**
@@ -90,7 +90,15 @@ trait CanUseCart
      */
     public function getUseCartableTitle()
     {
-        return property_exists($this, 'title') ? $this->title : ((property_exists($this, 'cartTitleField')) ? $this->getAttribute($this->cartTitleField) : 'Unknown');
+        if (property_exists($this, 'title')) {
+            return $this->title;
+        }
+
+        if (property_exists($this, 'cartTitleField')) {
+            return $this->getAttribute($this->cartTitleField);
+        }
+
+        return 'Unknown';
     }
 
     /**
@@ -100,15 +108,23 @@ trait CanUseCart
      */
     public function getUseCartablePrice()
     {
-        return property_exists($this, 'price') ? $this->price : ((property_exists($this, 'cartPriceField')) ? $this->getAttribute($this->cartPriceField) : 0);
+        if (property_exists($this, 'price')) {
+            return $this->price;
+        }
+
+        if (property_exists($this, 'cartPriceField')) {
+            return $this->getAttribute($this->cartPriceField);
+        }
+
+        return 0;
     }
 
     /**
      * Find a model by its identifier
      *
-     * @param  int  $id  The identifier of model
+     * @param  int $id The identifier of model
      *
-     * @return \Illuminate\Support\Collection|static|null
+     * @return Illuminate\Support\Collection|static|null
      */
     public function findById($id)
     {

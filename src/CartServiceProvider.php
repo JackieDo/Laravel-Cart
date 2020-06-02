@@ -25,7 +25,14 @@ class CartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Bootstrap handles
+        $packageConfigPath = __DIR__.'/Config/config.php';
+        $appConfigPath     = config_path('cart.php');
+
+        $this->mergeConfigFrom($packageConfigPath, 'cart');
+
+        $this->publishes([
+            $packageConfigPath => $appConfigPath,
+        ], 'config');
     }
 
     /**
