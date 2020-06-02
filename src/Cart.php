@@ -784,7 +784,7 @@ class Cart
     }
 
     /**
-     * Get the total tax rate applied to the current cart.
+     * Get the total tax amount applied to the current cart.
      *
      * @return float
      */
