@@ -310,7 +310,6 @@ class Cart
 
     /**
      * Determines if current cart is enabled built-in tax system
-     * This is only possible if the cart is empty
      *
      * @return boolean
      */
