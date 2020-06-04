@@ -310,7 +310,6 @@ class Cart
 
     /**
      * Determines if current cart is enabled built-in tax system
-     * This is only possible if the cart is empty
      *
      * @return boolean
      */
@@ -784,7 +783,7 @@ class Cart
     }
 
     /**
-     * Get the total tax rate applied to the current cart.
+     * Get the total tax amount applied to the current cart.
      *
      * @return float
      */

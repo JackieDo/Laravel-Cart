@@ -34,7 +34,6 @@ class Item implements CartNode
         'taxable'          => true,
         'options'          => [],
         'extra_info'       => [],
-        'applied_actions'  => null
     ];
 
     /**
@@ -45,6 +44,13 @@ class Item implements CartNode
     protected $acceptedCreators = [
         ItemsContainer::class
     ];
+
+    /**
+     * Stores applied actions
+     *
+     * @var Illuminate\Support\Collection
+     */
+    protected $appliedActions;
 
     /**
      * Indicates whether or not this item belong to a commercial cart
@@ -166,7 +172,7 @@ class Item implements CartNode
     {
         return array_merge([
             'hash' => $this->getHash()
-        ], Arr::except($this->attributes, ['applied_actions']));
+        ], $this->attributes);
     }
 
     /**
@@ -321,7 +327,7 @@ class Item implements CartNode
         $this->setAttributes($attributes);
 
         // Creates the actions container
-        $this->attributes['applied_actions'] = new ActionsContainer;
+        $this->appliedActions = new ActionsContainer;
 
         return $this;
     }
@@ -438,7 +444,7 @@ class Item implements CartNode
     protected function getActionsContainer()
     {
         if ($this->inCommercialCart) {
-            return $this->attributes['applied_actions'];
+            return $this->appliedActions;
         }
 
         return new ActionsContainer;

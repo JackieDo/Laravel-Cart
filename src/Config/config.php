@@ -33,7 +33,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This setting allows you to set the default state of using the built-in
-    | tax system or not every time you create a new cart
+    | taxing system or not every time you initialize the cart.
     |
     */
     'use_builtin_tax' => true,
@@ -65,7 +65,7 @@ return [
         'taxable'              => true,
         'allow_others_disable' => true,
         'disable_others'       => null,
-        'include_calculations' => 'previous_actions',
+        'include_calculations' => 'same_group_previous_actions',
         'max_amount'           => null,
         'min_amount'           => null
     ],
@@ -75,7 +75,7 @@ return [
     | Action groups order
     |--------------------------------------------------------------------------
     |
-    | This setting allows to prioritize groups of actions in ascending order.
+    | This setting allows to prioritize groups of actions in descending order.
     | If not set, actions will be sorted according to the time of applied. In
     | contrast, the actions will be sorted by groups order first, then sorted
     | by the time of applied.
