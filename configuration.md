@@ -48,4 +48,4 @@ The available keys and values ​​of this setting are:
 These values ​​will be explained in more detail in advanced usage.
 
 #### Action groups order
-The `action_groups_order` setting allows to prioritize groups of actions in ascending order. If not set, actions will be sorted according to the time of applied. In contrast, the actions will be sorted by groups order first, then sorted by the time of applied.
+The `action_groups_order` setting allows to prioritize groups of actions in descending order. If not set, actions will be sorted according to the time of applied. In contrast, the actions will be sorted by groups order first, then sorted by the time of applied.
