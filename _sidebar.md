@@ -1,5 +1,5 @@
 - Getting started
-    - [Important node](important-node)
+    - [Important note](important-note)
     - [Installation](installation)
     - [Configuration](configuration)
 
