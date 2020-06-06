@@ -31,7 +31,7 @@ Laravel Cart has three branches that are compatible with the following versions 
 Currently, versions `v1.0` and `v2.0` are no longer supported. Version `v3.0` was created with more advanced features, and has a completely different way of working from the old version.
 
 ## Documentation
-This documentation site is written specifically for v3.0. If you need documentation for older versions, please see the respective branches.
+This [documentation site](https://jackiedo.github.io/Laravel-Cart) is written specifically for v3.0. If you need documentation for older versions, please see the respective branches.
 
 ## Testing
 The package has been tested through more than 120 test cases with Travis CI on PHP versions 5.6 (Laravel 5.4) and 7.2 (Laravel 7.x). Detailed information about test cases please see [here](https://travis-ci.org/github/JackieDo/Laravel-Cart).
