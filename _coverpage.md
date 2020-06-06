@@ -3,7 +3,7 @@
 > A cart management tool for Laravel
 
 - Versatile - Flexible - Tight
-- Multiple Instances - Taxes - Actions
+- Groups - Carts - Items - Taxes - Actions
 
 [GitHub](https://github.com/JackieDo/Laravel-Cart)
 [Get Started](#laravel-cart)
