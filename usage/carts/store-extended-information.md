@@ -18,7 +18,9 @@ In addition to information related to items, actions, taxes, sometimes we need t
 public function setExtraInfo($information, $value = null);
 ```
 
-This method works quite similar to Laravel's `Arr::set()` method. The thing is, it returns the current cart. So you can call it continuously. Example:
+This method works quite similar to Laravel's `Arr::set()` method. The thing is, it returns the current cart. So you can call it continuously.
+
+**Example:**
 
 ```php
 $cart = Cart::name('shopping');
