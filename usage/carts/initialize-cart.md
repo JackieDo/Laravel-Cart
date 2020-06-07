@@ -27,7 +27,7 @@ class YourClass
 ```
 
 ## Using dependency injection
-Sine version 2.x of this package, it's possibly to use dependency injection to inject an instance of the Cart class into your controller or other class. In version 3.x, this feature is the same.
+Sine version `v2.0` of this package, it's possibly to use dependency injection to inject an instance of the Cart class into your controller or other class. In version `v3.0`, this feature is the same.
 
 **Example:**
 
@@ -40,8 +40,8 @@ use App\Product;
 use Illuminate\Http\Request;
 use Jackiedo\Cart\Cart;
 
-class TestCartController extends Controller {
-
+class TestCartController extends Controller
+{
     protected $cart;
 
     public function __construct(Cart $cart)
