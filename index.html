@@ -11,6 +11,10 @@
     section.cover .cover-main {
       z-index: 0;
     }
+
+    .docsify-pagination-container {
+        margin-bottom: 2em !important;
+    }
   </style>
 </head>
 <body>
@@ -22,10 +26,21 @@
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
-      coverpage: true
+      coverpage: true,
+      pagination: {
+        crossChapter: true,
+        crossChapterText: true
+      },
+      footer: {
+        copy: '<span>&copy; 2020.</span>',
+        auth: 'Published with <a href="https://github.com/JackieDo/Laravel-Cart" target="_blank">GitHub - Laravel Cart</a>',
+      }
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/docsify-footer-enh/dist/docsify-footer-enh.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-php.min.js"></script>
 </body>
