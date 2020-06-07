@@ -129,3 +129,15 @@ public function sumItemsQuantity($filter = null, $complyAll = true);
 ```
 
 **Note:** The `$filter` and `$complyAll` parameters are used in the same way as the `getItems()` method.
+
+#### Get the subtotal of all items in the cart
+**Method syntax:**
+
+```php
+/**
+ * Get the subtotal amount of all items in the items container
+ *
+ * @return float
+ */
+public function getItemsSubtotal();
+```
