@@ -9,9 +9,9 @@
         - [Name of cart](usage/carts/name-of-cart "Name of the cart - Laravel Cart")
         - [Cart instances](usage/carts/cart-instances "The cart instances - Laravel Cart")
         - [Commercial or not](usage/carts/commercial-or-not "Commercial or non-commercial cart - Laravel Cart")
+        - [Store extended information](usage/carts/store-extended-information "Store more extended information for the cart - Laravel Cart")
         - [Get money amounts](usage/carts/get-money-amounts "Get money amounts of the cart - Laravel Cart")
         - [Get cart details](usage/carts/get-cart-details "Get cart details as Laravel Collection - Laravel Cart")
-        - [Store extended information](usage/carts/store-extended-information "Store more extended information for the cart - Laravel Cart")
         - [Destroy cart](usage/carts/destroy-cart "Destroy the cart - Laravel Cart")
         - [Other methods](usage/carts/other-methods "Other cart methods - Laravel Cart")
 
