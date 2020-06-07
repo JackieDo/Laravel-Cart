@@ -6,7 +6,8 @@ The subtotal amount is the amount of the cart after adding the sum of the action
 
 ```php
 /**
- * Get the subtotal amount of all items in the items container
+ * Get the subtotal amount of the current cart.
+ * It is amount before tax.
  *
  * @return float
  */
@@ -29,6 +30,7 @@ The total amount is the final amount of the cart after tax.
 ```php
 /**
  * Get the total amount of the current cart.
+ * It is amount after tax.
  *
  * @return float
  */
