@@ -736,7 +736,7 @@ class Cart
     }
 
     /**
-     * Get the subtotal amount of all items in the items container
+     * Get the sum amount of all items subtotal amount and all actions amount
      *
      * @return float
      */
