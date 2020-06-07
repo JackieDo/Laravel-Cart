@@ -15,20 +15,20 @@ public function applyTax(array $attributes = [], $withEvent = true)
 
 The result of this method is an instance of the `Jackiedo\Cart\Tax` class. However, you cannot instantiate an object from this class and treat it as an applied tax. A properly applied tax can only be obtained via the above `applyTax()` method. You need to pass this method an array of the following attributes:
 
-* **`id`**:
+* `id`:
     - Description: Raw id of the tax, such as information from the id field in the database.
     - Type: string | int
     - Required: true
-* **`title`**:
+* `title`:
     - Description: The short title of the tax.
     - Type: string
     - Required: true
-* **`rate`**:
+* `rate`:
     - Description: The tax rate.
     - Type: float
     - Required: true
     - Default: The `default_tax_rate` setting in the configuration file (see [here](configuration#default-tax-rate))
-* **`extra_info`**:
+* `extra_info`:
     - Description: Store other extended information.
     - Type: array
     - Required: false
@@ -53,10 +53,10 @@ $tax = $cart->applyTax([
 ## The attributes of tax
 An applied tax contains the attributes that you passed into the `applyTax()` method and has some other special attributes:
 
-* **`hash`**:
+* `hash`:
     - Description: The unique identifier of tax in the cart.
     - Type: string
-* **`amount`**:
+* `amount`:
     - Description: The calcualted tax amount for the cart.
     - Type: float
 

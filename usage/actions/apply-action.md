@@ -15,37 +15,37 @@ public function applyAction(array $attributes = [], $withEvent = true);
 
 The result of this method is an instance of the `Jackiedo\Cart\Action` class. However, you cannot instantiate an object from this class and treat it as an applied action. A properly applied action can only be obtained via the above `applyAction()` method. You need to pass this method an array of the following attributes:
 
-* **`id`**:
+* `id`:
     - Description: Raw id of the action, such as information from the id field in the database.
     - Type: string | int
     - Required: true
     - Default: null
-* **`title`**:
+* `title`:
     - Description: The name of the action.
     - Type: string
     - Required: true
     - Default: null
-* **`group`**:
+* `group`:
     - Description: Grouping for action.
     - Type: string
     - Required: false
     - Default: 'unknown'
-* **`value`**:
+* `value`:
     - Description: The value to change the amount of instance that this action is applied to.
     - Type: float | string (percentage)
     - Required: false
     - Default: 0
-* **`target`**:
+* `target`:
     - Description: The target that this action wants to change.
     - Type: string
     - Required: false
     - Default: 'items\_subtotal' (for the cart) | 'total\_price' (for the item)
-* **`rules`**:
+* `rules`:
     - Description: The handling rules for action.
     - Type: array
     - Required: false
     - Default: The `default_action_rules` setting in the configuration file (see [here](configuration#default-rules-of-actions))
-* **`extra_info`**:
+* `extra_info`:
     - Description: Store other extended information.
     - Type: array
     - Required: false
@@ -82,10 +82,10 @@ $cart->applyAction([
 ## The attributes of action
 An applied action contains the attributes that you passed into the `applyAction()` method and has some other special attributes:
 
-* **`hash`**:
+* `hash`:
     - Description: The unique identifier of action in the cart.
     - Type: string
-* **`amount`**:
+* `amount`:
     - Description: The calcualted amount for the action.
     - Type: float
 

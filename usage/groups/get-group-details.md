@@ -22,6 +22,8 @@ public function getGroupDetails(
 );
 ```
 
+**Note:** If the `$groupName` parameter is not passed, the details of the parent group of current cart will be returned.
+
 **Example:**
 
 ```php
@@ -39,12 +41,12 @@ Like the `getDetails()` method of cart instance, the above method allows you to 
 
 By default, this Details Collection always has the following keys:
 
-- type
-- name
-- items_count
-- quantities_sum
-- subsections
-- extra_info
+- `type`
+- `name`
+- `items_count`
+- `quantities_sum`
+- `subsections`
+- `extra_info`
 
 If this group contains any commercial carts, this Details Collection will have an additional key named `total`.
 

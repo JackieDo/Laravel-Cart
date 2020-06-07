@@ -15,35 +15,35 @@ public function addItem(array $attributes = [], $withEvent = true)
 
 The result of this method is an instance of the `Jackiedo\Cart\Item` class. However, you cannot instantiate an object from this class and treat it as an added item. A properly added item can only be obtained via the above `addItem()` method. You need to pass this method an array of the following attributes:
 
-* **`id`**:
+* `id`:
     - Description: Raw id of the item, such as information from the id field in the database.
     - Type: string | int
     - Required: true
-* **`title`**:
+* `title`:
     - Description: The name of the item.
     - Type: string
     - Required: true
-* **`quantity`**:
+* `quantity`:
     - Description: Number of items to add to the cart.
     - Type: int
     - Required: false
     - Default: 1
-* **`price`**:
+* `price`:
     - Description: The price of the item.
     - Type: float
     - Required: false
     - Default: 0
-* **`options`**:
+* `options`:
     - Description: Optional item information, such as size, color...
     - Type: array
     - Required: false
     - Default: []
-* **`taxable`**:
+* `taxable`:
     - Description: Specifies whether this item is taxable or not (will be explained later in advanced usage).
     - Type: boolean
     - Required: false
     - Default: true
-* **`extra_info`**:
+* `extra_info`:
     - Description: Store other extended information.
     - Type: array
     - Required: false
@@ -86,25 +86,25 @@ $recentArticle  = $recentlyViewed->addItem([
 ## The attributes of item
 An added item contains the attributes that you passed into the `addItem()` method and has some other special attributes:
 
-* **`hash`**:
+* `hash`:
     - Description: The unique identifier of item in the cart.
     - Type: string
-* **`associated_class`**:
+* `associated_class`:
     - Description: The class name of associated model (will be explained later in advanced usage).
     - Type: string
-* **`total_price`**:
+* `total_price`:
     - Description: The total price of item, calculated by the product of `quantity` and price `attributes`.
     - Type: float
-* **`actions_count`**:
+* `actions_count`:
     - Description: The number of applied actions for this item (will be explained later in advanced usage).
     - Type: int
-* **`actions_amount`**:
+* `actions_amount`:
     - Description: The amount of applied actions (will be explained later in advanced usage).
     - Type: float
-* **`subtotal`**:
+* `subtotal`:
     - Description: The subtotal amount of item, calculated by the sum of `total_price` and `actions_amount` attrbutes.
     - Type: float
-* **`taxable_amount`**:
+* `taxable_amount`:
     - Description: The amount will be taxable (will be explained later in advanced usage).
     - Type: float
 

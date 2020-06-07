@@ -15,9 +15,9 @@ Like the `getDetails()` method of cart instance, the above method allows you to 
 
 The result of this method is an instance of `Jackiedo\Cart\Details` class and always has the following keys:
 
-- hash
-- id
-- title
-- rate
-- amount
-- extra_info
+- `hash`
+- `id`
+- `title`
+- `rate`
+- `amount`
+- `extra_info`

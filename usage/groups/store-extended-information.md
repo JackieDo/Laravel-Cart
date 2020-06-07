@@ -16,8 +16,6 @@
 public function setGroupExtraInfo($groupName, $information, $value = null);
 ```
 
-**Note:** If the `$groupName` parameter is not passed, the details of the parent group of current cart will be returned.
-
 ## Get extended information
 **Method syntax:**
 

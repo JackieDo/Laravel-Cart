@@ -38,20 +38,20 @@ Like the `getDetails()` method of cart instance, the above method allows you to 
 
 By default, this Details Collection always has the following keys:
 
-- hash
-- associated_class
-- id
-- title
-- extra_info
+- `hash`
+- `associated_class`
+- `id`
+- `title`
+- `extra_info`
 
 And if this item belongs to is a commercial cart, this Details Collection will have additional keys:
 
-- quantity
-- price
-- taxable
-- total_price
-- actions_count
-- actions_amount
-- subtotal
-- options
-- applied_actions
+- `quantity`
+- `price`
+- `taxable`
+- `total_price`
+- `actions_count`
+- `actions_amount`
+- `subtotal`
+- `options`
+- `applied_actions`

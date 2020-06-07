@@ -91,62 +91,62 @@ $groupByTitle = Cart::name('shopping')->getDetails()->items->groupBy('title');
 **Note:**
 - The values in this Details Collection are cloned from the real instance. Therefore, any direct changes to them do not change the information contained in the cart. To change the values ​​in the cart, you must use the methods provided.
 - This Details Collection always has the following keys:
-    + **`type`**:
+    + `type`:
         * Description: The type of this collection
         * Type: string
-    + **`name`**:
+    + `name`:
         * Description: The name of the cart
         * Type: string
-    + **`commercial_cart`**:
+    + `commercial_cart`:
         * Description: Indicates whether this cart is a commercial cart
         * Type: boolean
-    + **`enabled_builtin_tax`**:
+    + `enabled_builtin_tax`:
         * Description: Indicates whether this cart use built-in tax system
         * Type: boolean
-    + **`items_count`**:
+    + `items_count`:
         * Description: The number of added items in the cart
         * Type: int
-    + **`quantities_sum`**:
+    + `quantities_sum`:
         * Desciption: The sum quantities of all added items
         * Type: int
-    + **`items`**:
+    + `items`:
         * Description: All added items
         * Type: array
-    + **`extra_info`**:
+    + `extra_info`:
         * Description: The extended information of the cart
         * Type: array
 - If the cart is a commercial cart, this Details Collection will have the following keys as well:
-    + **`items_subtotal`**:
+    + `items_subtotal`:
         * Description: The sum subtotals of all added items in the cart
         * Type: float
-    + **`actions_count`**:
+    + `actions_count`:
         * Description: The number of applied actions to the cart
         * Type: int
-    + **`action_amount`**:
+    + `action_amount`:
         * Description: The calculated amount of applied actions
         * Type: float
-    + **`total`**:
+    + `total`:
         * Description: The final total amount of the cart, calculated as the sum of all amounts
         * Type: float
-    + **`applied_actions`**:
+    + `applied_actions`:
         * Description: All applied actions to the cart
         * Type: array
 - If the built-in tax system of the cart is enabled, this Details Collection will have more another keys:
-    + **`subtotal`**:
+    + `subtotal`:
         * Description: The subtotal amount of the cart, calculated by the sum of `items_subtotal` and `actions_amount` keys
         * Type: float
-    + **`taxes_count`**:
+    + `taxes_count`:
         * Description: The number of applied taxes to the cart
         * Type: int
-    + **`taxable_amount`**:
+    + `taxable_amount`:
         * Description: The amount will be taxable of the cart
         * Type: float
-    + **`tax_rate`**:
+    + `tax_rate`:
         * Description: The sum tax rates of all applied taxes
         * Type: float
-    + **`tax_amount`**:
+    + `tax_amount`:
         * Description: The tax amount of the cart, calculated based on `tax_rate` and `taxable_amount` keys
         * Type: float
-    + **`applied_taxes`**:
+    + `applied_taxes`:
         * Description: All apllied taxes
         * Type: array
