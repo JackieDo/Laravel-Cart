@@ -1,4 +1,4 @@
-# Laravel Cart
+## Laravel Cart
 A package used to create and manage carts in Laravel application.
 
 [![Build Status](https://api.travis-ci.org/JackieDo/Laravel-Cart.svg?branch=v3.0)](https://travis-ci.org/JackieDo/Laravel-Cart)
