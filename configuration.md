@@ -8,7 +8,7 @@ Before using, you should perform configuration for the package. This can be done
 At the root of your application directory, run the following command:
 
 ```shell
-$ php artisan vendor:publish --provider="Jackiedo\Cart\CartServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Jackiedo\Cart\CartServiceProvider" --tag="config"
 ```
 
 This will create a `config/cart.php` file in root folder of your application. Through it, you can set the settings. Also, make sure you check for changes to the original config file in this package between releases.

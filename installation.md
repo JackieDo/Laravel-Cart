@@ -5,7 +5,7 @@ You can install Laravel Cart through [Composer](https://getcomposer.org) with th
 At the root of your application directory, run the following command:
 
 ```shell
-$ composer require jackiedo/cart:3.*
+composer require jackiedo/cart:3.*
 ```
 
 **Note:** Since Laravel 5.5, [service providers and aliases are automatically registered](https://laravel.com/docs/5.5/packages#package-discovery), you don't need to do anything more. But if you are using Laravel 5.4 or earlier, you must perform two more steps below.
