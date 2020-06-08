@@ -12,6 +12,14 @@
       z-index: 0;
     }
 
+    code.lang-shell:before {
+        content: "$ ";
+    }
+
+    .docsify-copy-code-button {
+        padding: .4em .7em !important;
+    }
+
     .docsify-pagination-container {
         margin-bottom: 2em !important;
     }
@@ -27,6 +35,9 @@
       subMaxLevel: 2,
       auto2top: true,
       coverpage: true,
+      copyCode: {
+        buttonText: 'Copy'
+      },
       pagination: {
         crossChapter: true,
         crossChapterText: true
@@ -39,6 +50,7 @@
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
   <script src="//unpkg.com/docsify-footer-enh/dist/docsify-footer-enh.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
