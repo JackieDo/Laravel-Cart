@@ -16,6 +16,14 @@
         content: "$ ";
     }
 
+    pre:after {
+      font-size: .7rem;
+    }
+
+    .markdown-section pre {
+      /*border-left: 4px solid #ccc;*/
+    }
+
     .docsify-copy-code-button {
         padding: .4em .7em !important;
     }
@@ -31,10 +39,11 @@
     window.$docsify = {
       name: 'Laravel Cart',
       repo: 'https://github.com/JackieDo/Laravel-Cart',
+      coverpage: true,
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
-      coverpage: true,
+      topMargin: 50,
       copyCode: {
         buttonText: 'Copy'
       },
@@ -54,6 +63,7 @@
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-json.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-php.min.js"></script>
 </body>
 </html>
