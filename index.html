@@ -10,26 +10,32 @@
   <style type="text/css">
     section.cover .cover-main {
       z-index: 0;
+      min-height: 300px;
     }
 
     code.lang-shell:before {
-        content: "$ ";
+      content: "$ ";
     }
 
     pre:after {
       font-size: .7rem;
     }
 
+    .search .matching-post p {
+      color: #ccc !important;
+      word-spacing: .05rem;
+    }
+
     .markdown-section pre {
-      /*border-left: 4px solid #ccc;*/
+      border-left: 4px solid #ccc;
     }
 
     .docsify-copy-code-button {
-        padding: .4em .7em !important;
+      padding: .4em .7em !important;
     }
 
     .docsify-pagination-container {
-        margin-bottom: 2em !important;
+      margin-bottom: 2em !important;
     }
   </style>
 </head>
@@ -44,6 +50,9 @@
       subMaxLevel: 2,
       auto2top: true,
       topMargin: 50,
+      search: {
+        namespace: 'laravel-cart'
+      },
       copyCode: {
         buttonText: 'Copy'
       },
@@ -53,7 +62,7 @@
       },
       footer: {
         copy: '<span>&copy; 2020.</span>',
-        auth: 'Published with <a href="https://github.com/JackieDo/Laravel-Cart" target="_blank">GitHub - Laravel Cart</a>',
+        auth: 'Published with <a href="https://github.com/JackieDo/Laravel-Cart" target="_blank">Laravel Cart</a>',
       }
     }
   </script>
