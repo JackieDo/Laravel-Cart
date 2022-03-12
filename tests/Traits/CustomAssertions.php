@@ -3,9 +3,9 @@
 trait CustomAssertions
 {
     /**
-     * Use expectException() method with differents PHPUnit version
+     * Use expectException() method with differents PHPUnit version.
      *
-     * @param  string $exception
+     * @param string $exception
      *
      * @return void
      */
@@ -30,7 +30,7 @@ trait CustomAssertions
     public function assertSimilarArray(array $expected, array $array)
     {
         $this->assertEquals(count($expected), count($array));
-        $this->assertTrue(count(array_diff_key($array, $expected)) === 0);
+        $this->assertTrue(0 === count(array_diff_key($array, $expected)));
 
         foreach ($expected as $key => $value) {
             if (is_array($value)) {

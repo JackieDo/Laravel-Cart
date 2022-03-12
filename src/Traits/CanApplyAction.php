@@ -1,23 +1,23 @@
-<?php namespace Jackiedo\Cart\Traits;
+<?php
 
-use Jackiedo\Cart\Cart;
-use Jackiedo\Cart\Item;
+namespace Jackiedo\Cart\Traits;
 
 /**
- * The CanApplyAction traits
+ * The CanApplyAction traits.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 trait CanApplyAction
 {
     /**
-     * Add an action into the actions container
+     * Add an action into the actions container.
      *
-     * @param  array   $attributes The action attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The action attributes
+     * @param bool  $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Action|null
+     * @return null|Jackiedo\Cart\Action
      */
     public function applyAction(array $attributes = [], $withEvent = true)
     {
@@ -29,13 +29,13 @@ trait CanApplyAction
     }
 
     /**
-     * Update an action in the actions container
+     * Update an action in the actions container.
      *
-     * @param  string  $actionHash The unique identifier of the action
-     * @param  array   $attributes The new attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param string $actionHash The unique identifier of the action
+     * @param array  $attributes The new attributes
+     * @param bool   $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Action|null
+     * @return null|Jackiedo\Cart\Action
      */
     public function updateAction($actionHash, array $attributes = [], $withEvent = true)
     {
@@ -43,11 +43,11 @@ trait CanApplyAction
     }
 
     /**
-     * Determines if the action exists in the actions container by given action hash
+     * Determines if the action exists in the actions container by given action hash.
      *
-     * @param  string $actionHash The unique identifier of the action
+     * @param string $actionHash The unique identifier of the action
      *
-     * @return boolean
+     * @return bool
      */
     public function hasAction($actionHash)
     {
@@ -55,9 +55,9 @@ trait CanApplyAction
     }
 
     /**
-     * Get an action in the actions container
+     * Get an action in the actions container.
      *
-     * @param  string $actionHash The unique identifier of the action
+     * @param string $actionHash The unique identifier of the action
      *
      * @return Jackiedo\Cart\Action
      */
@@ -67,12 +67,12 @@ trait CanApplyAction
     }
 
     /**
-     * Get all actions in the actions container that match the given filter
+     * Get all actions in the actions container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return array
      */
@@ -82,10 +82,10 @@ trait CanApplyAction
     }
 
     /**
-     * Remove an action from the actions container
+     * Remove an action from the actions container.
      *
-     * @param  string  $actionHash The unique identifier of the action
-     * @param  boolean $withEvent  Enable firing the event
+     * @param string $actionHash The unique identifier of the action
+     * @param bool   $withEvent  Enable firing the event
      *
      * @return $this
      */
@@ -97,9 +97,9 @@ trait CanApplyAction
     }
 
     /**
-     * Remove all actions from the actions container
+     * Remove all actions from the actions container.
      *
-     * @param  boolean $withEvent Enable firing the event
+     * @param bool $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -111,14 +111,14 @@ trait CanApplyAction
     }
 
     /**
-     * Count all actions in the actions container that match the given filter
+     * Count all actions in the actions container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
-     * @return integer
+     * @return int
      */
     public function countActions($filter = null, $complyAll = true)
     {
@@ -126,12 +126,12 @@ trait CanApplyAction
     }
 
     /**
-     * Calculate the sum of action amounts in the actions container that match the given filter
+     * Calculate the sum of action amounts in the actions container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return float
      */

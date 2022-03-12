@@ -7,6 +7,10 @@ use Orchestra\Testbench\TestCase;
 
 require_once __DIR__ . '/Traits/CommonSetUp.php';
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class TaxTest extends TestCase
 {
     use CommonSetUp;
@@ -24,13 +28,13 @@ class TaxTest extends TestCase
         $title     = 'Example tax';
         $rate      = 10;
         $extraInfo = [
-            'description' => 'Example extra information'
+            'description' => 'Example extra information',
         ];
         $tax = $cart->applyTax([
             'id'         => $id,
             'title'      => $title,
             'rate'       => $rate,
-            'extra_info' => $extraInfo
+            'extra_info' => $extraInfo,
         ]);
 
         $this->assertInstanceOf(Tax::class, $tax);
@@ -53,13 +57,13 @@ class TaxTest extends TestCase
         $title     = 'Example tax';
         $rate      = 10;
         $extraInfo = [
-            'description' => 'Example extra information'
+            'description' => 'Example extra information',
         ];
         $tax = $cart->applyTax([
             'id'         => $id,
             'title'      => $title,
             'rate'       => $rate,
-            'extra_info' => $extraInfo
+            'extra_info' => $extraInfo,
         ]);
 
         $this->assertInstanceOf(Tax::class, $tax);
@@ -89,7 +93,7 @@ class TaxTest extends TestCase
      * @testdox Can retrieve the cart instance that tax belongs to using the getCart() method.
      * @test
      */
-    public function can_retrieve_the_cart_instance_that_tax_belongs_to_using_the_getCart_method()
+    public function can_retrieve_the_cart_instance_that_tax_belongs_to_using_the_get_cart_method()
     {
         $cart      = $this->initCart();
         $tax       = $cart->applyTax(['id' => 1, 'title' => 'Example title']);
@@ -105,7 +109,7 @@ class TaxTest extends TestCase
      * @testdox Can also retrieve the cart instance that tax belongs to using the getParentNode() method.
      * @test
      */
-    public function can_also_retrieve_the_cart_instance_that_tax_belongs_to_using_the_getParentNode_method()
+    public function can_also_retrieve_the_cart_instance_that_tax_belongs_to_using_the_get_parent_node_method()
     {
         $cart      = $this->initCart();
         $tax       = $cart->applyTax(['id' => 1, 'title' => 'Example title']);
@@ -121,7 +125,7 @@ class TaxTest extends TestCase
      * @testdox Each tax always has a hash code that can be retrieved by the getHash() method.
      * @test
      */
-    public function each_tax_always_has_a_hash_code_that_can_be_retrieved_by_the_getHash_method()
+    public function each_tax_always_has_a_hash_code_that_can_be_retrieved_by_the_get_hash_method()
     {
         $cart = $this->initCart();
         $tax  = $cart->applyTax(['id' => 1, 'title' => 'Example title']);
@@ -177,7 +181,7 @@ class TaxTest extends TestCase
             'id'         => 1,
             'title'      => 'Demo tax',
             'rate'       => 10,
-            'extra_info' => ['description' => 'Demo extra information']
+            'extra_info' => ['description' => 'Demo extra information'],
         ]);
 
         $this->assertEquals(1, $tax->getId());
@@ -189,7 +193,7 @@ class TaxTest extends TestCase
             'id'         => 2,
             'title'      => 'Updated title',
             'rate'       => 20,
-            'extra_info' => ['description' => 'Updated extra information']
+            'extra_info' => ['description' => 'Updated extra information'],
         ]);
 
         $this->assertNotEquals(2, $updated->getId());

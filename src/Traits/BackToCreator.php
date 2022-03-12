@@ -1,4 +1,6 @@
-<?php namespace Jackiedo\Cart\Traits;
+<?php
+
+namespace Jackiedo\Cart\Traits;
 
 use Closure;
 use Illuminate\Support\Arr;
@@ -13,19 +15,20 @@ use Jackiedo\Cart\Exceptions\UnknownCreatorException;
  *       class.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 trait BackToCreator
 {
     /**
-     * Stores the creator instance
+     * Stores the creator instance.
      *
-     * @var object|null
+     * @var null|object
      */
     protected $creator;
 
     /**
-     * Get the creator of this instance
+     * Get the creator of this instance.
      *
      * @throws Jackiedo\Cart\Exceptions\UnknownCreatorException
      *
@@ -34,16 +37,16 @@ trait BackToCreator
     public function getCreator()
     {
         if (!$this->hasKnownCreator()) {
-            throw new UnknownCreatorException("The interacting instance does not belong to any cart tree.");
+            throw new UnknownCreatorException('The interacting instance does not belong to any cart tree.');
         }
 
         return $this->creator;
     }
 
     /**
-     * Determines weather this instance has stored the creator
+     * Determines weather this instance has stored the creator.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasKnownCreator()
     {
@@ -51,14 +54,14 @@ trait BackToCreator
     }
 
     /**
-     * Stores the creator into instance
+     * Stores the creator into instance.
      *
-     * @param  integer  $stepsBackward  The steps backward from the method containing
-     *                                  this method to the constructor or the cloner.
-     *                                  It is 0 if this method is in the constructor
-     *                                  or the cloner.
-     * @param  callback $laterJob       The action will be taken later if this instance
-     *                                  stored the creator.
+     * @param int      $stepsBackward The steps backward from the method containing
+     *                                this method to the constructor or the cloner.
+     *                                It is 0 if this method is in the constructor
+     *                                or the cloner.
+     * @param callable $laterJob      the action will be taken later if this instance
+     *                                stored the creator
      *
      * @return $this
      */
@@ -71,7 +74,7 @@ trait BackToCreator
         $acceptedCreators = is_array($this->acceptedCreators) ? $this->acceptedCreators : [];
 
         if (in_array($callerClass, $acceptedCreators) && is_object($callerObject)) {
-            $this->creator = ($callerClass == Cart::class) ? clone $callerObject : $callerObject;
+            $this->creator = (Cart::class == $callerClass) ? clone $callerObject : $callerObject;
 
             if ($laterJob instanceof Closure) {
                 call_user_func_array($laterJob, [$this->creator, $caller]);

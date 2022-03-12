@@ -1,33 +1,36 @@
-<?php namespace Jackiedo\Cart;
+<?php
+
+namespace Jackiedo\Cart;
 
 use Closure;
 
 /**
  * The ActionsContainer class
- * This is a container used to hold actions
+ * This is a container used to hold actions.
  *
  * @package JackieDo/Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class ActionsContainer extends Container
 {
     /**
-     * The name of the accepted class is the creator
+     * The name of the accepted class is the creator.
      *
      * @var array
      */
     protected $acceptedCreators = [
         Cart::class,
-        Item::class
+        Item::class,
     ];
 
     /**
-     * Add an action into this container
+     * Add an action into this container.
      *
-     * @param  array   $attributes The action attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The action attributes
+     * @param bool  $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Action|null
+     * @return null|Jackiedo\Cart\Action
      */
     public function addAction(array $attributes = [], $withEvent = true)
     {
@@ -36,7 +39,7 @@ class ActionsContainer extends Container
         if ($withEvent) {
             $event  = $this->fireEvent('cart.action.applying', [$action]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return null;
             }
         }
@@ -60,13 +63,13 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Update an action in actions container
+     * Update an action in actions container.
      *
-     * @param  string  $actionHash The unique identifier of action
-     * @param  array   $attributes The new attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param string $actionHash The unique identifier of action
+     * @param array  $attributes The new attributes
+     * @param bool   $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Action|null
+     * @return null|Jackiedo\Cart\Action
      */
     public function updateAction($actionHash, array $attributes = [], $withEvent = true)
     {
@@ -75,7 +78,7 @@ class ActionsContainer extends Container
         if ($withEvent) {
             $event  = $this->fireEvent('cart.action.updating', [&$attributes, $action]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return null;
             }
         }
@@ -103,9 +106,9 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Get an action in this container by given hash
+     * Get an action in this container by given hash.
      *
-     * @param  string $actionHash The unique identifier of action
+     * @param string $actionHash The unique identifier of action
      *
      * @return Jackiedo\Cart\Action
      */
@@ -119,12 +122,12 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Get all actions in this container that match the given filter
+     * Get all actions in this container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return array
      */
@@ -144,7 +147,7 @@ class ActionsContainer extends Container
         if (is_array($filter)) {
             // If filter is not an associative array
             if (!isAssocArray($filter)) {
-                $filtered = $this->filter(function($action) use ($filter) {
+                $filtered = $this->filter(function ($action) use ($filter) {
                     return in_array($action->getHash(), $filter);
                 });
 
@@ -156,13 +159,13 @@ class ActionsContainer extends Container
                 $filtered = $this->filter(function ($action) use ($filter) {
                     $intersects = array_intersect_assoc_recursive($action->getFilterValues(), $filter);
 
-                    return (!empty($intersects));
+                    return !empty($intersects);
                 });
             } else {
                 $filtered = $this->filter(function ($action) use ($filter) {
                     $diffs = array_diff_assoc_recursive($action->getFilterValues(), $filter);
 
-                    return (empty($diffs));
+                    return empty($diffs);
                 });
             }
 
@@ -173,10 +176,10 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Remove an action instance from this container
+     * Remove an action instance from this container.
      *
-     * @param  string  $actionHash The unique identifier of the action instance
-     * @param  boolean $withEvent  Enable firing the event
+     * @param string $actionHash The unique identifier of the action instance
+     * @param bool   $withEvent  Enable firing the event
      *
      * @return $this
      */
@@ -187,7 +190,7 @@ class ActionsContainer extends Container
         if ($withEvent) {
             $event  = $this->fireEvent('cart.action.removing', [$action]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return $this;
             }
         }
@@ -203,9 +206,9 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Remove all action instances from this container
+     * Remove all action instances from this container.
      *
-     * @param  boolean $withEvent Enable firing the event
+     * @param bool $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -220,7 +223,7 @@ class ActionsContainer extends Container
         if ($withEvent) {
             $event = $this->fireEvent('cart.action.clearing', [$cart]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return $this;
             }
         }
@@ -235,14 +238,14 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Count all actions in this container that match the given filter
+     * Count all actions in this container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
-     * @return integer
+     * @return int
      */
     public function countActions($filter = null, $complyAll = true)
     {
@@ -254,12 +257,12 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Calculate the sum of action amounts in this container that match the given filter
+     * Calculate the sum of action amounts in this container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return float
      */
@@ -271,19 +274,19 @@ class ActionsContainer extends Container
 
         $allActions = $this->getActions($filter, $complyAll);
 
-        return array_reduce($allActions, function($carry, $action) {
+        return array_reduce($allActions, function ($carry, $action) {
             return $carry + $action->getAmount();
         }, 0);
     }
 
     /**
-     * Sort all actions using the orderId attribute
+     * Sort all actions using the orderId attribute.
      *
      * @return $this
      */
     protected function sortActions()
     {
-        $sorted = $this->sortBy(function($item) {
+        $sorted = $this->sortBy(function ($item) {
             return $item->getOrderId();
         });
 
@@ -293,13 +296,13 @@ class ActionsContainer extends Container
     }
 
     /**
-     * Sort all actions using the orderId attribute with descending direction
+     * Sort all actions using the orderId attribute with descending direction.
      *
      * @return $this
      */
     protected function sortActionsDesc()
     {
-        $sorted = $this->sortByDesc(function($item) {
+        $sorted = $this->sortByDesc(function ($item) {
             return $item->getOrderId();
         });
 

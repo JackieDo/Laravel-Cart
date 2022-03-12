@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default cart name
@@ -67,7 +66,7 @@ return [
         'disable_others'       => null,
         'include_calculations' => 'same_group_previous_actions',
         'max_amount'           => null,
-        'min_amount'           => null
+        'min_amount'           => null,
     ],
 
     /*
@@ -83,6 +82,5 @@ return [
     */
     'action_groups_order' => [
         // 'example_action_group_name'
-    ]
-
+    ],
 ];

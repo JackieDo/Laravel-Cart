@@ -1,15 +1,18 @@
-<?php namespace Jackiedo\Cart\Traits;
+<?php
+
+namespace Jackiedo\Cart\Traits;
 
 /**
- * The CollectionForgetAll traits
+ * The CollectionForgetAll traits.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 trait CollectionForgetAll
 {
     /**
-     * Remove all items out of the collection
+     * Remove all items out of the collection.
      *
      * @return $this
      */

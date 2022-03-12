@@ -1,9 +1,12 @@
-<?php namespace Jackiedo\Cart\Traits;
+<?php
+
+namespace Jackiedo\Cart\Traits;
 
 /**
- * The FireEvent traits
+ * The FireEvent traits.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 trait FireEvent
@@ -11,10 +14,11 @@ trait FireEvent
     /**
      * Fire an event and call the listeners.
      *
-     * @param  string|object $event
-     * @param  mixed         $payload
-     * @param  bool          $halt
-     * @return array|null
+     * @param object|string $event
+     * @param mixed         $payload
+     * @param bool          $halt
+     *
+     * @return null|array
      */
     protected function fireEvent($event, $payload = [], $halt = true)
     {

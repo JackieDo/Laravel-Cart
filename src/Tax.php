@@ -1,15 +1,17 @@
-<?php namespace Jackiedo\Cart;
+<?php
+
+namespace Jackiedo\Cart;
 
 use Illuminate\Support\Arr;
 use Jackiedo\Cart\Contracts\CartNode;
-use Jackiedo\Cart\Details;
 use Jackiedo\Cart\Exceptions\InvalidArgumentException;
 use Jackiedo\Cart\Traits\CanBeCartNode;
 
 /**
- * The Tax class
+ * The Tax class.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class Tax implements CartNode
@@ -17,7 +19,7 @@ class Tax implements CartNode
     use CanBeCartNode;
 
     /**
-     * The attributes of tax
+     * The attributes of tax.
      *
      * @var array
      */
@@ -25,22 +27,22 @@ class Tax implements CartNode
         'id'         => null,
         'title'      => null,
         'rate'       => null,
-        'extra_info' => []
+        'extra_info' => [],
     ];
 
     /**
-     * The name of the accepted class is the creator
+     * The name of the accepted class is the creator.
      *
      * @var array
      */
     protected $acceptedCreators = [
-        TaxesContainer::class
+        TaxesContainer::class,
     ];
 
     /**
-     * Create a new tax
+     * Create a new tax.
      *
-     * @param  array  $attributes  The tax attributes
+     * @param array $attributes The tax attributes
      *
      * @return void
      */
@@ -54,10 +56,10 @@ class Tax implements CartNode
     }
 
     /**
-     * Update attributes of this tax instance
+     * Update attributes of this tax instance.
      *
-     * @param  array   $attributes The new attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The new attributes
+     * @param bool  $withEvent  Enable firing the event
      *
      * @return $this
      */
@@ -86,7 +88,7 @@ class Tax implements CartNode
     }
 
     /**
-     * Get details of tha tax as a collection
+     * Get details of tha tax as a collection.
      *
      * @return Jackiedo\Cart\Details
      */
@@ -105,19 +107,19 @@ class Tax implements CartNode
     }
 
     /**
-     * Determines which values ​​to filter
+     * Determines which values ​​to filter.
      *
      * @return array
      */
     public function getFilterValues()
     {
         return array_merge([
-            'hash' => $this->getHash()
+            'hash' => $this->getHash(),
         ], $this->attributes);
     }
 
     /**
-     * Get the unique identifier of the tax
+     * Get the unique identifier of the tax.
      *
      * @return string
      */
@@ -127,7 +129,7 @@ class Tax implements CartNode
     }
 
     /**
-     * Get the calculated amount of this tax
+     * Get the calculated amount of this tax.
      *
      * @return float
      */
@@ -144,9 +146,9 @@ class Tax implements CartNode
     }
 
     /**
-     * Initialize the attributes
+     * Initialize the attributes.
      *
-     * @param  array  $attributes The tax attributes
+     * @param array $attributes The tax attributes
      *
      * @return $this
      */
@@ -168,9 +170,9 @@ class Tax implements CartNode
     }
 
     /**
-     * Set value for the attributes of this instance
+     * Set value for the attributes of this instance.
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return void
      */
@@ -194,9 +196,9 @@ class Tax implements CartNode
     }
 
     /**
-     * Set value for the rate attribute
+     * Set value for the rate attribute.
      *
-     * @param  mixed $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -206,9 +208,9 @@ class Tax implements CartNode
     }
 
     /**
-     * Validate the tax attributes
+     * Validate the tax attributes.
      *
-     * @param  array  $attributes  The tax attributes
+     * @param array $attributes The tax attributes
      *
      * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
      *
@@ -217,19 +219,19 @@ class Tax implements CartNode
     protected function validate($attributes)
     {
         if (array_key_exists('id', $attributes) && empty($attributes['id'])) {
-            throw new InvalidArgumentException("The id attribute of the tax is required.");
+            throw new InvalidArgumentException('The id attribute of the tax is required.');
         }
 
         if (array_key_exists('title', $attributes) && (!is_string($attributes['title']) || empty($attributes['title']))) {
-            throw new InvalidArgumentException("The title attribute of the tax is required and must be a non-empty string.");
+            throw new InvalidArgumentException('The title attribute of the tax is required and must be a non-empty string.');
         }
 
         if (array_key_exists('rate', $attributes) && !preg_match('/^\d+(\.{0,1}\d+)?$/', $attributes['rate'])) {
-            throw new InvalidArgumentException("The rate attribute of the tax is required and must be a float number greater than or equal to 0.");
+            throw new InvalidArgumentException('The rate attribute of the tax is required and must be a float number greater than or equal to 0.');
         }
 
         if (array_key_exists('extra_info', $attributes) && !is_array($attributes['extra_info'])) {
-            throw new InvalidArgumentException("The extra_info attribute of the tax must be an array.");
+            throw new InvalidArgumentException('The extra_info attribute of the tax must be an array.');
         }
     }
 }

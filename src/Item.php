@@ -1,9 +1,10 @@
-<?php namespace Jackiedo\Cart;
+<?php
+
+namespace Jackiedo\Cart;
 
 use Illuminate\Support\Arr;
 use Jackiedo\Cart\Contracts\CartNode;
 use Jackiedo\Cart\Contracts\UseCartable;
-use Jackiedo\Cart\Details;
 use Jackiedo\Cart\Exceptions\InvalidArgumentException;
 use Jackiedo\Cart\Exceptions\InvalidAssociatedException;
 use Jackiedo\Cart\Exceptions\InvalidModelException;
@@ -11,17 +12,19 @@ use Jackiedo\Cart\Traits\CanApplyAction;
 use Jackiedo\Cart\Traits\CanBeCartNode;
 
 /**
- * The Item class
+ * The Item class.
  *
  * @package JackieDo/Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class Item implements CartNode
 {
-    use CanBeCartNode, CanApplyAction;
+    use CanBeCartNode;
+    use CanApplyAction;
 
     /**
-     * The attributes of item
+     * The attributes of item.
      *
      * @var array
      */
@@ -37,46 +40,46 @@ class Item implements CartNode
     ];
 
     /**
-     * The name of the accepted class is the creator
+     * The name of the accepted class is the creator.
      *
      * @var array
      */
     protected $acceptedCreators = [
-        ItemsContainer::class
+        ItemsContainer::class,
     ];
 
     /**
-     * Stores applied actions
+     * Stores applied actions.
      *
      * @var Illuminate\Support\Collection
      */
     protected $appliedActions;
 
     /**
-     * Indicates whether or not this item belong to a commercial cart
+     * Indicates whether or not this item belong to a commercial cart.
      *
-     * @var boolean
+     * @var bool
      */
     protected $inCommercialCart = false;
 
     /**
-     * Indicates whether or not this item belongs to a taxable cart
+     * Indicates whether or not this item belongs to a taxable cart.
      *
-     * @var boolean
+     * @var bool
      */
     protected $enabledBuiltinTax = false;
 
     /**
-     * The constructor
+     * The constructor.
      *
-     * @param  array $attributes  The item attributes
+     * @param array $attributes The item attributes
      *
      * @return void
      */
     public function __construct(array $attributes = [])
     {
         // Store the creator
-        $this->storeCreator(0, function($creator, $caller) {
+        $this->storeCreator(0, function ($creator, $caller) {
             $cart                    = $creator->getCreator();
             $this->inCommercialCart  = $cart->isCommercialCart();
             $this->enabledBuiltinTax = $cart->isEnabledBuiltinTax();
@@ -87,10 +90,10 @@ class Item implements CartNode
     }
 
     /**
-     * Update information of cart item
+     * Update information of cart item.
      *
-     * @param  array   $attributes The new attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The new attributes
+     * @param bool  $withEvent  Enable firing the event
      *
      * @return $this
      */
@@ -123,9 +126,9 @@ class Item implements CartNode
     }
 
     /**
-     * Get details of the item as a collection
+     * Get details of the item as a collection.
      *
-     * @param  boolean $withActions Include details of applied actions in the result
+     * @param bool $withActions Include details of applied actions in the result
      *
      * @return Jackiedo\Cart\Details
      */
@@ -164,19 +167,19 @@ class Item implements CartNode
     }
 
     /**
-     * Determines which values ​​to filter
+     * Determines which values ​​to filter.
      *
      * @return array
      */
     public function getFilterValues()
     {
         return array_merge([
-            'hash' => $this->getHash()
+            'hash' => $this->getHash(),
         ], $this->attributes);
     }
 
     /**
-     * Get the unique identifier of item in the cart
+     * Get the unique identifier of item in the cart.
      *
      * @return string
      */
@@ -193,11 +196,11 @@ class Item implements CartNode
     }
 
     /**
-     * Get the model instance to which this item is associated
+     * Get the model instance to which this item is associated.
      *
      * @throws Jackiedo\Cart\Exceptions\InvalidAssociatedException
      *
-     * @return Illuminate\Database\Eloquent|null
+     * @return null|Illuminate\Database\Eloquent
      */
     public function getModel()
     {
@@ -205,20 +208,20 @@ class Item implements CartNode
         $associatedClass = $this->attributes['associated_class'];
 
         if (!class_exists($associatedClass)) {
-            throw new InvalidAssociatedException("The [" . $associatedClass . "] class does not exist.");
+            throw new InvalidAssociatedException('The [' . $associatedClass . '] class does not exist.');
         }
 
         $model = with(new $associatedClass)->findById($id);
 
         if (!$model) {
-            throw new InvalidModelException("The supplied associated model from [" . $associatedClass . "] does not exist.");
+            throw new InvalidModelException('The supplied associated model from [' . $associatedClass . '] does not exist.');
         }
 
         return $model;
     }
 
     /**
-     * Calculate the total price of item based on the quantity and unit price of item
+     * Calculate the total price of item based on the quantity and unit price of item.
      *
      * @return float
      */
@@ -228,7 +231,7 @@ class Item implements CartNode
     }
 
     /**
-     * Get the subtotal information of item in the cart
+     * Get the subtotal information of item in the cart.
      *
      * @return float
      */
@@ -238,7 +241,7 @@ class Item implements CartNode
     }
 
     /**
-     * Calculate taxable amount based on total price and total taxable action amounts
+     * Calculate taxable amount based on total price and total taxable action amounts.
      *
      * @return float
      */
@@ -251,7 +254,7 @@ class Item implements CartNode
         return $this->getTotalPrice() + $this->sumActionsAmount([
             'rules' => [
                 'taxable' => true,
-            ]
+            ],
         ]);
     }
 
@@ -259,8 +262,8 @@ class Item implements CartNode
      * Get value of one or some options of the item
      * using "dot" notation.
      *
-     * @param  null|string|array $options The option want to get
-     * @param  mixed             $default
+     * @param null|array|string $options The option want to get
+     * @param mixed             $default
      *
      * @return mixed
      */
@@ -280,9 +283,9 @@ class Item implements CartNode
     }
 
     /**
-     * Determines whether this is a taxable item
+     * Determines whether this is a taxable item.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTaxable()
     {
@@ -290,9 +293,9 @@ class Item implements CartNode
     }
 
     /**
-     * Initialize attributes for cart item
+     * Initialize attributes for cart item.
      *
-     * @param  array  $attributes  The cart item attributes
+     * @param array $attributes The cart item attributes
      *
      * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
      *
@@ -333,10 +336,10 @@ class Item implements CartNode
     }
 
     /**
-     * Parse data from UseCartable model to retrieve attributes
+     * Parse data from UseCartable model to retrieve attributes.
      *
-     * @param  object $model  The UseCartable model
-     * @param  array  $except The attrobutes will be excepted
+     * @param object $model  The UseCartable model
+     * @param array  $except The attrobutes will be excepted
      *
      * @return array
      */
@@ -357,9 +360,9 @@ class Item implements CartNode
     }
 
     /**
-     * Set value for the attributes of this instance
+     * Set value for the attributes of this instance.
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return void
      */
@@ -391,9 +394,9 @@ class Item implements CartNode
     }
 
     /**
-     * Set value for the quantity attribute
+     * Set value for the quantity attribute.
      *
-     * @param  mixed $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -403,9 +406,9 @@ class Item implements CartNode
     }
 
     /**
-     * Set value for the price attribute
+     * Set value for the price attribute.
      *
-     * @param  mixed $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -415,9 +418,9 @@ class Item implements CartNode
     }
 
     /**
-     * Set value for the options attribute
+     * Set value for the options attribute.
      *
-     * @param  array $options
+     * @param array $options
      *
      * @return void
      */
@@ -437,7 +440,7 @@ class Item implements CartNode
     }
 
     /**
-     * Return the actions container
+     * Return the actions container.
      *
      * @return Jackiedo\Cart\ActionsContainer
      */
@@ -451,9 +454,9 @@ class Item implements CartNode
     }
 
     /**
-     * Indicates whether this instance can apply cart
+     * Indicates whether this instance can apply cart.
      *
-     * @return boolean
+     * @return bool
      */
     protected function canApplyAction()
     {
@@ -465,9 +468,9 @@ class Item implements CartNode
     }
 
     /**
-     * Validate item attributes
+     * Validate item attributes.
      *
-     * @param  array  $attributes  The item attributes
+     * @param array $attributes The item attributes
      *
      * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
      *
@@ -476,31 +479,31 @@ class Item implements CartNode
     protected function validate(array $attributes = [])
     {
         if (array_key_exists('id', $attributes) && empty($attributes['id'])) {
-            throw new InvalidArgumentException("The id attribute of the item is required.");
+            throw new InvalidArgumentException('The id attribute of the item is required.');
         }
 
         if (array_key_exists('title', $attributes) && (!is_string($attributes['title']) || empty($attributes['title']))) {
-            throw new InvalidArgumentException("The title attribute of the item is required.");
+            throw new InvalidArgumentException('The title attribute of the item is required.');
         }
 
         if (array_key_exists('quantity', $attributes) && (!is_numeric($attributes['quantity']) || intval($attributes['quantity']) < 1)) {
-            throw new InvalidArgumentException("The quantity attribute of the item is required and must be an integer type greater than 1.");
+            throw new InvalidArgumentException('The quantity attribute of the item is required and must be an integer type greater than 1.');
         }
 
         if (array_key_exists('price', $attributes) && (!is_numeric($attributes['price']) || floatval($attributes['price']) < 0)) {
-            throw new InvalidArgumentException("The price attribute of the item must be an float type greater than or equal to 0.");
+            throw new InvalidArgumentException('The price attribute of the item must be an float type greater than or equal to 0.');
         }
 
         if (array_key_exists('taxable', $attributes) && !is_bool($attributes['taxable'])) {
-            throw new InvalidArgumentException("The taxable attribute of the item must be a boolean type.");
+            throw new InvalidArgumentException('The taxable attribute of the item must be a boolean type.');
         }
 
         if (array_key_exists('options', $attributes) && !is_array($attributes['options'])) {
-            throw new InvalidArgumentException("The options attribute of the item must be an array.");
+            throw new InvalidArgumentException('The options attribute of the item must be an array.');
         }
 
         if (array_key_exists('extra_info', $attributes) && !is_array($attributes['extra_info'])) {
-            throw new InvalidArgumentException("The extra_info attribute of the item must be an array.");
+            throw new InvalidArgumentException('The extra_info attribute of the item must be an array.');
         }
     }
 }

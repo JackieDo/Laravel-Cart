@@ -11,8 +11,13 @@ use Jackiedo\Cart\Tax;
 use Orchestra\Testbench\TestCase;
 
 require_once __DIR__ . '/Traits/CommonSetUp.php';
+
 require_once __DIR__ . '/Mocks/UseCartableProduct.php';
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class CartTest extends TestCase
 {
     use CommonSetUp;
@@ -93,7 +98,7 @@ class CartTest extends TestCase
      * @testdox Can check if the current cart is grouped or not using the hasBeenGrouped() method.
      * @test
      */
-    public function can_check_if_the_current_cart_is_grouped_or_not_using_the_hasBeenGrouped_method()
+    public function can_check_if_the_current_cart_is_grouped_or_not_using_the_has_been_grouped_method()
     {
         $cart1 = $this->initCart()->name('cart1');
         $cart2 = $this->initCart()->name('grouped.cart2');
@@ -194,7 +199,7 @@ class CartTest extends TestCase
      * @testdox Can set useForCommercial status on the fly if the cart is empty.
      * @test
      */
-    public function can_set_useForCommercial_status_on_the_fly_if_the_cart_is_empty()
+    public function can_set_use_for_commercial_status_on_the_fly_if_the_cart_is_empty()
     {
         $cart = $this->initCart();
 
@@ -211,7 +216,7 @@ class CartTest extends TestCase
      * @testdox Cannot set useForCommercial status on the fly if the cart is not empty.
      * @test
      */
-    public function cannot_set_useForCommercial_status_on_the_fly_if_the_cart_is_not_empty()
+    public function cannot_set_use_for_commercial_status_on_the_fly_if_the_cart_is_not_empty()
     {
         $cart = $this->initCart();
 
@@ -220,7 +225,7 @@ class CartTest extends TestCase
 
         $cart->addItem([
             'id'    => 1,
-            'title' => 'Example item title'
+            'title' => 'Example item title',
         ]);
 
         $cart->useForCommercial(false);
@@ -233,7 +238,7 @@ class CartTest extends TestCase
      * @testdox Can set useBuiltinTax status on the fly if the cart is empty.
      * @test
      */
-    public function can_set_useBuiltinTax_status_on_the_fly_if_the_cart_is_empty()
+    public function can_set_use_builtin_tax_status_on_the_fly_if_the_cart_is_empty()
     {
         $cart = $this->initCart();
 
@@ -250,7 +255,7 @@ class CartTest extends TestCase
      * @testdox Cannot set useBuiltinTax status on the fly if the cart is not empty.
      * @test
      */
-    public function cannot_set_useBuiltinTax_status_on_the_fly_if_the_cart_is_not_empty()
+    public function cannot_set_use_builtin_tax_status_on_the_fly_if_the_cart_is_not_empty()
     {
         $cart = $this->initCart();
 
@@ -259,7 +264,7 @@ class CartTest extends TestCase
 
         $cart->addItem([
             'id'    => 1,
-            'title' => 'Example item title'
+            'title' => 'Example item title',
         ]);
 
         $cart->useBuiltinTax(false);
@@ -302,7 +307,7 @@ class CartTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item title',
             'quantity' => 5,
-            'price'    => 100
+            'price'    => 100,
         ]);
 
         $cartSubtotal = $cart->getSubtotal();
@@ -327,7 +332,7 @@ class CartTest extends TestCase
             'id'       => $id,
             'title'    => $title,
             'quantity' => $quantity,
-            'price'    => $price
+            'price'    => $price,
         ]);
 
         $this->assertEquals(0, $cart->getSubtotal());
@@ -351,7 +356,7 @@ class CartTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item title',
             'quantity' => 5,
-            'price'    => 100
+            'price'    => 100,
         ]);
 
         $cartTotal = $cart->getTotal();
@@ -374,7 +379,7 @@ class CartTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item title',
             'quantity' => 5,
-            'price'    => 100
+            'price'    => 100,
         ]);
 
         $this->assertInstanceOf(Collection::class, $cart->getDetails());
@@ -394,7 +399,7 @@ class CartTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item title',
             'quantity' => 5,
-            'price'    => 100
+            'price'    => 100,
         ]);
 
         $cartDetails  = $cart->getDetails();
@@ -444,7 +449,7 @@ class CartTest extends TestCase
         $this->assertTrue(is_array($extraInfo));
         $this->assertSimilarArray([
             'demo_extra_info_1' => 'Demo value 1',
-            'demo_extra_info_2' => 'Demo value 2'
+            'demo_extra_info_2' => 'Demo value 2',
         ], $extraInfo);
     }
 
@@ -459,7 +464,7 @@ class CartTest extends TestCase
         $cart      = $this->initCart();
         $addedItem = $cart->addItem([
             'id'    => 123,
-            'title' => 'Example item title'
+            'title' => 'Example item title',
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -477,7 +482,7 @@ class CartTest extends TestCase
         $addedItem = $cart->addItem([
             'id'       => 123,
             'title'    => 'Example item title',
-            'quantity' => 5
+            'quantity' => 5,
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -500,7 +505,7 @@ class CartTest extends TestCase
             'id'       => $id,
             'title'    => $title,
             'quantity' => $quantity,
-            'price'    => $price
+            'price'    => $price,
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -521,8 +526,8 @@ class CartTest extends TestCase
             'quantity' => 5,
             'price'    => 100,
             'options'  => [
-                'size' => 'XL'
-            ]
+                'size' => 'XL',
+            ],
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -543,7 +548,7 @@ class CartTest extends TestCase
             'quantity'   => 5,
             'price'      => 100,
             'options'    => ['size' => 'XL'],
-            'extra_info' => ['description' => 'Example extra information']
+            'extra_info' => ['description' => 'Example extra information'],
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -565,7 +570,7 @@ class CartTest extends TestCase
             'price'      => 100,
             'options'    => ['size' => 'XL'],
             'extra_info' => ['description' => 'Example extra information'],
-            'taxable'    => false
+            'taxable'    => false,
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -577,7 +582,7 @@ class CartTest extends TestCase
      * @testdox Can add item to cart only with an UseCartable model.
      * @test
      */
-    public function can_add_item_to_cart_only_with_an_UseCartable_model()
+    public function can_add_item_to_cart_only_with_an__use_cartable_model()
     {
         $cart        = $this->initCart();
         $useCartable = new UseCartableProduct;
@@ -595,7 +600,7 @@ class CartTest extends TestCase
      * @testdox Can add item to cart only with an UseCartable model and the valid quantity argument.
      * @test
      */
-    public function can_add_item_to_cart_only_with_an_UseCartable_model_and_the_valid_quantity_argument()
+    public function can_add_item_to_cart_only_with_an__use_cartable_model_and_the_valid_quantity_argument()
     {
         $cart        = $this->initCart();
         $useCartable = new UseCartableProduct;
@@ -604,7 +609,7 @@ class CartTest extends TestCase
 
         $addedItem = $cart->addItem([
             'model'    => $useCartable,
-            'quantity' => 5
+            'quantity' => 5,
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -616,7 +621,7 @@ class CartTest extends TestCase
      * @testdox Can add item to cart only with an UseCartable model, the valid quantity and options arguments.
      * @test
      */
-    public function can_add_item_to_cart_only_with_an_UseCartable_model_the_valid_quantity_and_options_arguments()
+    public function can_add_item_to_cart_only_with_an__use_cartable_model_the_valid_quantity_and_options_arguments()
     {
         $cart        = $this->initCart();
         $useCartable = new UseCartableProduct;
@@ -626,7 +631,7 @@ class CartTest extends TestCase
         $addedItem = $cart->addItem([
             'model'    => $useCartable,
             'quantity' => 5,
-            'options'  => ['size' => 'XL']
+            'options'  => ['size' => 'XL'],
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -638,7 +643,7 @@ class CartTest extends TestCase
      * @testdox Can add item to cart only with an UseCartable model, the valid quantity, options and extra_info arguments.
      * @test
      */
-    public function can_add_item_to_cart_only_with_an_UseCartable_model_the_valid_quantity_options_and_extra_info_arguments()
+    public function can_add_item_to_cart_only_with_an__use_cartable_model_the_valid_quantity_options_and_extra_info_arguments()
     {
         $cart        = $this->initCart();
         $useCartable = new UseCartableProduct;
@@ -661,7 +666,7 @@ class CartTest extends TestCase
      * @testdox Can add item to cart only with an UseCartable model and all valid arguments.
      * @test
      */
-    public function can_add_item_to_cart_with_an_UseCartable_model_and_all_valid_arguments()
+    public function can_add_item_to_cart_with_an__use_cartable_model_and_all_valid_arguments()
     {
         $cart        = $this->initCart();
         $useCartable = new UseCartableProduct;
@@ -673,7 +678,7 @@ class CartTest extends TestCase
             'quantity'   => 5,
             'options'    => ['size' => 'XL'],
             'extra_info' => ['description' => 'Example extra information'],
-            'taxable'    => true
+            'taxable'    => true,
         ]);
 
         $this->assertInstanceOf(Item::class, $addedItem);
@@ -693,7 +698,7 @@ class CartTest extends TestCase
 
         $cart->addItem([
             'id'    => null,
-            'title' => 'Example item title'
+            'title' => 'Example item title',
         ]);
     }
 
@@ -711,7 +716,7 @@ class CartTest extends TestCase
 
         $cart->addItem([
             'id'    => 123,
-            'title' => null
+            'title' => null,
         ]);
     }
 
@@ -730,7 +735,7 @@ class CartTest extends TestCase
         $cart->addItem([
             'id'       => 123,
             'title'    => 'Example item title',
-            'quantity' => 'Invalid value'
+            'quantity' => 'Invalid value',
         ]);
     }
 
@@ -749,7 +754,7 @@ class CartTest extends TestCase
         $cart->addItem([
             'id'    => 123,
             'title' => 'Example item title',
-            'price' => 'Invalid value'
+            'price' => 'Invalid value',
         ]);
     }
 
@@ -768,7 +773,7 @@ class CartTest extends TestCase
         $cart->addItem([
             'id'      => 123,
             'title'   => 'Example item title',
-            'options' => 'Invalid value'
+            'options' => 'Invalid value',
         ]);
     }
 
@@ -787,7 +792,7 @@ class CartTest extends TestCase
         $cart->addItem([
             'id'         => 123,
             'title'      => 'Example item title',
-            'extra_info' => 'Invalid value'
+            'extra_info' => 'Invalid value',
         ]);
     }
 
@@ -806,7 +811,7 @@ class CartTest extends TestCase
         $cart->addItem([
             'id'      => 123,
             'title'   => 'Example item title',
-            'taxable' => 'Invalid value'
+            'taxable' => 'Invalid value',
         ]);
     }
 
@@ -825,7 +830,7 @@ class CartTest extends TestCase
         $cart->addItem([
             'id'       => 123,
             'title'    => 'Example item title',
-            'quantity' => 5
+            'quantity' => 5,
         ]);
 
         $this->assertTrue(is_integer($cart->countItems()));
@@ -848,7 +853,7 @@ class CartTest extends TestCase
             'price'      => 100,
             'options'    => ['size' => 'XL'],
             'extra_info' => ['description' => 'Example extra information'],
-            'taxable'    => false
+            'taxable'    => false,
         ]);
 
         $this->assertEquals(5, $firstItem->getQuantity());
@@ -860,7 +865,7 @@ class CartTest extends TestCase
             'price'      => 100,
             'options'    => ['size' => 'XL'],
             'extra_info' => ['description' => 'Example extra information'],
-            'taxable'    => false
+            'taxable'    => false,
         ]);
 
         $this->assertEquals(10, $secondItem->getQuantity());
@@ -876,7 +881,7 @@ class CartTest extends TestCase
      * @testdox Can calculate the quantities of all items in the cart using the sumItemsQuantity() method.
      * @test
      */
-    public function can_calculate_the_sum_quantities_of_all_items_in_the_cart_using_the_sumItemsQuantity_method()
+    public function can_calculate_the_sum_quantities_of_all_items_in_the_cart_using_the_sum_items_quantity_method()
     {
         $cart = $this->initCart();
 
@@ -897,7 +902,7 @@ class CartTest extends TestCase
      * @testdox Can calculate the sum subtotals of all items in the cart using the getItemsSubtotal() method.
      * @test
      */
-    public function can_calculate_the_sum_subtotals_of_all_items_in_the_cart_using_the_getItemsSubtotal_method()
+    public function can_calculate_the_sum_subtotals_of_all_items_in_the_cart_using_the_get_items_subtotal_method()
     {
         $cart = $this->initCart();
 
@@ -908,7 +913,7 @@ class CartTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item title',
             'quantity' => 5,
-            'price'    => 100
+            'price'    => 100,
         ]);
 
         $itemsSubtotal = $cart->getItemsSubtotal();
@@ -921,7 +926,7 @@ class CartTest extends TestCase
      * @testdox Can retrieve an added item using the getItem() method with a given hash code.
      * @test
      */
-    public function can_retrieve_an_added_item_using_the_getItem_method_with_a_given_hash_code()
+    public function can_retrieve_an_added_item_using_the_get_item_method_with_a_given_hash_code()
     {
         $cart = $this->initCart();
         $item = $cart->addItem([
@@ -939,7 +944,7 @@ class CartTest extends TestCase
      * @testdox Can get an array of added items using the getItems() method.
      * @test
      */
-    public function can_get_an_array_of_added_items_using_the_getItems_method()
+    public function can_get_an_array_of_added_items_using_the_get_items_method()
     {
         $cart  = $this->initCart();
         $item1 = $cart->addItem([
@@ -964,7 +969,7 @@ class CartTest extends TestCase
      * @testdox Can remove an added item using the removeItem() method with a given hash code.
      * @test
      */
-    public function can_remove_an_added_item_using_the_removeItem_method_with_a_given_hash_code()
+    public function can_remove_an_added_item_using_the_remove_item_method_with_a_given_hash_code()
     {
         $cart = $this->initCart();
         $item = $cart->addItem([
@@ -982,7 +987,7 @@ class CartTest extends TestCase
      * @testdox Can remove all items in the cart using the clearItems() method.
      * @test
      */
-    public function can_remove_all_items_in_the_cart_using_the_clearItems_method()
+    public function can_remove_all_items_in_the_cart_using_the_clear_items_method()
     {
         $cart = $this->initCart();
 
@@ -1080,7 +1085,7 @@ class CartTest extends TestCase
         $tax  = $cart->applyTax([
             'id'    => 1,
             'title' => 'Demo tax',
-            'rate'  => 'invalid rate'
+            'rate'  => 'invalid rate',
         ]);
     }
 
@@ -1099,7 +1104,7 @@ class CartTest extends TestCase
             'id'         => 1,
             'title'      => 'Demo tax',
             'rate'       => 10,
-            'extra_info' => 'invalid extra info'
+            'extra_info' => 'invalid extra info',
         ]);
     }
 
@@ -1109,7 +1114,7 @@ class CartTest extends TestCase
      * @testdox Can count number of taxes that has been applied to the cart by the countTaxes() method.
      * @test
      */
-    public function can_count_number_of_taxes_that_has_been_applied_to_the_cart_by_the_countTaxes_method()
+    public function can_count_number_of_taxes_that_has_been_applied_to_the_cart_by_the_count_taxes_method()
     {
         $cart = $this->initCart();
 
@@ -1132,7 +1137,7 @@ class CartTest extends TestCase
      * @testdox Can retrieve an applied tax using the getTax() method with a given hash code.
      * @test
      */
-    public function can_retrieve_an_applied_tax_using_the_getTax_method_with_a_given_hash_code()
+    public function can_retrieve_an_applied_tax_using_the_get_tax_method_with_a_given_hash_code()
     {
         $cart      = $this->initCart();
         $tax       = $cart->applyTax(['id' => 1, 'title' => 'Demo tax']);
@@ -1147,7 +1152,7 @@ class CartTest extends TestCase
      * @testdox Can get an array of applied taxes using the getTaxes() method.
      * @test
      */
-    public function can_get_an_array_of_applied_taxes_using_the_getTaxes_method()
+    public function can_get_an_array_of_applied_taxes_using_the_get_taxes_method()
     {
         $cart         = $this->initCart();
         $tax1         = $cart->applyTax(['id' => 1, 'title' => 'Demo tax 1']);
@@ -1166,7 +1171,7 @@ class CartTest extends TestCase
      * @testdox Can update an applied tax using the updateTax() method with a given hash code.
      * @test
      */
-    public function can_update_an_applied_tax_using_the_updateTax_method_with_a_given_hash_code()
+    public function can_update_an_applied_tax_using_the_update_tax_method_with_a_given_hash_code()
     {
         $cart = $this->initCart();
         $tax  = $cart->applyTax([
@@ -1174,7 +1179,7 @@ class CartTest extends TestCase
             'title' => 'Demo tax',
         ]);
         $updatedTax = $cart->updateTax($tax->getHash(), [
-            'title' => 'Updated title'
+            'title' => 'Updated title',
         ]);
 
         $this->assertEquals($tax, $updatedTax);
@@ -1187,7 +1192,7 @@ class CartTest extends TestCase
      * @testdox Can remove an applied tax using the removeTax() method with a given hash code.
      * @test
      */
-    public function can_remove_an_applied_tax_using_the_removeTax_method_with_a_given_hash_code()
+    public function can_remove_an_applied_tax_using_the_remove_tax_method_with_a_given_hash_code()
     {
         $cart = $this->initCart();
         $tax  = $cart->applyTax([
@@ -1205,7 +1210,7 @@ class CartTest extends TestCase
      * @testdox Can remove all applied taxes using the clearTaxes() method.
      * @test
      */
-    public function can_remove_all_applied_taxes_using_the_clearTaxes_method()
+    public function can_remove_all_applied_taxes_using_the_clear_taxes_method()
     {
         $cart = $this->initCart();
 
@@ -1304,7 +1309,7 @@ class CartTest extends TestCase
         $action = $cart->applyAction([
             'id'    => 1,
             'title' => 'Demo action',
-            'value' => 'invalid value'
+            'value' => 'invalid value',
         ]);
     }
 
@@ -1323,7 +1328,7 @@ class CartTest extends TestCase
             'id'    => 1,
             'title' => 'Demo action',
             'value' => '-10%',
-            'group' => null
+            'group' => null,
         ]);
     }
 
@@ -1343,7 +1348,7 @@ class CartTest extends TestCase
             'title' => 'Demo action',
             'value' => '-10%',
             'group' => 'discount',
-            'rules' => 'invalid rules'
+            'rules' => 'invalid rules',
         ]);
     }
 
@@ -1364,7 +1369,7 @@ class CartTest extends TestCase
             'value'      => '-10%',
             'group'      => 'discount',
             'rules'      => [],
-            'extra_info' => 'invalid extra_info'
+            'extra_info' => 'invalid extra_info',
         ]);
     }
 
@@ -1374,7 +1379,7 @@ class CartTest extends TestCase
      * @testdox Can count number of actions that has been applied to the cart by the countActions() method.
      * @test
      */
-    public function can_count_number_of_actions_that_has_been_applied_to_the_cart_by_the_countActions_method()
+    public function can_count_number_of_actions_that_has_been_applied_to_the_cart_by_the_count_actions_method()
     {
         $cart = $this->initCart();
 
@@ -1403,7 +1408,7 @@ class CartTest extends TestCase
      * @testdox Can retrieve an applied action using the getAction() method with a given hash code.
      * @test
      */
-    public function can_retrieve_an_applied_action_using_the_getAction_method_with_a_given_hash_code()
+    public function can_retrieve_an_applied_action_using_the_get_action_method_with_a_given_hash_code()
     {
         $cart         = $this->initCart();
         $action       = $cart->applyAction(['id' => 1, 'title' => 'Demo action']);
@@ -1418,7 +1423,7 @@ class CartTest extends TestCase
      * @testdox Can get an array of applied actions using the getActions() method.
      * @test
      */
-    public function can_get_an_array_of_applied_actions_using_the_getActions_method()
+    public function can_get_an_array_of_applied_actions_using_the_get_actions_method()
     {
         $cart           = $this->initCart();
         $action1        = $cart->applyAction(['id' => 1, 'title' => 'Demo action']);
@@ -1437,7 +1442,7 @@ class CartTest extends TestCase
      * @testdox Can update an applied action using the updateAction() method with a given hash code.
      * @test
      */
-    public function can_update_an_applied_action_using_the_updateAction_method_with_a_given_hash_code()
+    public function can_update_an_applied_action_using_the_update_action_method_with_a_given_hash_code()
     {
         $cart   = $this->initCart();
         $action = $cart->applyAction([
@@ -1445,7 +1450,7 @@ class CartTest extends TestCase
             'title' => 'Demo action',
         ]);
         $updatedAction = $cart->updateAction($action->getHash(), [
-            'title' => 'Updated title'
+            'title' => 'Updated title',
         ]);
 
         $this->assertEquals($action, $updatedAction);
@@ -1458,7 +1463,7 @@ class CartTest extends TestCase
      * @testdox Can remove an applied action using the removeAction() method with a given hash code.
      * @test
      */
-    public function can_remove_an_applied_action_using_the_removeAction_method_with_a_given_hash_code()
+    public function can_remove_an_applied_action_using_the_remove_action_method_with_a_given_hash_code()
     {
         $cart   = $this->initCart();
         $action = $cart->applyAction(['id' => 1, 'title' => 'Demo action']);
@@ -1473,7 +1478,7 @@ class CartTest extends TestCase
      * @testdox Can remove all applied actions using the clearActions() method.
      * @test
      */
-    public function can_remove_all_applied_actions_using_the_clearActions_method()
+    public function can_remove_all_applied_actions_using_the_clear_actions_method()
     {
         $cart = $this->initCart();
 
@@ -1491,7 +1496,7 @@ class CartTest extends TestCase
      * @testdox Can calculate the sum amount of applied actions using the sumActionsAmount() method.
      * @test
      */
-    public function can_calculate_the_sum_amount_of_applied_actions_using_the_sumActionsAmount_method()
+    public function can_calculate_the_sum_amount_of_applied_actions_using_the_sum_actions_amount_method()
     {
         $cart    = $this->initCart();
         $action1 = $cart->applyAction(['id' => 1, 'title' => 'Demo action 1', 'value' => -5000]);

@@ -1,9 +1,10 @@
-<?php namespace Jackiedo\Cart;
+<?php
+
+namespace Jackiedo\Cart;
 
 use Illuminate\Support\Arr;
 use Jackiedo\Cart\Contracts\ActionHandler;
 use Jackiedo\Cart\Contracts\CartNode;
-use Jackiedo\Cart\Details;
 use Jackiedo\Cart\Exceptions\InvalidArgumentException;
 use Jackiedo\Cart\Traits\CanBeCartNode;
 
@@ -12,7 +13,7 @@ class Action implements CartNode
     use CanBeCartNode;
 
     /**
-     * The attributes of action
+     * The attributes of action.
      *
      * @var array
      */
@@ -23,41 +24,41 @@ class Action implements CartNode
         'target'     => null,
         'value'      => 0,
         'rules'      => [],
-        'extra_info' => []
+        'extra_info' => [],
     ];
 
     /**
-     * The name of the accepted class is the creator
+     * The name of the accepted class is the creator.
      *
      * @var array
      */
     protected $acceptedCreators = [
-        ActionsContainer::class
+        ActionsContainer::class,
     ];
 
     /**
-     * Indicates whether this action belongs to a taxable cart
+     * Indicates whether this action belongs to a taxable cart.
      *
-     * @var boolean
+     * @var bool
      */
     protected $enabledBuiltinTax = false;
 
     /**
-     * Stores the number used to sort
+     * Stores the number used to sort.
      *
-     * @var integer
+     * @var int
      */
     protected $orderNumber;
 
     /**
-     * The constructor
+     * The constructor.
      *
      * @param array $attributes The action attributes
      */
     public function __construct(array $attributes = [])
     {
         // Stores the creator
-        $this->storeCreator(0, function($creator, $caller) {
+        $this->storeCreator(0, function ($creator, $caller) {
             $cart                      = $this->getCart();
             $this->enabledBuiltinTax   = $cart->isEnabledBuiltinTax();
             $this->attributes['rules'] = $cart->getConfig('default_action_rules', []);
@@ -68,10 +69,10 @@ class Action implements CartNode
     }
 
     /**
-     * Update attributes of this action instance
+     * Update attributes of this action instance.
      *
-     * @param  array   $attributes The new attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The new attributes
+     * @param bool  $withEvent  Enable firing the event
      *
      * @return $this
      */
@@ -100,7 +101,7 @@ class Action implements CartNode
     }
 
     /**
-     * Get details of the action as a collection
+     * Get details of the action as a collection.
      *
      * @return Jackiedo\Cart\Details
      */
@@ -129,7 +130,7 @@ class Action implements CartNode
     }
 
     /**
-     * Determines which values ​​to filter
+     * Determines which values ​​to filter.
      *
      * @return array
      */
@@ -144,7 +145,7 @@ class Action implements CartNode
     }
 
     /**
-     * Return the unique identifier of this action
+     * Return the unique identifier of this action.
      *
      * @return string
      */
@@ -154,7 +155,7 @@ class Action implements CartNode
     }
 
     /**
-     * Get the id used to sort
+     * Get the id used to sort.
      *
      * @return string
      */
@@ -163,7 +164,7 @@ class Action implements CartNode
         $groupsOrder    = $this->getConfig('action_groups_order', []);
         $thisGroupOrder = array_search($this->attributes['group'], $groupsOrder);
 
-        if ($thisGroupOrder !== false) {
+        if (false !== $thisGroupOrder) {
             return '1.' . $thisGroupOrder . '.' . $this->orderNumber;
         }
 
@@ -171,10 +172,10 @@ class Action implements CartNode
     }
 
     /**
-     * Get the formatted rules of this actions
+     * Get the formatted rules of this actions.
      *
-     * @param  string $rule    The specific rule or a set of rules
-     * @param  mixed  $default The return value if the rule does not exist
+     * @param string $rule    The specific rule or a set of rules
+     * @param mixed  $default The return value if the rule does not exist
      *
      * @return mixed
      */
@@ -229,10 +230,10 @@ class Action implements CartNode
     }
 
     /**
-     * Indicates whether this action is taxable
+     * Indicates whether this action is taxable.
      *
-     * @return boolean Return true if parent node is taxable item
-     *                 and the taxable rule is true
+     * @return bool Return true if parent node is taxable item
+     *              and the taxable rule is true
      */
     public function isTaxable()
     {
@@ -250,9 +251,9 @@ class Action implements CartNode
     }
 
     /**
-     * Determines if this action is self enabled through the rules attribute
+     * Determines if this action is self enabled through the rules attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSelfActivated()
     {
@@ -260,9 +261,9 @@ class Action implements CartNode
     }
 
     /**
-     * Determines if this action is disabled by one of the following action
+     * Determines if this action is disabled by one of the following action.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDeactivated()
     {
@@ -273,19 +274,19 @@ class Action implements CartNode
 
         // Get the behind actions that could be deactivator of this action
         $container    = $this->getCreator();
-        $deactivators = $container->filter(function($action) {
+        $deactivators = $container->filter(function ($action) {
             if ($this->isPreviousOf($action) && $action->isEnabled()) {
                 $actionDisableRule = $action->getRules('disable_others');
 
-                if ($actionDisableRule === 'previous_actions') {
+                if ('previous_actions' === $actionDisableRule) {
                     return true;
                 }
 
-                if ($actionDisableRule === 'same_group_previous_actions' && $this->isSameGroupAs($action)) {
+                if ('same_group_previous_actions' === $actionDisableRule && $this->isSameGroupAs($action)) {
                     return true;
                 }
 
-                if ($actionDisableRule === 'previous_groups' && !$this->isSameGroupAs($action)) {
+                if ('previous_groups' === $actionDisableRule && !$this->isSameGroupAs($action)) {
                     return true;
                 }
 
@@ -307,9 +308,9 @@ class Action implements CartNode
     }
 
     /**
-     * Indicates whether this action is enabled
+     * Indicates whether this action is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -317,11 +318,11 @@ class Action implements CartNode
     }
 
     /**
-     * Determines if this action takes place before a specific action
+     * Determines if this action takes place before a specific action.
      *
-     * @param  Jackiedo\Cart\Action $action The specific action
+     * @param Jackiedo\Cart\Action $action The specific action
      *
-     * @return boolean
+     * @return bool
      */
     public function isPreviousOf(Action $action)
     {
@@ -329,11 +330,11 @@ class Action implements CartNode
     }
 
     /**
-     * Determines if this action takes place after a specific action
+     * Determines if this action takes place after a specific action.
      *
-     * @param  Jackiedo\Cart\Action $action The specific action
+     * @param Jackiedo\Cart\Action $action The specific action
      *
-     * @return boolean
+     * @return bool
      */
     public function isBehindOf(Action $action)
     {
@@ -341,11 +342,11 @@ class Action implements CartNode
     }
 
     /**
-     * Determines if this action is in the same group as the specific action
+     * Determines if this action is in the same group as the specific action.
      *
-     * @param  Jackiedo\Cart\Action $action The specific action
+     * @param Jackiedo\Cart\Action $action The specific action
      *
-     * @return boolean
+     * @return bool
      */
     public function isSameGroupAs(Action $action)
     {
@@ -353,7 +354,7 @@ class Action implements CartNode
     }
 
     /**
-     * Get the amount of this action
+     * Get the amount of this action.
      *
      * @return float
      */
@@ -373,7 +374,7 @@ class Action implements CartNode
         $inclusiveAmount   = $rules['include_calculations'];
 
         // Calculate target amount
-        $targetAmount = floatval(($target === 'items_subtotal') ? $parentNode->getItemsSubtotal() : $parentNode->getTotalPrice());
+        $targetAmount = floatval(('items_subtotal' === $target) ? $parentNode->getItemsSubtotal() : $parentNode->getTotalPrice());
         $targetAmount = !is_null($inclusiveAmount) ? $targetAmount + $this->calcInclusiveAmount($inclusiveAmount) : $targetAmount;
 
         // Calculate action amount based on value and target amount
@@ -391,16 +392,16 @@ class Action implements CartNode
                 $amount = $isNegative ? max($amount, $maxAmount) : min($amount, $maxAmount);
             }
         } else {
-            $amount = ($target === 'price') ? $parentNode->getQuantity() * $value : $value;
+            $amount = ('price' === $target) ? $parentNode->getQuantity() * $value : $value;
         }
 
         return max(0 - $targetAmount, $amount);
     }
 
     /**
-     * Calculates the inclusive amount corresponding to the target of the action
+     * Calculates the inclusive amount corresponding to the target of the action.
      *
-     * @param  string $type The included type
+     * @param string $type The included type
      *
      * @return float
      */
@@ -414,8 +415,8 @@ class Action implements CartNode
         }
 
         // If the included type is all previous groups
-        if ($type === 'previous_groups') {
-            return $container->sum(function($action) {
+        if ('previous_groups' === $type) {
+            return $container->sum(function ($action) {
                 $isPreviousAction = $this->isBehindOf($action);
                 $isAnotherGroup   = !$this->isSameGroupAs($action);
 
@@ -424,8 +425,8 @@ class Action implements CartNode
         }
 
         // If the included type is all previous actions
-        if ($type === 'previous_actions') {
-            return $container->sum(function($action) {
+        if ('previous_actions' === $type) {
+            return $container->sum(function ($action) {
                 $isPreviousAction = $this->isBehindOf($action);
 
                 return ($isPreviousAction) ? $action->getAmount() : 0;
@@ -433,8 +434,8 @@ class Action implements CartNode
         }
 
         // If the included type is all same group previous actions
-        if ($type === 'same_group_previous_actions') {
-            return $container->sum(function($action) {
+        if ('same_group_previous_actions' === $type) {
+            return $container->sum(function ($action) {
                 $isPreviousAction = $this->isBehindOf($action);
                 $isSameGroup      = $this->isSameGroupAs($action);
 
@@ -444,7 +445,7 @@ class Action implements CartNode
 
         // If included type is an array of groups
         if (is_array($type)) {
-            return $container->sum(function($action) use ($type) {
+            return $container->sum(function ($action) use ($type) {
                 $isPreviousAction = $this->isBehindOf($action);
                 $inAcceptedGroups = in_array($action->getGroup(), $type);
 
@@ -456,9 +457,9 @@ class Action implements CartNode
     }
 
     /**
-     * Initialize the attributes
+     * Initialize the attributes.
      *
-     * @param  array  $attributes The action attributes
+     * @param array $attributes The action attributes
      *
      * @return $this
      */
@@ -481,9 +482,9 @@ class Action implements CartNode
     }
 
     /**
-     * Set value for the attributes of this instance
+     * Set value for the attributes of this instance.
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return void
      */
@@ -511,9 +512,9 @@ class Action implements CartNode
     }
 
     /**
-     * Set value for the target attribute
+     * Set value for the target attribute.
      *
-     * @param  string $value
+     * @param string $value
      *
      * @return void
      */
@@ -533,9 +534,9 @@ class Action implements CartNode
     }
 
     /**
-     * Set value for the rules attribute
+     * Set value for the rules attribute.
      *
-     * @param  mixed $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -545,11 +546,11 @@ class Action implements CartNode
     }
 
     /**
-     * Determines whether the input is a percentage string
+     * Determines whether the input is a percentage string.
      *
-     * @param  string  $input
+     * @param string $input
      *
-     * @return boolean
+     * @return bool
      */
     protected function isPercentage($input)
     {
@@ -557,13 +558,13 @@ class Action implements CartNode
             return false;
         }
 
-        return substr($input, -1) == '%';
+        return '%' == substr($input, -1);
     }
 
     /**
-     * Validates the input
+     * Validates the input.
      *
-     * @param  array  $attributes Array of input
+     * @param array $attributes Array of input
      *
      * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
      *
@@ -572,31 +573,31 @@ class Action implements CartNode
     protected function validate(array $attributes = [])
     {
         if (array_key_exists('id', $attributes) && empty($attributes['id'])) {
-            throw new InvalidArgumentException("The id attribute of the action is required.");
+            throw new InvalidArgumentException('The id attribute of the action is required.');
         }
 
         if (array_key_exists('title', $attributes) && (!is_string($attributes['title']) || empty($attributes['title']))) {
-            throw new InvalidArgumentException("The title attribute of the action is required.");
+            throw new InvalidArgumentException('The title attribute of the action is required.');
         }
 
         if (array_key_exists('group', $attributes) && !is_string($attributes['group'])) {
-            throw new InvalidArgumentException("The group attribute of the action must be a string.");
+            throw new InvalidArgumentException('The group attribute of the action must be a string.');
         }
 
         if (array_key_exists('target', $attributes) && !is_null($attributes['target']) && !is_string($attributes['target'])) {
-            throw new InvalidArgumentException("The target attribute of the action must be null or a string.");
+            throw new InvalidArgumentException('The target attribute of the action must be null or a string.');
         }
 
         if (array_key_exists('value', $attributes) && !preg_match('/^\-{0,1}\d+(\.{0,1}\d+)?\%{0,1}$/', $attributes['value'])) {
-            throw new InvalidArgumentException("The value attribute of the action must be a float numeric or percentage.");
+            throw new InvalidArgumentException('The value attribute of the action must be a float numeric or percentage.');
         }
 
         if (array_key_exists('rules', $attributes) && !is_array($attributes['rules']) && !($attributes['rules'] instanceof ActionHandler)) {
-            throw new InvalidArgumentException("The rules attribute of the action must be an array or an instance of " . ActionHandler::class . ".");
+            throw new InvalidArgumentException('The rules attribute of the action must be an array or an instance of ' . ActionHandler::class . '.');
         }
 
         if (array_key_exists('extra_info', $attributes) && !is_array($attributes['extra_info'])) {
-            throw new InvalidArgumentException("The extra_info attribute of the action must be an array.");
+            throw new InvalidArgumentException('The extra_info attribute of the action must be an array.');
         }
     }
 }
