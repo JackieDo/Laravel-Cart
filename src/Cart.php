@@ -356,7 +356,7 @@ class Cart
      * @param array $attributes The item attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Item
+     * @return null|\Jackiedo\Cart\Item
      */
     public function addItem(array $attributes = [], $withEvent = true)
     {
@@ -370,7 +370,7 @@ class Cart
      * @param array|int $attributes New quantity of item or array of new attributes to update
      * @param bool      $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Item
+     * @return null|\Jackiedo\Cart\Item
      */
     public function updateItem($itemHash, $attributes = [], $withEvent = true)
     {
@@ -411,7 +411,7 @@ class Cart
      *
      * @param string $itemHash The unique identifier of the item
      *
-     * @return Jackiedo\Cart\Item
+     * @return \Jackiedo\Cart\Item
      */
     public function getItem($itemHash)
     {
@@ -619,7 +619,7 @@ class Cart
      * @param array $attributes The tax attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Tax
+     * @return null|\Jackiedo\Cart\Tax
      */
     public function applyTax(array $attributes = [], $withEvent = true)
     {
@@ -637,7 +637,7 @@ class Cart
      * @param array  $attributes The new attributes
      * @param bool   $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Tax
+     * @return null|\Jackiedo\Cart\Tax
      */
     public function updateTax($taxHash, array $attributes = [], $withEvent = true)
     {
@@ -649,7 +649,7 @@ class Cart
      *
      * @param string $taxHash The unique identifire of the tax instance
      *
-     * @return Jackiedo\Cart\Tax
+     * @return \Jackiedo\Cart\Tax
      */
     public function getTax($taxHash)
     {
@@ -815,7 +815,7 @@ class Cart
      * @param bool $withActions Include details of applied actions in the result
      * @param bool $withTaxes   Include details of applied taxes in the result
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails($withItems = true, $withActions = true, $withTaxes = true)
     {
@@ -884,13 +884,13 @@ class Cart
     /**
      * Get all information of cart group as a collection.
      *
-     * @param string $groupName            The group part from cart name
-     * @param bool   $withCartsHaveNoItems Include carts have no items in the result
-     * @param bool   $withItems            Include details of added items in the result
-     * @param bool   $withActions          Include details of applied actions in the result
-     * @param bool   $withTaxes            Include details of applied taxes in the result
+     * @param null|string $groupName            The group part from cart name
+     * @param bool        $withCartsHaveNoItems Include carts have no items in the result
+     * @param bool        $withItems            Include details of added items in the result
+     * @param bool        $withActions          Include details of applied actions in the result
+     * @param bool        $withTaxes            Include details of applied taxes in the result
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getGroupDetails($groupName = null, $withCartsHaveNoItems = false, $withItems = true, $withActions = true, $withTaxes = true)
     {
@@ -904,7 +904,7 @@ class Cart
      *
      * @param null|string $name The cart name before standardized
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidCartNameException
+     * @throws \Jackiedo\Cart\Exceptions\InvalidCartNameException
      *
      * @return string
      */
@@ -978,7 +978,7 @@ class Cart
     /**
      * Get the session path from the path to the cart.
      *
-     * @param null|mixed $sessionKey
+     * @param mixed $sessionKey
      *
      * @return string $sessionKey The sub session key from session of this cart
      */
@@ -994,7 +994,7 @@ class Cart
     /**
      * Get the items container.
      *
-     * @return Jackiedo\Cart\ItemsContainer
+     * @return \Jackiedo\Cart\ItemsContainer
      */
     protected function getItemsContainer()
     {
@@ -1004,7 +1004,7 @@ class Cart
     /**
      * Get the taxes container.
      *
-     * @return Jackiedo\Cart\TaxesContainer
+     * @return \Jackiedo\Cart\TaxesContainer
      */
     protected function getTaxesContainer()
     {
@@ -1014,7 +1014,7 @@ class Cart
     /**
      * Get the actions container.
      *
-     * @return Jackiedo\Cart\ActionsContainer
+     * @return \Jackiedo\Cart\ActionsContainer
      */
     protected function getActionsContainer()
     {
@@ -1046,7 +1046,7 @@ class Cart
      * @param array  $moneyAmount          Information on cumulative amounts from the details of the subsections
      * @param array  $moneyAmounts
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     protected function groupAnalysic($groupName, $withCartsHaveNoItems, $withItems, $withActions, $withTaxes, array $moneyAmounts = [])
     {

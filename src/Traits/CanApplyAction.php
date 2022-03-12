@@ -17,7 +17,7 @@ trait CanApplyAction
      * @param array $attributes The action attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Action
+     * @return null|\Jackiedo\Cart\Action
      */
     public function applyAction(array $attributes = [], $withEvent = true)
     {
@@ -35,7 +35,7 @@ trait CanApplyAction
      * @param array  $attributes The new attributes
      * @param bool   $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Action
+     * @return null|\Jackiedo\Cart\Action
      */
     public function updateAction($actionHash, array $attributes = [], $withEvent = true)
     {
@@ -59,7 +59,7 @@ trait CanApplyAction
      *
      * @param string $actionHash The unique identifier of the action
      *
-     * @return Jackiedo\Cart\Action
+     * @return \Jackiedo\Cart\Action
      */
     public function getAction($actionHash)
     {

@@ -5,7 +5,7 @@ trait TestCaseSetUp
     /**
      * Get package providers.
      *
-     * @param Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */
@@ -17,7 +17,7 @@ trait TestCaseSetUp
     /**
      * Get package aliases.
      *
-     * @param Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */
@@ -29,7 +29,7 @@ trait TestCaseSetUp
     /**
      * Define environment setup.
      *
-     * @param Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return void
      */

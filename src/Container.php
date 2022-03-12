@@ -38,7 +38,7 @@ class Container extends Collection
     /**
      * Get details information of this container as a collection.
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails()
     {
@@ -57,7 +57,7 @@ class Container extends Collection
      *
      * @param string $hash The hash string
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidHashException
+     * @throws \Jackiedo\Cart\Exceptions\InvalidHashException
      *
      * @return void
      */

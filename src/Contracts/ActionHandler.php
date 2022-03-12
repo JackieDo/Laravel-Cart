@@ -7,7 +7,7 @@ interface ActionHandler
     /**
      * Control action rules.
      *
-     * @param Jackiedo\Cart\Action $action The action
+     * @param \Jackiedo\Cart\Action $action The action
      *
      * @return array
      */

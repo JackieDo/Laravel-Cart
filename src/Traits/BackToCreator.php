@@ -30,7 +30,7 @@ trait BackToCreator
     /**
      * Get the creator of this instance.
      *
-     * @throws Jackiedo\Cart\Exceptions\UnknownCreatorException
+     * @throws \Jackiedo\Cart\Exceptions\UnknownCreatorException
      *
      * @return object
      */

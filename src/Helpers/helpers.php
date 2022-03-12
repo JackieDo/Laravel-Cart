@@ -4,8 +4,8 @@ if (!function_exists('getCaller')) {
     /**
      * Returns an array containing information about the caller that called specific function.
      *
-     * @param string $function The function name or syntax of class::function
-     * @param int    $addSteps The number of additional steps to backward
+     * @param null|string $function The function name or syntax of class::function
+     * @param int         $addSteps The number of additional steps to backward
      *
      * @return array
      */

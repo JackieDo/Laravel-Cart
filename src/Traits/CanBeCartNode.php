@@ -83,8 +83,8 @@ trait CanBeCartNode
     /**
      * Get config of the cart instance thet this node belong to.
      *
-     * @param string $name    The config name
-     * @param mixed  $default The return value if the config does not exist
+     * @param null|string $name    The config name
+     * @param mixed       $default The return value if the config does not exist
      *
      * @return mixed
      */
@@ -100,8 +100,8 @@ trait CanBeCartNode
     /**
      * Get the cart node's original attribute values.
      *
-     * @param string $attribute The attribute
-     * @param mixed  $default   The return value if attribute does not exist
+     * @param null|string $attribute The attribute
+     * @param mixed       $default   The return value if attribute does not exist
      *
      * @return mixed
      */
@@ -117,8 +117,8 @@ trait CanBeCartNode
     /**
      * Dynamic attribute getter.
      *
-     * @param string $attribute The attribute
-     * @param mixed  $default   The return value if attribute does not exist
+     * @param null|string $attribute The attribute
+     * @param mixed       $default   The return value if attribute does not exist
      *
      * @return mixed
      */

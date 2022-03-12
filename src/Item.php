@@ -51,7 +51,7 @@ class Item implements CartNode
     /**
      * Stores applied actions.
      *
-     * @var Illuminate\Support\Collection
+     * @var \Illuminate\Support\Collection
      */
     protected $appliedActions;
 
@@ -130,7 +130,7 @@ class Item implements CartNode
      *
      * @param bool $withActions Include details of applied actions in the result
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails($withActions = true)
     {
@@ -198,9 +198,9 @@ class Item implements CartNode
     /**
      * Get the model instance to which this item is associated.
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidAssociatedException
+     * @throws \Jackiedo\Cart\Exceptions\InvalidAssociatedException
      *
-     * @return null|Illuminate\Database\Eloquent
+     * @return null|\Illuminate\Database\Eloquent
      */
     public function getModel()
     {
@@ -297,7 +297,7 @@ class Item implements CartNode
      *
      * @param array $attributes The cart item attributes
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
+     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
      *
      * @return $this;
      */
@@ -442,7 +442,7 @@ class Item implements CartNode
     /**
      * Return the actions container.
      *
-     * @return Jackiedo\Cart\ActionsContainer
+     * @return \Jackiedo\Cart\ActionsContainer
      */
     protected function getActionsContainer()
     {
@@ -472,7 +472,7 @@ class Item implements CartNode
      *
      * @param array $attributes The item attributes
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
+     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
      *
      * @return void
      */

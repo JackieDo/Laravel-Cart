@@ -103,7 +103,7 @@ class Action implements CartNode
     /**
      * Get details of the action as a collection.
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails()
     {
@@ -174,8 +174,8 @@ class Action implements CartNode
     /**
      * Get the formatted rules of this actions.
      *
-     * @param string $rule    The specific rule or a set of rules
-     * @param mixed  $default The return value if the rule does not exist
+     * @param null|string $rule    The specific rule or a set of rules
+     * @param mixed       $default The return value if the rule does not exist
      *
      * @return mixed
      */
@@ -320,7 +320,7 @@ class Action implements CartNode
     /**
      * Determines if this action takes place before a specific action.
      *
-     * @param Jackiedo\Cart\Action $action The specific action
+     * @param \Jackiedo\Cart\Action $action The specific action
      *
      * @return bool
      */
@@ -332,7 +332,7 @@ class Action implements CartNode
     /**
      * Determines if this action takes place after a specific action.
      *
-     * @param Jackiedo\Cart\Action $action The specific action
+     * @param \Jackiedo\Cart\Action $action The specific action
      *
      * @return bool
      */
@@ -344,7 +344,7 @@ class Action implements CartNode
     /**
      * Determines if this action is in the same group as the specific action.
      *
-     * @param Jackiedo\Cart\Action $action The specific action
+     * @param \Jackiedo\Cart\Action $action The specific action
      *
      * @return bool
      */

@@ -66,7 +66,7 @@ class UseCartableProduct implements UseCartable
      *
      * @param int $id The identifier of model
      *
-     * @return null|Illuminate\Support\Collection|static
+     * @return null|\Illuminate\Support\Collection|static
      */
     public function findById($id)
     {

@@ -28,7 +28,7 @@ class ItemsContainer extends Container
      *
      * @param bool $withActions Include details of applied actions in the result
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails($withActions = true)
     {
@@ -48,7 +48,7 @@ class ItemsContainer extends Container
      * @param array $attributes The item attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Item
+     * @return null|\Jackiedo\Cart\Item
      */
     public function addItem(array $attributes = [], $withEvent = true)
     {
@@ -88,7 +88,7 @@ class ItemsContainer extends Container
      * @param array  $attributes The new item attributes
      * @param bool   $withEvent  Enable firing the event
      *
-     * @return null|Jackiedo\Cart\Item
+     * @return null|\Jackiedo\Cart\Item
      */
     public function updateItem($itemHash, $attributes = [], $withEvent = true)
     {
@@ -198,7 +198,7 @@ class ItemsContainer extends Container
      *
      * @param string $itemHash The unique identifier of item
      *
-     * @return Jackiedo\Cart\Item
+     * @return \Jackiedo\Cart\Item
      */
     public function getItem($itemHash)
     {
