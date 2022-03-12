@@ -1,4 +1,6 @@
-<?php namespace Jackiedo\Cart\Traits;
+<?php
+
+namespace Jackiedo\Cart\Traits;
 
 use BadMethodCallException;
 use Illuminate\Support\Arr;
@@ -7,9 +9,10 @@ use Jackiedo\Cart\Cart;
 use ReflectionMethod;
 
 /**
- * The CanBeCartNode traits
+ * The CanBeCartNode traits.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 trait CanBeCartNode
@@ -17,9 +20,34 @@ trait CanBeCartNode
     use BackToCreator { getCreator as protected; }
 
     /**
+     * Dynamically handle calls to the class.
+     *
+     * @param string $method     The method name
+     * @param array  $parameters The input parameters
+     *
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        if (strlen($method) > 3 && 'get' == substr($method, 0, 3)) {
+            $attribute = Str::snake(substr($method, 3));
+
+            if (array_key_exists($attribute, $this->attributes)) {
+                return $this->attributes[$attribute];
+            }
+        }
+
+        throw new BadMethodCallException(sprintf(
+            'Method %s::%s does not exist.',
+            static::class,
+            $method
+        ));
+    }
+
+    /**
      * Check if the parent node can be found.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasKnownParentNode()
     {
@@ -27,7 +55,7 @@ trait CanBeCartNode
     }
 
     /**
-     * Get parent node instance that this instance is belong to
+     * Get parent node instance that this instance is belong to.
      *
      * @return object
      */
@@ -37,7 +65,7 @@ trait CanBeCartNode
     }
 
     /**
-     * Get the cart instance that this node belong to
+     * Get the cart instance that this node belong to.
      *
      * @return Jackiedo\Cart\Cart
      */
@@ -53,10 +81,10 @@ trait CanBeCartNode
     }
 
     /**
-     * Get config of the cart instance thet this node belong to
+     * Get config of the cart instance thet this node belong to.
      *
-     * @param  string $name    The config name
-     * @param  mixed  $default The return value if the config does not exist
+     * @param null|string $name    The config name
+     * @param mixed       $default The return value if the config does not exist
      *
      * @return mixed
      */
@@ -72,8 +100,8 @@ trait CanBeCartNode
     /**
      * Get the cart node's original attribute values.
      *
-     * @param  string $attribute The attribute
-     * @param  mixed  $default   The return value if attribute does not exist
+     * @param null|string $attribute The attribute
+     * @param mixed       $default   The return value if attribute does not exist
      *
      * @return mixed
      */
@@ -87,10 +115,10 @@ trait CanBeCartNode
     }
 
     /**
-     * Dynamic attribute getter
+     * Dynamic attribute getter.
      *
-     * @param  string $attribute The attribute
-     * @param  mixed  $default   The return value if attribute does not exist
+     * @param null|string $attribute The attribute
+     * @param mixed       $default   The return value if attribute does not exist
      *
      * @return mixed
      */
@@ -104,7 +132,7 @@ trait CanBeCartNode
                 $isMethodPublic         = $methodReflection->isPublic();
                 $numberOfRequiredParams = $methodReflection->getNumberOfRequiredParameters();
 
-                if ($isMethodPublic && $numberOfRequiredParams == 0) {
+                if ($isMethodPublic && 0 == $numberOfRequiredParams) {
                     return $this->{$getMethod}();
                 }
             }
@@ -119,8 +147,8 @@ trait CanBeCartNode
      * Get value of one or some extended informations of the current node
      * using "dot" notation.
      *
-     * @param  null|string|array $information The information want to get
-     * @param  mixed             $default
+     * @param null|array|string $information The information want to get
+     * @param mixed             $default
      *
      * @return mixed
      */
@@ -140,33 +168,10 @@ trait CanBeCartNode
     }
 
     /**
-     * Dynamically handle calls to the class.
+     * Set value for an attribute of this node.
      *
-     * @param  string $method     The method name
-     * @param  array  $parameters The input parameters
-     *
-     * @return mixed
-     */
-    public function __call($method, $parameters)
-    {
-        if (strlen($method) > 3 && substr($method, 0, 3) == 'get') {
-            $attribute = Str::snake(substr($method, 3));
-
-            if (array_key_exists($attribute, $this->attributes)) {
-                return $this->attributes[$attribute];
-            }
-        }
-
-        throw new BadMethodCallException(sprintf(
-            'Method %s::%s does not exist.', static::class, $method
-        ));
-    }
-
-    /**
-     * Set value for an attribute of this node
-     *
-     * @param  string $attribute The attribute want to set
-     * @param  mixed  $value     The value of attribute
+     * @param string $attribute The attribute want to set
+     * @param mixed  $value     The value of attribute
      *
      * @return void
      */
@@ -184,9 +189,9 @@ trait CanBeCartNode
     }
 
     /**
-     * Set value for the attributes of this node
+     * Set value for the attributes of this node.
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return void
      */
@@ -199,9 +204,9 @@ trait CanBeCartNode
 
     /**
      * Set value for extended informations of the current node.
-     * Can use "dot" notation with each information
+     * Can use "dot" notation with each information.
      *
-     * @param  array $informations
+     * @param array $informations
      *
      * @return void
      */

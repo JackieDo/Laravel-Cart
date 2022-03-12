@@ -1,9 +1,9 @@
-<?php namespace Jackiedo\Cart;
+<?php
 
-use Closure;
+namespace Jackiedo\Cart;
+
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Jackiedo\Cart\Details;
 use Jackiedo\Cart\Exceptions\InvalidCartNameException;
 use Jackiedo\Cart\Traits\CanApplyAction;
 use Jackiedo\Cart\Traits\FireEvent;
@@ -14,35 +14,37 @@ use Jackiedo\Cart\Traits\FireEvent;
  * Used to manage the cart data in session.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class Cart
 {
-    use CanApplyAction, FireEvent;
+    use CanApplyAction;
+    use FireEvent;
 
     /**
-     * The root session name
+     * The root session name.
      *
      * @var string
      */
     protected $rootSessionName;
 
     /**
-     * The default cart name
+     * The default cart name.
      *
      * @var string
      */
     protected $defaultCartName = 'default';
 
     /**
-     * The name of current cart instance
+     * The name of current cart instance.
      *
      * @var string
      */
     protected $cartName;
 
     /**
-     * Create cart instance
+     * Create cart instance.
      *
      * @return void
      */
@@ -59,9 +61,9 @@ class Cart
     }
 
     /**
-     * Select a cart to work with
+     * Select a cart to work with.
      *
-     * @param  string|null $name The cart name
+     * @param null|string $name The cart name
      *
      * @return $this
      */
@@ -75,9 +77,9 @@ class Cart
     }
 
     /**
-     * Create an another cart instance with the specific name
+     * Create an another cart instance with the specific name.
      *
-     * @param  string|null $name The cart name
+     * @param null|string $name The cart name
      *
      * @return $this
      */
@@ -97,9 +99,9 @@ class Cart
     }
 
     /**
-     * Determines whether this cart has been grouped
+     * Determines whether this cart has been grouped.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasBeenGrouped()
     {
@@ -107,11 +109,11 @@ class Cart
     }
 
     /**
-     * Determines whether this cart is in the specific group
+     * Determines whether this cart is in the specific group.
      *
-     * @param  string  $groupName The specific group name
+     * @param string $groupName The specific group name
      *
-     * @return boolean
+     * @return bool
      */
     public function isInGroup($groupName)
     {
@@ -129,7 +131,7 @@ class Cart
     }
 
     /**
-     * Get the group name of the cart
+     * Get the group name of the cart.
      *
      * @return string
      */
@@ -146,7 +148,7 @@ class Cart
     }
 
     /**
-     * Get the current cart name
+     * Get the current cart name.
      *
      * @return string
      */
@@ -156,10 +158,10 @@ class Cart
     }
 
     /**
-     * Get config of this cart
+     * Get config of this cart.
      *
-     * @param  string $name    The config name
-     * @param  mixed  $default The return value if the config does not exist
+     * @param string $name    The config name
+     * @param mixed  $default The return value if the config does not exist
      *
      * @return mixed
      */
@@ -175,7 +177,7 @@ class Cart
     /**
      * Change whether the cart status is used for commercial or not.
      *
-     * @param  boolean $status
+     * @param bool $status
      *
      * @return $this
      */
@@ -205,9 +207,9 @@ class Cart
 
     /**
      * Enable or disable built-in tax system for the cart.
-     * This is only possible if the cart is empty
+     * This is only possible if the cart is empty.
      *
-     * @param  boolean $status
+     * @param bool $status
      *
      * @return $this
      */
@@ -230,7 +232,7 @@ class Cart
 
     /**
      * Set default action rules for the cart.
-     * This is only possible if the cart is empty
+     * This is only possible if the cart is empty.
      *
      * @param array $rules The default action rules
      */
@@ -244,9 +246,9 @@ class Cart
     }
 
     /**
-     * Set action groups order for the cart
+     * Set action groups order for the cart.
      *
-     * @param  array $order The action groups order
+     * @param array $order The action groups order
      *
      * @return $this
      */
@@ -258,10 +260,10 @@ class Cart
     }
 
     /**
-     * Determines if the cart is empty
+     * Determines if the cart is empty.
      *
-     * @return boolean Returns true if the cart has no items, no taxes,
-     *                 and no action has been applied yet.
+     * @return bool returns true if the cart has no items, no taxes,
+     *              and no action has been applied yet
      */
     public function isEmpty()
     {
@@ -269,9 +271,9 @@ class Cart
     }
 
     /**
-     * Determines if the cart has no items
+     * Determines if the cart has no items.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasNoItems()
     {
@@ -279,9 +281,9 @@ class Cart
     }
 
     /**
-     * Determines if the cart has no actions
+     * Determines if the cart has no actions.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasNoActions()
     {
@@ -289,9 +291,9 @@ class Cart
     }
 
     /**
-     * Determines if the cart has no taxes
+     * Determines if the cart has no taxes.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasNoTaxes()
     {
@@ -299,9 +301,9 @@ class Cart
     }
 
     /**
-     * Determines if current cart is used for commcercial
+     * Determines if current cart is used for commcercial.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCommercialCart()
     {
@@ -309,9 +311,9 @@ class Cart
     }
 
     /**
-     * Determines if current cart is enabled built-in tax system
+     * Determines if current cart is enabled built-in tax system.
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabledBuiltinTax()
     {
@@ -323,18 +325,18 @@ class Cart
     }
 
     /**
-     * Remove cart from session
+     * Remove cart from session.
      *
-     * @param  boolean $withEvent Enable firing the event
+     * @param bool $withEvent Enable firing the event
      *
-     * @return boolean
+     * @return bool
      */
     public function destroy($withEvent = true)
     {
         if ($withEvent) {
             $eventResponse = $this->fireEvent('cart.destroying', clone $this);
 
-            if ($eventResponse === false) {
+            if (false === $eventResponse) {
                 return false;
             }
         }
@@ -349,12 +351,12 @@ class Cart
     }
 
     /**
-     * Add an item into the items container
+     * Add an item into the items container.
      *
-     * @param  array   $attributes The item attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The item attributes
+     * @param bool  $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Item|null
+     * @return null|\Jackiedo\Cart\Item
      */
     public function addItem(array $attributes = [], $withEvent = true)
     {
@@ -362,13 +364,13 @@ class Cart
     }
 
     /**
-     * Update an item in the items container
+     * Update an item in the items container.
      *
-     * @param  string    $itemHash   The unique identifier of the item
-     * @param  int|array $attributes New quantity of item or array of new attributes to update
-     * @param  boolean   $withEvent  Enable firing the event
+     * @param string    $itemHash   The unique identifier of the item
+     * @param array|int $attributes New quantity of item or array of new attributes to update
+     * @param bool      $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Item|null
+     * @return null|\Jackiedo\Cart\Item
      */
     public function updateItem($itemHash, $attributes = [], $withEvent = true)
     {
@@ -376,10 +378,10 @@ class Cart
     }
 
     /**
-     * Remove an item out of the items container
+     * Remove an item out of the items container.
      *
-     * @param  string  $itemHash  The unique identifier of the item
-     * @param  boolean $withEvent Enable firing the event
+     * @param string $itemHash  The unique identifier of the item
+     * @param bool   $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -391,9 +393,9 @@ class Cart
     }
 
     /**
-     * Delete all items in the items container
+     * Delete all items in the items container.
      *
-     * @param  boolean $withEvent Enable firing the event
+     * @param bool $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -405,11 +407,11 @@ class Cart
     }
 
     /**
-     * Get an item in the items container
+     * Get an item in the items container.
      *
-     * @param  string $itemHash The unique identifier of the item
+     * @param string $itemHash The unique identifier of the item
      *
-     * @return Jackiedo\Cart\Item
+     * @return \Jackiedo\Cart\Item
      */
     public function getItem($itemHash)
     {
@@ -417,12 +419,12 @@ class Cart
     }
 
     /**
-     * Get all items in the items container that match the given filter
+     * Get all items in the items container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return array
      */
@@ -432,14 +434,14 @@ class Cart
     }
 
     /**
-     * Count the number of items in the items container that match the given filter
+     * Count the number of items in the items container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
-     * @return integer
+     * @return int
      */
     public function countItems($filter = null, $complyAll = true)
     {
@@ -447,14 +449,14 @@ class Cart
     }
 
     /**
-     * Sum the quantities of all items in the items container that match the given filter
+     * Sum the quantities of all items in the items container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
-     * @return integer
+     * @return int
      */
     public function sumItemsQuantity($filter = null, $complyAll = true)
     {
@@ -462,11 +464,11 @@ class Cart
     }
 
     /**
-     * Determines if the item exists in the items container
+     * Determines if the item exists in the items container.
      *
-     * @param  string $itemHash The unique identifier of the item
+     * @param string $itemHash The unique identifier of the item
      *
-     * @return boolean
+     * @return bool
      */
     public function hasItem($itemHash)
     {
@@ -474,10 +476,10 @@ class Cart
     }
 
     /**
-     * Set value for one or some extended informations of the cart
+     * Set value for one or some extended informations of the cart.
      *
-     * @param  string|array $information The information want to set
-     * @param  mixed        $value       The value of information
+     * @param array|string $information The information want to set
+     * @param mixed        $value       The value of information
      *
      * @return $this
      */
@@ -488,10 +490,10 @@ class Cart
 
     /**
      * Get value of one or some extended informations of the cart
-     * using "dot" notation
+     * using "dot" notation.
      *
-     * @param  null|string|array $information The information want to get
-     * @param  mixed             $default     The return value if information does not exist
+     * @param null|array|string $information The information want to get
+     * @param mixed             $default     The return value if information does not exist
      *
      * @return mixed
      */
@@ -502,9 +504,9 @@ class Cart
 
     /**
      * Remove one or some extended informations of the cart
-     * using "dot" notation
+     * using "dot" notation.
      *
-     * @param  null|string|array $information The information want to remove
+     * @param null|array|string $information The information want to remove
      *
      * @return $this
      */
@@ -517,9 +519,9 @@ class Cart
      * Set value for one or some extended informations of the group
      * using "dot" notation.
      *
-     * @param  string       $groupName   The name of the cart group
-     * @param  string|array $information The information want to set
-     * @param  mixed        $value       The value of information
+     * @param string       $groupName   The name of the cart group
+     * @param array|string $information The information want to set
+     * @param mixed        $value       The value of information
      *
      * @return $this
      */
@@ -530,7 +532,7 @@ class Cart
         if ($groupName) {
             if (!is_array($information)) {
                 $information = [
-                    $information => $value
+                    $information => $value,
                 ];
             }
 
@@ -548,17 +550,17 @@ class Cart
 
     /**
      * Get value of one or some extended informations of the group
-     * using "dot" notation
+     * using "dot" notation.
      *
-     * @param  string            $groupName   The name of the cart group
-     * @param  null|string|array $information The information want to get
-     * @param  mixed             $default     The return value if information does not exist
+     * @param string            $groupName   The name of the cart group
+     * @param null|array|string $information The information want to get
+     * @param mixed             $default     The return value if information does not exist
      *
      * @return mixed
      */
     public function getGroupExtraInfo($groupName, $information = null, $default = null)
     {
-        $groupName = trim ($groupName, '.');
+        $groupName = trim($groupName, '.');
 
         if ($groupName) {
             $extraInfo = session($this->rootSessionName . '.' . $groupName . '.extra_info', []);
@@ -579,10 +581,10 @@ class Cart
 
     /**
      * Remove one or some extended informations of the group
-     * using "dot" notation
+     * using "dot" notation.
      *
-     * @param  string            $groupName   The name of the cart group
-     * @param  null|string|array $information The information want to remove
+     * @param string            $groupName   The name of the cart group
+     * @param null|array|string $information The information want to remove
      *
      * @return $this
      */
@@ -612,12 +614,12 @@ class Cart
     }
 
     /**
-     * Add a tax into the taxes container of this cart
+     * Add a tax into the taxes container of this cart.
      *
-     * @param  array   $attributes The tax attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The tax attributes
+     * @param bool  $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Tax|null
+     * @return null|\Jackiedo\Cart\Tax
      */
     public function applyTax(array $attributes = [], $withEvent = true)
     {
@@ -629,13 +631,13 @@ class Cart
     }
 
     /**
-     * Update a tax in the taxes container
+     * Update a tax in the taxes container.
      *
-     * @param  string  $taxHash    The unique identifire of the tax instance
-     * @param  array   $attributes The new attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param string $taxHash    The unique identifire of the tax instance
+     * @param array  $attributes The new attributes
+     * @param bool   $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Tax|null
+     * @return null|\Jackiedo\Cart\Tax
      */
     public function updateTax($taxHash, array $attributes = [], $withEvent = true)
     {
@@ -643,11 +645,11 @@ class Cart
     }
 
     /**
-     * Get an applied tax in the taxes container of this cart
+     * Get an applied tax in the taxes container of this cart.
      *
-     * @param  string $taxHash The unique identifire of the tax instance
+     * @param string $taxHash The unique identifire of the tax instance
      *
-     * @return Jackiedo\Cart\Tax
+     * @return \Jackiedo\Cart\Tax
      */
     public function getTax($taxHash)
     {
@@ -655,12 +657,12 @@ class Cart
     }
 
     /**
-     * Get all tax instances in the taxes container of this cart that match the given filter
+     * Get all tax instances in the taxes container of this cart that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return array
      */
@@ -670,14 +672,14 @@ class Cart
     }
 
     /**
-     * Count all taxes in the actions container that match the given filter
+     * Count all taxes in the actions container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
-     * @return integer
+     * @return int
      */
     public function countTaxes($filter = null, $complyAll = true)
     {
@@ -685,11 +687,11 @@ class Cart
     }
 
     /**
-     * Determines if the tax exists in the taxes container of this cart
+     * Determines if the tax exists in the taxes container of this cart.
      *
-     * @param  string $taxHash The unique identifier of the tax
+     * @param string $taxHash The unique identifier of the tax
      *
-     * @return boolean
+     * @return bool
      */
     public function hasTax($taxHash)
     {
@@ -697,10 +699,10 @@ class Cart
     }
 
     /**
-     * Remove an applied tax from the taxes container of this cart
+     * Remove an applied tax from the taxes container of this cart.
      *
-     * @param  string  $taxHash   The unique identifier of the tax instance
-     * @param  boolean $withEvent Enable firing the event
+     * @param string $taxHash   The unique identifier of the tax instance
+     * @param bool   $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -712,9 +714,9 @@ class Cart
     }
 
     /**
-     * Remove all apllied taxes from the taxes container of this cart
+     * Remove all apllied taxes from the taxes container of this cart.
      *
-     * @param  boolean $withEvent Enable firing the event
+     * @param bool $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -726,7 +728,7 @@ class Cart
     }
 
     /**
-     * Get the subtotal amount of all items in the items container
+     * Get the subtotal amount of all items in the items container.
      *
      * @return float
      */
@@ -736,7 +738,7 @@ class Cart
     }
 
     /**
-     * Get the sum amount of all items subtotal amount and all actions amount
+     * Get the sum amount of all items subtotal amount and all actions amount.
      *
      * @return float
      */
@@ -748,7 +750,7 @@ class Cart
     }
 
     /**
-     * Calculate total taxable amounts include the taxable amount of cart and all items
+     * Calculate total taxable amounts include the taxable amount of cart and all items.
      *
      * @return float
      */
@@ -762,7 +764,7 @@ class Cart
         $cartTaxableAmount  = $this->getActionsContainer()->sumAmount([
             'rules' => [
                 'taxable' => true,
-            ]
+            ],
         ]);
 
         return $itemsTaxableAmount + $cartTaxableAmount;
@@ -807,13 +809,13 @@ class Cart
     }
 
     /**
-     * Get all information of cart as a collection
+     * Get all information of cart as a collection.
      *
-     * @param  boolean $withItems   Include details of added items in the result
-     * @param  boolean $withActions Include details of applied actions in the result
-     * @param  boolean $withTaxes   Include details of applied taxes in the result
+     * @param bool $withItems   Include details of added items in the result
+     * @param bool $withActions Include details of applied actions in the result
+     * @param bool $withTaxes   Include details of applied taxes in the result
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails($withItems = true, $withActions = true, $withTaxes = true)
     {
@@ -880,15 +882,15 @@ class Cart
     }
 
     /**
-     * Get all information of cart group as a collection
+     * Get all information of cart group as a collection.
      *
-     * @param  string  $groupName            The group part from cart name
-     * @param  boolean $withCartsHaveNoItems Include carts have no items in the result
-     * @param  boolean $withItems            Include details of added items in the result
-     * @param  boolean $withActions          Include details of applied actions in the result
-     * @param  boolean $withTaxes            Include details of applied taxes in the result
+     * @param null|string $groupName            The group part from cart name
+     * @param bool        $withCartsHaveNoItems Include carts have no items in the result
+     * @param bool        $withItems            Include details of added items in the result
+     * @param bool        $withActions          Include details of applied actions in the result
+     * @param bool        $withTaxes            Include details of applied taxes in the result
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getGroupDetails($groupName = null, $withCartsHaveNoItems = false, $withItems = true, $withActions = true, $withTaxes = true)
     {
@@ -898,11 +900,11 @@ class Cart
     }
 
     /**
-     * Standardize the cart name
+     * Standardize the cart name.
      *
-     * @param  string|null $name The cart name before standardized
+     * @param null|string $name The cart name before standardized
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidCartNameException
+     * @throws \Jackiedo\Cart\Exceptions\InvalidCartNameException
      *
      * @return string
      */
@@ -919,9 +921,9 @@ class Cart
     }
 
     /**
-     * Initialize attributes for current cart instance
+     * Initialize attributes for current cart instance.
      *
-     * @return boolean Return false if attributes already exist without initialization.
+     * @return bool return false if attributes already exist without initialization
      */
     protected function initSessions()
     {
@@ -957,10 +959,10 @@ class Cart
     }
 
     /**
-     * Set config for this cart
+     * Set config for this cart.
      *
-     * @param  string $name
-     * @param  mixed  $value
+     * @param string $name
+     * @param mixed  $value
      *
      * @return $this
      */
@@ -974,7 +976,9 @@ class Cart
     }
 
     /**
-     * Get the session path from the path to the cart
+     * Get the session path from the path to the cart.
+     *
+     * @param mixed $sessionKey
      *
      * @return string $sessionKey The sub session key from session of this cart
      */
@@ -988,9 +992,9 @@ class Cart
     }
 
     /**
-     * Get the items container
+     * Get the items container.
      *
-     * @return Jackiedo\Cart\ItemsContainer
+     * @return \Jackiedo\Cart\ItemsContainer
      */
     protected function getItemsContainer()
     {
@@ -998,9 +1002,9 @@ class Cart
     }
 
     /**
-     * Get the taxes container
+     * Get the taxes container.
      *
-     * @return Jackiedo\Cart\TaxesContainer
+     * @return \Jackiedo\Cart\TaxesContainer
      */
     protected function getTaxesContainer()
     {
@@ -1008,9 +1012,9 @@ class Cart
     }
 
     /**
-     * Get the actions container
+     * Get the actions container.
      *
-     * @return Jackiedo\Cart\ActionsContainer
+     * @return \Jackiedo\Cart\ActionsContainer
      */
     protected function getActionsContainer()
     {
@@ -1018,9 +1022,9 @@ class Cart
     }
 
     /**
-     * Indicates whether this instance can apply cart
+     * Indicates whether this instance can apply cart.
      *
-     * @return boolean
+     * @return bool
      */
     protected function canApplyAction()
     {
@@ -1032,23 +1036,24 @@ class Cart
     }
 
     /**
-     * Analyze data from the session group
+     * Analyze data from the session group.
      *
-     * @param  string  $groupName            The group part from cart name
-     * @param  boolean $withCartsHaveNoItems Include carts have no items in the result
-     * @param  boolean $withItems            Include details of added items in the result
-     * @param  boolean $withActions          Include details of applied actions in the result
-     * @param  boolean $withTaxes            Include details of applied taxes in the result
-     * @param  array   $moneyAmount          Information on cumulative amounts from the details of the subsections
+     * @param string $groupName            The group part from cart name
+     * @param bool   $withCartsHaveNoItems Include carts have no items in the result
+     * @param bool   $withItems            Include details of added items in the result
+     * @param bool   $withActions          Include details of applied actions in the result
+     * @param bool   $withTaxes            Include details of applied taxes in the result
+     * @param array  $moneyAmount          Information on cumulative amounts from the details of the subsections
+     * @param array  $moneyAmounts
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     protected function groupAnalysic($groupName, $withCartsHaveNoItems, $withItems, $withActions, $withTaxes, array $moneyAmounts = [])
     {
         $info = session($this->rootSessionName . '.' . $groupName, []);
 
         // If this is a group
-        if (Arr::get($info, 'type') !== 'cart') {
+        if ('cart' !== Arr::get($info, 'type')) {
             $extraInfo   = Arr::get($info, 'extra_info', []);
             $info        = Arr::except($info, ['extra_info']);
             $details     = new Details;
@@ -1076,7 +1081,7 @@ class Cart
             }
 
             $details->put('items_count', $subsections->sum('items_count'));
-            $details->put('quantities_sum', $subsections->sum(function($section) {
+            $details->put('quantities_sum', $subsections->sum(function ($section) {
                 return $section->get('quantities_sum', $section->get('items_count'));
             }));
 

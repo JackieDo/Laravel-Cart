@@ -1,26 +1,30 @@
-<?php namespace Jackiedo\Cart;
+<?php
+
+namespace Jackiedo\Cart;
 
 use Illuminate\Support\Collection;
-use Jackiedo\Cart\Details;
 use Jackiedo\Cart\Exceptions\InvalidHashException;
 use Jackiedo\Cart\Traits\BackToCreator;
 use Jackiedo\Cart\Traits\CollectionForgetAll;
 use Jackiedo\Cart\Traits\FireEvent;
 
 /**
- * The Container class
+ * The Container class.
  *
  * @package JackieDo/Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class Container extends Collection
 {
-    use CollectionForgetAll, BackToCreator, FireEvent;
+    use CollectionForgetAll;
+    use BackToCreator;
+    use FireEvent;
 
     /**
      * Create a new container.
      *
-     * @param  mixed  $items
+     * @param mixed $items
      *
      * @return void
      */
@@ -32,9 +36,9 @@ class Container extends Collection
     }
 
     /**
-     * Get details information of this container as a collection
+     * Get details information of this container as a collection.
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails()
     {
@@ -49,16 +53,16 @@ class Container extends Collection
     }
 
     /**
-     * Check for the existence of the hash string
+     * Check for the existence of the hash string.
      *
-     * @param  string $hash The hash string
+     * @param string $hash The hash string
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidHashException
+     * @throws \Jackiedo\Cart\Exceptions\InvalidHashException
      *
      * @return void
      */
     protected function throwInvalidHashException($hash)
     {
-        throw new InvalidHashException("Could not find any action with hash " . $hash . " in the actions container.");
+        throw new InvalidHashException('Could not find any action with hash ' . $hash . ' in the actions container.');
     }
 }

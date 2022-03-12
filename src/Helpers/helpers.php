@@ -4,12 +4,13 @@ if (!function_exists('getCaller')) {
     /**
      * Returns an array containing information about the caller that called specific function.
      *
-     * @param  string $function The function name or syntax of class::function
-     * @param  int    $addSteps The number of additional steps to backward
+     * @param null|string $function The function name or syntax of class::function
+     * @param int         $addSteps The number of additional steps to backward
      *
      * @return array
      */
-    function getCaller($function = null, $addSteps = 0) {
+    function getCaller($function = null, $addSteps = 0)
+    {
         // Get all debug backtrace
         $traces = debug_backtrace();
 
@@ -31,12 +32,12 @@ if (!function_exists('getCaller')) {
             return [];
         }
 
-        if (is_string($function) && $function != '') {
+        if (is_string($function) && '' != $function) {
             // This stage used to get the caller that called to special function
             // or method.
             $splitParts = explode('::', $function, 2);
 
-            if (count($splitParts) == 2) {
+            if (2 == count($splitParts)) {
                 $class    = $splitParts[0];
                 $function = $splitParts[1];
             } else {
@@ -44,12 +45,12 @@ if (!function_exists('getCaller')) {
                 $function = $splitParts[0];
             }
 
-            if ($function != '') {
+            if ('' != $function) {
                 // If we are given a function name as a string, go through all
                 // the traces and find it's caller.
                 $maxFindRange = $totalTraces - $stepsBackward;
 
-                for ($i = 0; $i <= $maxFindRange; $i++) {
+                for ($i = 0; $i <= $maxFindRange; ++$i) {
                     $currTrace     = $traces[$i];
                     $traceClass    = array_key_exists('class', $currTrace) ? $currTrace['class'] : null;
                     $traceFunction = array_key_exists('function', $currTrace) ? $currTrace['function'] : '';
@@ -80,7 +81,8 @@ if (!function_exists('isAssocArray')) {
      *
      * An array is "associative" if it doesn't have sequential numerical keys beginning with zero.
      *
-     * @param  array $array
+     * @param array $array
+     *
      * @return bool
      */
     function isAssocArray(array $array)
@@ -93,10 +95,10 @@ if (!function_exists('isAssocArray')) {
 
 if (!function_exists('array_intersect_assoc_recursive')) {
     /**
-     * Recursive computes the intersection of two arrays with additional index check
+     * Recursive computes the intersection of two arrays with additional index check.
      *
-     * @param  array $array1
-     * @param  array $array2
+     * @param array $array1
+     * @param array $array2
      *
      * @return array
      */
@@ -125,10 +127,10 @@ if (!function_exists('array_intersect_assoc_recursive')) {
 
 if (!function_exists('array_diff_assoc_recursive')) {
     /**
-     * Recursive computes the difference of two arrays with additional index check
+     * Recursive computes the difference of two arrays with additional index check.
      *
-     * @param  array $array1
-     * @param  array $array2
+     * @param array $array1
+     * @param array $array2
      *
      * @return array
      */
@@ -157,12 +159,12 @@ if (!function_exists('array_diff_assoc_recursive')) {
 
 if (!function_exists('ksort_recursive')) {
     /**
-     * Recursive sort an array by key
+     * Recursive sort an array by key.
      *
-     * @param  array   $array
-     * @param  int     $sort_flags
+     * @param array $array
+     * @param int   $sort_flags
      *
-     * @return boolean
+     * @return bool
      */
     function ksort_recursive(array &$array, $sort_flags = SORT_REGULAR)
     {

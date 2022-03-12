@@ -1,16 +1,18 @@
-<?php namespace Jackiedo\Cart;
+<?php
+
+namespace Jackiedo\Cart;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * The CartServiceProvider class
+ * The CartServiceProvider class.
  *
  * @package Jackiedo\Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class CartServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -25,7 +27,7 @@ class CartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $packageConfigPath = __DIR__.'/Config/config.php';
+        $packageConfigPath = __DIR__ . '/Config/config.php';
         $appConfigPath     = config_path('cart.php');
 
         $this->mergeConfigFrom($packageConfigPath, 'cart');

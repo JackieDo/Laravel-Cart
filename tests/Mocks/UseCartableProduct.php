@@ -4,28 +4,28 @@ use Jackiedo\Cart\Contracts\UseCartable;
 use Jackiedo\Cart\Traits\CanUseCart;
 
 /**
- * This is a sample model use to associated with the cart item
+ * This is a sample model use to associated with the cart item.
  */
 class UseCartableProduct implements UseCartable
 {
     use CanUseCart;
 
     /**
-     * The identifier of model
+     * The identifier of model.
      *
-     * @var integer
+     * @var int
      */
     public $id = 1;
 
     /**
-     * The name of model
+     * The name of model.
      *
      * @var string
      */
     public $name = 'Polo T-shirt for men';
 
     /**
-     * The price of model
+     * The price of model.
      *
      * @var float
      */
@@ -62,11 +62,11 @@ class UseCartableProduct implements UseCartable
     }
 
     /**
-     * Find a model by its identifier
+     * Find a model by its identifier.
      *
-     * @param  int  $id  The identifier of model
+     * @param int $id The identifier of model
      *
-     * @return Illuminate\Support\Collection|static|null
+     * @return null|\Illuminate\Support\Collection|static
      */
     public function findById($id)
     {

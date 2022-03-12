@@ -1,32 +1,34 @@
-<?php namespace Jackiedo\Cart;
+<?php
+
+namespace Jackiedo\Cart;
 
 use Closure;
-use Jackiedo\Cart\Details;
 
 /**
  * The ItemsContainer class
- * This is a container used to store cart items
+ * This is a container used to store cart items.
  *
  * @package JackieDo/Cart
+ *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
 class ItemsContainer extends Container
 {
     /**
-     * The name of the accepted class is the creator
+     * The name of the accepted class is the creator.
      *
      * @var array
      */
     protected $acceptedCreators = [
-        Cart::class
+        Cart::class,
     ];
 
     /**
-     * Get details information of this container as a collection
+     * Get details information of this container as a collection.
      *
-     * @param  boolean $withActions Include details of applied actions in the result
+     * @param bool $withActions Include details of applied actions in the result
      *
-     * @return Jackiedo\Cart\Details
+     * @return \Jackiedo\Cart\Details
      */
     public function getDetails($withActions = true)
     {
@@ -41,12 +43,12 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Add an item into this container
+     * Add an item into this container.
      *
-     * @param  array   $attributes The item attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param array $attributes The item attributes
+     * @param bool  $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Item|null
+     * @return null|\Jackiedo\Cart\Item
      */
     public function addItem(array $attributes = [], $withEvent = true)
     {
@@ -55,7 +57,7 @@ class ItemsContainer extends Container
         if ($withEvent) {
             $event = $this->fireEvent('cart.item.adding', [$item]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return null;
             }
         }
@@ -65,9 +67,8 @@ class ItemsContainer extends Container
         if ($this->has($itemHash)) {
             // If item is already exists in this container, we will increase quantity of item
             $newQuantity = $this->get($itemHash)->getQuantity() + $item->getQuantity();
-            $updatedItem = $this->updateItem($itemHash, ['quantity' => $newQuantity], $withEvent);
 
-            return $updatedItem;
+            return $this->updateItem($itemHash, ['quantity' => $newQuantity], $withEvent);
         }
 
         // If item is not exists in this container, we will put it to container
@@ -81,13 +82,13 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Update item attributes of an item in this container
+     * Update item attributes of an item in this container.
      *
-     * @param  string  $itemHash   The unique identifier of item
-     * @param  array   $attributes The new item attributes
-     * @param  boolean $withEvent  Enable firing the event
+     * @param string $itemHash   The unique identifier of item
+     * @param array  $attributes The new item attributes
+     * @param bool   $withEvent  Enable firing the event
      *
-     * @return Jackiedo\Cart\Item|null
+     * @return null|\Jackiedo\Cart\Item
      */
     public function updateItem($itemHash, $attributes = [], $withEvent = true)
     {
@@ -106,7 +107,7 @@ class ItemsContainer extends Container
         if ($withEvent) {
             $event = $this->fireEvent('cart.item.updating', [&$attributes, $item]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return null;
             }
         }
@@ -135,10 +136,10 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Remove an item from this container
+     * Remove an item from this container.
      *
-     * @param  string  $itemHash  The unique identifier of item
-     * @param  boolean $withEvent Enable firing the event
+     * @param string $itemHash  The unique identifier of item
+     * @param bool   $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -149,7 +150,7 @@ class ItemsContainer extends Container
         if ($withEvent) {
             $event = $this->fireEvent('cart.item.removing', [$item]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return $this;
             }
         }
@@ -165,9 +166,9 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Clear all item in this container
+     * Clear all item in this container.
      *
-     * @param  boolean $withEvent Enable firing the event
+     * @param bool $withEvent Enable firing the event
      *
      * @return $this
      */
@@ -178,7 +179,7 @@ class ItemsContainer extends Container
         if ($withEvent) {
             $event = $this->fireEvent('cart.item.clearing', [$cart]);
 
-            if ($event === false) {
+            if (false === $event) {
                 return $this;
             }
         }
@@ -193,11 +194,11 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Get an item in this container by given hash
+     * Get an item in this container by given hash.
      *
-     * @param  string $itemHash The unique identifier of item
+     * @param string $itemHash The unique identifier of item
      *
-     * @return Jackiedo\Cart\Item
+     * @return \Jackiedo\Cart\Item
      */
     public function getItem($itemHash)
     {
@@ -209,12 +210,12 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Get all items in this container that match the given filter
+     * Get all items in this container that match the given filter.
      *
-     * @param  mixed   $filter    The search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    The search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return array
      */
@@ -234,7 +235,7 @@ class ItemsContainer extends Container
         if (is_array($filter)) {
             // If filter is not an associative array
             if (!isAssocArray($filter)) {
-                $filtered = $this->filter(function($item) use ($filter) {
+                $filtered = $this->filter(function ($item) use ($filter) {
                     return in_array($item->getHash(), $filter);
                 });
 
@@ -246,13 +247,13 @@ class ItemsContainer extends Container
                 $filtered = $this->filter(function ($item) use ($filter) {
                     $intersects = array_intersect_assoc_recursive($item->getFilterValues(), $filter);
 
-                    return (!empty($intersects));
+                    return !empty($intersects);
                 });
             } else {
                 $filtered = $this->filter(function ($item) use ($filter) {
                     $diffs = array_diff_assoc_recursive($item->getFilterValues(), $filter);
 
-                    return (empty($diffs));
+                    return empty($diffs);
                 });
             }
 
@@ -263,14 +264,14 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Count the number of items in this container that match the given filter
+     * Count the number of items in this container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
-     * @return integer
+     * @return int
      */
     public function countItems($filter = null, $complyAll = true)
     {
@@ -282,14 +283,14 @@ class ItemsContainer extends Container
     }
 
     /**
-     * Count the quantities of all items in this container that match the given filter
+     * Count the quantities of all items in this container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
-     * @return integer
+     * @return int
      */
     public function sumQuantity($filter = null, $complyAll = true)
     {
@@ -299,18 +300,18 @@ class ItemsContainer extends Container
 
         $allItems = $this->getItems($filter, $complyAll);
 
-        return array_reduce($allItems, function($carry, $item) {
+        return array_reduce($allItems, function ($carry, $item) {
             return $carry + $item->getQuantity();
         }, 0);
     }
 
     /**
-     * Sum the subtotal of all items in this container that match the given filter
+     * Sum the subtotal of all items in this container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return float
      */
@@ -322,18 +323,18 @@ class ItemsContainer extends Container
 
         $allItems = $this->getItems($filter, $complyAll);
 
-        return array_reduce($allItems, function($carry, $item) {
+        return array_reduce($allItems, function ($carry, $item) {
             return $carry + $item->getSubtotal();
         }, 0);
     }
 
     /**
-     * Sum the taxable amount of all items in this container that match the given filter
+     * Sum the taxable amount of all items in this container that match the given filter.
      *
-     * @param  mixed   $filter    Search filter
-     * @param  boolean $complyAll Indicates that the results returned must satisfy
-     *                            all the conditions of the filter at the same time
-     *                            or that only parts of the filter.
+     * @param mixed $filter    Search filter
+     * @param bool  $complyAll indicates that the results returned must satisfy
+     *                         all the conditions of the filter at the same time
+     *                         or that only parts of the filter
      *
      * @return float
      */
@@ -345,7 +346,7 @@ class ItemsContainer extends Container
 
         $allItems = $this->getItems($filter, $complyAll);
 
-        return array_reduce($allItems, function($carry, $item) {
+        return array_reduce($allItems, function ($carry, $item) {
             return $carry + $item->getTaxableAmount();
         }, 0);
     }

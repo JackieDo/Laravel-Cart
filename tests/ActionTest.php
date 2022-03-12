@@ -8,6 +8,10 @@ use Orchestra\Testbench\TestCase;
 
 require_once __DIR__ . '/Traits/CommonSetUp.php';
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class ActionTest extends TestCase
 {
     use CommonSetUp;
@@ -25,7 +29,7 @@ class ActionTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item',
             'quantity' => 1,
-            'price'    => 1000
+            'price'    => 1000,
         ]);
 
         $id        = 1;
@@ -33,7 +37,7 @@ class ActionTest extends TestCase
         $group     = 'discount';
         $value     = -100;
         $extraInfo = [
-            'description' => 'Example extra information'
+            'description' => 'Example extra information',
         ];
 
         $cartAction = $cart->applyAction([
@@ -41,7 +45,7 @@ class ActionTest extends TestCase
             'title'      => $title,
             'group'      => $group,
             'value'      => $value,
-            'extra_info' => $extraInfo
+            'extra_info' => $extraInfo,
         ]);
 
         $itemAction = $item->applyAction([
@@ -49,7 +53,7 @@ class ActionTest extends TestCase
             'title'      => $title,
             'group'      => $group,
             'value'      => $value,
-            'extra_info' => $extraInfo
+            'extra_info' => $extraInfo,
         ]);
 
         $this->assertInstanceOf(Action::class, $cartAction);
@@ -82,7 +86,7 @@ class ActionTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item',
             'quantity' => 1,
-            'price'    => 1000
+            'price'    => 1000,
         ]);
 
         $id        = 1;
@@ -90,7 +94,7 @@ class ActionTest extends TestCase
         $group     = 'discount';
         $value     = -100;
         $extraInfo = [
-            'description' => 'Example extra information'
+            'description' => 'Example extra information',
         ];
 
         $cartAction = $cart->applyAction([
@@ -98,7 +102,7 @@ class ActionTest extends TestCase
             'title'      => $title,
             'group'      => $group,
             'value'      => $value,
-            'extra_info' => $extraInfo
+            'extra_info' => $extraInfo,
         ]);
 
         $itemAction = $item->applyAction([
@@ -106,7 +110,7 @@ class ActionTest extends TestCase
             'title'      => $title,
             'group'      => $group,
             'value'      => $value,
-            'extra_info' => $extraInfo
+            'extra_info' => $extraInfo,
         ]);
 
         $this->assertInstanceOf(Action::class, $cartAction);
@@ -139,7 +143,7 @@ class ActionTest extends TestCase
             'id'       => 1,
             'title'    => 'Example item',
             'quantity' => 1,
-            'price'    => 1000
+            'price'    => 1000,
         ]);
 
         $cartAction = $cart->applyAction(['id' => 1, 'title' => 'Example action']);
@@ -155,14 +159,14 @@ class ActionTest extends TestCase
      * @testdox Can retrieve the cart instance that action belongs to using the getCart() method.
      * @test
      */
-    public function can_retrieve_the_cart_instance_that_action_belongs_to_using_the_getCart_method()
+    public function can_retrieve_the_cart_instance_that_action_belongs_to_using_the_get_cart_method()
     {
         $cart = $this->initCart();
         $item = $cart->addItem([
             'id'       => 1,
             'title'    => 'Example item',
             'quantity' => 1,
-            'price'    => 1000
+            'price'    => 1000,
         ]);
 
         $cartAction       = $cart->applyAction(['id' => 1, 'title' => 'Example action']);
@@ -182,14 +186,14 @@ class ActionTest extends TestCase
      * @testdox Can retrieve the parent node instance that action belongs to using the getParentNode() method.
      * @test
      */
-    public function can_retrieve_the_parent_node_instance_that_action_belongs_to_using_the_getParentNode_method()
+    public function can_retrieve_the_parent_node_instance_that_action_belongs_to_using_the_get_parent_node_method()
     {
         $cart = $this->initCart();
         $item = $cart->addItem([
             'id'       => 1,
             'title'    => 'Example item',
             'quantity' => 1,
-            'price'    => 1000
+            'price'    => 1000,
         ]);
 
         $cartAction = $cart->applyAction(['id' => 1, 'title' => 'Example action']);
@@ -211,7 +215,7 @@ class ActionTest extends TestCase
      * @testdox Each action always has a hash code that can be retrieved by the getHash() method.
      * @test
      */
-    public function each_action_always_has_a_hash_code_that_can_be_retrieved_by_the_getHash_method()
+    public function each_action_always_has_a_hash_code_that_can_be_retrieved_by_the_get_hash_method()
     {
         $cart   = $this->initCart();
         $action = $cart->applyAction(['id' => 1, 'title' => 'Example title']);
