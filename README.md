@@ -1,9 +1,9 @@
 # Laravel Cart
+
 [![Run tests](https://github.com/JackieDo/Laravel-Cart/actions/workflows/run-tests.yml/badge.svg?branch=v3.0)](https://github.com/JackieDo/Laravel-Cart/actions/workflows/run-tests.yml)
 [![Build Status](https://api.travis-ci.org/JackieDo/Laravel-Cart.svg?branch=v3.0)](https://travis-ci.org/JackieDo/Laravel-Cart)
 [![Total Downloads](https://poser.pugx.org/jackiedo/cart/downloads)](https://packagist.org/packages/jackiedo/cart)
 [![Latest Stable Version](https://poser.pugx.org/jackiedo/cart/v/stable)](https://packagist.org/packages/jackiedo/cart)
-[![Latest Unstable Version](https://poser.pugx.org/jackiedo/cart/v/unstable)](https://packagist.org/packages/jackiedo/cart)
 [![License](https://poser.pugx.org/jackiedo/cart/license)](https://packagist.org/packages/jackiedo/cart)
 
 Laravel Cart is a package used to create and manage carts (such as shopping, recently viewed, compared items...) in Laravel application.
