@@ -1,10 +1,10 @@
 ## Laravel Cart
 A package used to create and manage carts in Laravel application.
 
+[![Run tests](https://github.com/JackieDo/Laravel-Cart/actions/workflows/run-tests.yml/badge.svg?branch=v3.0)](https://github.com/JackieDo/Laravel-Cart/actions/workflows/run-tests.yml)
 [![Build Status](https://api.travis-ci.org/JackieDo/Laravel-Cart.svg?branch=v3.0)](https://travis-ci.org/JackieDo/Laravel-Cart)
 [![Total Downloads](https://poser.pugx.org/jackiedo/cart/downloads)](https://packagist.org/packages/jackiedo/cart)
 [![Latest Stable Version](https://poser.pugx.org/jackiedo/cart/v/stable)](https://packagist.org/packages/jackiedo/cart)
-[![Latest Unstable Version](https://poser.pugx.org/jackiedo/cart/v/unstable)](https://packagist.org/packages/jackiedo/cart)
 [![License](https://poser.pugx.org/jackiedo/cart/license)](https://packagist.org/packages/jackiedo/cart)
 
 ## Features
@@ -34,7 +34,7 @@ Currently, versions `v1.0` and `v2.0` are no longer supported. Version `v3.0` wa
 This [documentation site](https://jackiedo.github.io/Laravel-Cart) is written specifically for v3.0. If you need documentation for older versions, please see the respective branches.
 
 ## Testing
-The package has been tested through more than 120 test cases with Travis CI on PHP versions 5.6 (Laravel 5.4) and 7.2 (Laravel 7.x). Detailed information about test cases please see [here](https://travis-ci.org/github/JackieDo/Laravel-Cart).
+The package has been tested through over 120 test cases with GitHub Actions from PHP version 7.1 (Laravel 5.8) to 8.1 (Laravel 9.x). Detailed information about test cases please see [here](https://github.com/JackieDo/Laravel-Cart/actions/workflows/run-tests.yml).
 
 ## License
 [MIT](https://github.com/JackieDo/Laravel-Cart/blob/master/LICENSE) © Jackie Do
