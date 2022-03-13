@@ -1,5 +1,5 @@
-on: [push]
 name: Fix coding standards
+on: [push]
 jobs:
   php-cs-fixer:
     name: PHP-CS-Fixer
