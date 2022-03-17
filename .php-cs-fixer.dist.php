@@ -60,6 +60,12 @@ $rules = [
     ],
     'phpdoc_no_empty_return' => false,
     'phpdoc_no_package' => false,
+    'visibility_required' => [
+        'elements' => [
+            'property',
+            'method',
+        ],
+    ],
 ];
 
 $config = new Config;
