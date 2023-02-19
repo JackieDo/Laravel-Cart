@@ -40,7 +40,7 @@ On the contrary, if you choose version 3.0 to work, you will own particularly us
 You can find documentation for version `v3.0` [here](https://jackiedo.github.io/Laravel-Cart). Documentations for older versions, please see the respective branches.
 
 ## Testing
-The package has been tested through over 120 test cases with GitHub Actions from PHP version 7.1 (Laravel 5.8) to 8.1 (Laravel 9.x). Detailed information about test cases please see [here](https://github.com/JackieDo/Laravel-Cart/actions/workflows/run-tests.yml).
+The package has been tested through over 120 test cases with GitHub Actions from PHP version 7.1 (Laravel 5.8) to 8.2 (Laravel 10.x). Detailed information about test cases please see [here](https://github.com/JackieDo/Laravel-Cart/actions/workflows/run-tests.yml).
 
 ## License
 [MIT](LICENSE) © Jackie Do
