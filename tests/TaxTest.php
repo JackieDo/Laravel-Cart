@@ -9,6 +9,7 @@ require_once __DIR__ . '/Traits/CommonSetUp.php';
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class TaxTest extends TestCase
@@ -19,6 +20,7 @@ class TaxTest extends TestCase
      * The tax attributes can be retrieved using a corresponding getter.
      *
      * @testdox The tax attributes can be retrieved using a corresponding getter.
+     *
      * @test
      */
     public function the_tax_attributes_can_be_retrieved_using_a_corresponding_getter()
@@ -48,6 +50,7 @@ class TaxTest extends TestCase
      * The tax attributes can also be retrieved by the get() method.
      *
      * @testdox The tax attributes can also be retrieved by the get() method.
+     *
      * @test
      */
     public function the_tax_attributes_can_also_be_retrieved_by_the_get_method()
@@ -77,6 +80,7 @@ class TaxTest extends TestCase
      * Can retrieve details of tax as Laravel collection using the getDetails() method.
      *
      * @testdox Can retrieve details of tax as Laravel collection using the getDetails() method.
+     *
      * @test
      */
     public function can_retrieve_details_of_tax_as_laravel_collection_using_the_get_details_method()
@@ -91,6 +95,7 @@ class TaxTest extends TestCase
      * Can retrieve the cart instance that tax belongs to using the getCart() method.
      *
      * @testdox Can retrieve the cart instance that tax belongs to using the getCart() method.
+     *
      * @test
      */
     public function can_retrieve_the_cart_instance_that_tax_belongs_to_using_the_get_cart_method()
@@ -107,6 +112,7 @@ class TaxTest extends TestCase
      * Can also retrieve the cart instance that tax belongs to using the getParentNode() method.
      *
      * @testdox Can also retrieve the cart instance that tax belongs to using the getParentNode() method.
+     *
      * @test
      */
     public function can_also_retrieve_the_cart_instance_that_tax_belongs_to_using_the_get_parent_node_method()
@@ -123,6 +129,7 @@ class TaxTest extends TestCase
      * Each tax always has a hash code that can be retrieved by the getHash() method.
      *
      * @testdox Each tax always has a hash code that can be retrieved by the getHash() method.
+     *
      * @test
      */
     public function each_tax_always_has_a_hash_code_that_can_be_retrieved_by_the_get_hash_method()
@@ -138,6 +145,7 @@ class TaxTest extends TestCase
      * Taxes with different id attribute will have different hash codes.
      *
      * @testdox Taxes with different id attribute will have different hash codes.
+     *
      * @test
      */
     public function taxes_with_different_id_attribute_will_have_different_hash_codes()
@@ -157,6 +165,7 @@ class TaxTest extends TestCase
      * The detailed of tax always has the hash, id, title, rate, amount and extra_info attributes.
      *
      * @testdox The detailed of tax always has the hash, id, title, rate, amount and extra_info attributes.
+     *
      * @test
      */
     public function the_detailed_of_tax_always_has_the_hash_id_title_rate_amount_and_extra_info_attributes()
@@ -172,6 +181,7 @@ class TaxTest extends TestCase
      * Can update attributes except id using the update() method.
      *
      * @testdox Can update attributes except id using the update() method.
+     *
      * @test
      */
     public function can_update_attributes_except_id_using_the_update_method()

@@ -10,6 +10,7 @@ require_once __DIR__ . '/Traits/CommonSetUp.php';
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class ActionTest extends TestCase
@@ -20,6 +21,7 @@ class ActionTest extends TestCase
      * The action attributes can be retrieved using a corresponding getter.
      *
      * @testdox The action attributes can be retrieved using a corresponding getter.
+     *
      * @test
      */
     public function the_action_attributes_can_be_retrieved_using_a_corresponding_getter()
@@ -77,6 +79,7 @@ class ActionTest extends TestCase
      * The action attributes can also be retrieved by the get() method.
      *
      * @testdox The action attributes can also be retrieved by the get() method.
+     *
      * @test
      */
     public function the_action_attributes_can_also_be_retrieved_by_the_get_method()
@@ -134,6 +137,7 @@ class ActionTest extends TestCase
      * Can retrieve details of action as Laravel collection using the getDetails() method.
      *
      * @testdox Can retrieve details of action as Laravel collection using the getDetails() method.
+     *
      * @test
      */
     public function can_retrieve_details_of_action_as_laravel_collection_using_the_get_details_method()
@@ -157,6 +161,7 @@ class ActionTest extends TestCase
      * Can retrieve the cart instance that action belongs to using the getCart() method.
      *
      * @testdox Can retrieve the cart instance that action belongs to using the getCart() method.
+     *
      * @test
      */
     public function can_retrieve_the_cart_instance_that_action_belongs_to_using_the_get_cart_method()
@@ -184,6 +189,7 @@ class ActionTest extends TestCase
      * Can retrieve the parent node instance that action belongs to using the getParentNode() method.
      *
      * @testdox Can retrieve the parent node instance that action belongs to using the getParentNode() method.
+     *
      * @test
      */
     public function can_retrieve_the_parent_node_instance_that_action_belongs_to_using_the_get_parent_node_method()
@@ -213,6 +219,7 @@ class ActionTest extends TestCase
      * Each action always has a hash code that can be retrieved by the getHash() method.
      *
      * @testdox Each action always has a hash code that can be retrieved by the getHash() method.
+     *
      * @test
      */
     public function each_action_always_has_a_hash_code_that_can_be_retrieved_by_the_get_hash_method()
@@ -228,6 +235,7 @@ class ActionTest extends TestCase
      * Actions with different id and group attributes will have different hash codes.
      *
      * @testdox Actions with different id and group attributes will have different hash codes.
+     *
      * @test
      */
     public function actions_with_different_id_and_group_attributes_will_have_different_hash_codes()

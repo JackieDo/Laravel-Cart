@@ -57,9 +57,9 @@ class Container extends Collection
      *
      * @param string $hash The hash string
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidHashException
-     *
      * @return void
+     *
+     * @throws \Jackiedo\Cart\Exceptions\InvalidHashException
      */
     protected function throwInvalidHashException($hash)
     {

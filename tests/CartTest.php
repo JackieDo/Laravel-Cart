@@ -16,6 +16,7 @@ require_once __DIR__ . '/Mocks/UseCartableProduct.php';
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class CartTest extends TestCase
@@ -26,6 +27,7 @@ class CartTest extends TestCase
      * Always have a default cart name.
      *
      * @testdox Always have a default cart name.
+     *
      * @test
      */
     public function always_have_a_default_cart_name()
@@ -40,6 +42,7 @@ class CartTest extends TestCase
      * Can name the cart differently from the default cart name using the name() method.
      *
      * @testdox Can name the cart differently from the default cart name using the name() method.
+     *
      * @test
      */
     public function can_name_the_cart_differently_from_the_default_cart_name_using_the_name_method()
@@ -54,6 +57,7 @@ class CartTest extends TestCase
      * Cannot use the extra_info keyword to name the cart.
      *
      * @testdox Cannot use the extra_info keyword to name the cart.
+     *
      * @test
      */
     public function cannot_use_the_extra_info_keyword_to_name_the_cart()
@@ -67,6 +71,7 @@ class CartTest extends TestCase
      * Can group multiple carts into a group by using the dot to separate the name of the cart into group names.
      *
      * @testdox Can group multiple carts into a group by using the dot to separate the name of the cart into group names.
+     *
      * @test
      */
     public function can_group_multiple_carts_into_a_group_by_using_the_dot_to_separate_the_name_of_the_cart_into_group_names()
@@ -83,6 +88,7 @@ class CartTest extends TestCase
      * Cannot use the extra_info keyword to name the group of carts.
      *
      * @testdox Cannot use the extra_info keyword to name the group of carts.
+     *
      * @test
      */
     public function cannot_use_the_extra_info_keyword_to_name_the_group_of_carts()
@@ -96,6 +102,7 @@ class CartTest extends TestCase
      * Can check if the current cart is grouped or not using the hasBeenGrouped() method.
      *
      * @testdox Can check if the current cart is grouped or not using the hasBeenGrouped() method.
+     *
      * @test
      */
     public function can_check_if_the_current_cart_is_grouped_or_not_using_the_has_been_grouped_method()
@@ -111,6 +118,7 @@ class CartTest extends TestCase
      * Can use different cart names with one instance.
      *
      * @testdox Can use different cart names with one instance.
+     *
      * @test
      */
     public function can_use_different_cart_names_with_one_instance()
@@ -126,6 +134,7 @@ class CartTest extends TestCase
      * Can create different cart instances.
      *
      * @testdox Can create different cart instances.
+     *
      * @test
      */
     public function can_create_different_cart_instances()
@@ -141,6 +150,7 @@ class CartTest extends TestCase
      * Different cart instances may share the same cart name.
      *
      * @testdox Different cart instances may share the same cart name.
+     *
      * @test
      */
     public function different_cart_instances_may_share_the_same_cart_name()
@@ -160,6 +170,7 @@ class CartTest extends TestCase
      * Cart can be used for commercial purposes or not based on Laravel configuration file.
      *
      * @testdox Cart can be used for commercial purposes or not based on Laravel configuration file.
+     *
      * @test
      */
     public function cart_can_be_used_for_commercial_purposes_or_not_based_on_laravel_configuration_file()
@@ -176,6 +187,7 @@ class CartTest extends TestCase
      * Cart can use built-in tax system or not based on Laravel configuration file.
      *
      * @testdox Cart can use built-in tax system or not based on Laravel configuration file.
+     *
      * @test
      */
     public function cart_can_use_built_in_tax_system_or_not_based_on_laravel_configuration_file()
@@ -197,6 +209,7 @@ class CartTest extends TestCase
      * Can set useForCommercial status on the fly if the cart is empty.
      *
      * @testdox Can set useForCommercial status on the fly if the cart is empty.
+     *
      * @test
      */
     public function can_set_use_for_commercial_status_on_the_fly_if_the_cart_is_empty()
@@ -214,6 +227,7 @@ class CartTest extends TestCase
      * Cannot set useForCommercial status on the fly if the cart is not empty.
      *
      * @testdox Cannot set useForCommercial status on the fly if the cart is not empty.
+     *
      * @test
      */
     public function cannot_set_use_for_commercial_status_on_the_fly_if_the_cart_is_not_empty()
@@ -236,6 +250,7 @@ class CartTest extends TestCase
      * Can set useBuiltinTax status on the fly if the cart is empty.
      *
      * @testdox Can set useBuiltinTax status on the fly if the cart is empty.
+     *
      * @test
      */
     public function can_set_use_builtin_tax_status_on_the_fly_if_the_cart_is_empty()
@@ -253,6 +268,7 @@ class CartTest extends TestCase
      * Cannot set useBuiltinTax status on the fly if the cart is not empty.
      *
      * @testdox Cannot set useBuiltinTax status on the fly if the cart is not empty.
+     *
      * @test
      */
     public function cannot_set_use_builtin_tax_status_on_the_fly_if_the_cart_is_not_empty()
@@ -275,6 +291,7 @@ class CartTest extends TestCase
      * A non-commercial cart will be disabled built-in tax system.
      *
      * @testdox A non-commercial cart will be disabled built-in tax system.
+     *
      * @test
      */
     public function a_non_commercial_cart_will_be_a_disabled_builtin_tax_system()
@@ -294,6 +311,7 @@ class CartTest extends TestCase
      * Can retrieve the subtotal amount of the cart as a number.
      *
      * @testdox Can retrieve the subtotal amount of the cart as a number.
+     *
      * @test
      */
     public function can_retrieve_the_subtotal_amount_of_the_cart_as_a_number()
@@ -318,6 +336,7 @@ class CartTest extends TestCase
      * A non-commercial cart always has the subtotal and total amount is 0.
      *
      * @testdox A non-commercial cart always has the subtotal and total amount is 0.
+     *
      * @test
      */
     public function a_non_commercial_cart_always_has_the_subtotal_and_total_amount_is_0()
@@ -343,6 +362,7 @@ class CartTest extends TestCase
      * Can retrieve the total amount of the cart as a number.
      *
      * @testdox Can retrieve the total amount of the cart as a number.
+     *
      * @test
      */
     public function can_retrieve_the_total_amount_of_the_cart_as_a_number()
@@ -367,6 +387,7 @@ class CartTest extends TestCase
      * Can retrieve details information of the cart as Laravel collection.
      *
      * @testdox Can retrieve details information of the cart as Laravel collection.
+     *
      * @test
      */
     public function can_retrieve_details_information_of_the_cart_as_laravel_collection()
@@ -389,6 +410,7 @@ class CartTest extends TestCase
      * Can retrieve details information of the carts group as Laravel collection.
      *
      * @testdox Can retrieve details information of the carts group as Laravel collection.
+     *
      * @test
      */
     public function can_retrieve_details_information_of_the_carts_group_as_laravel_collection()
@@ -413,6 +435,7 @@ class CartTest extends TestCase
      * Can set extended information for the cart.
      *
      * @testdox Can set extended information for the cart.
+     *
      * @test
      */
     public function can_set_extended_information_for_the_cart()
@@ -435,6 +458,7 @@ class CartTest extends TestCase
      * Can set extended information for the group of carts.
      *
      * @testdox Can set extended information for the group of carts.
+     *
      * @test
      */
     public function can_set_extended_information_for_the_group_of_carts()
@@ -457,6 +481,7 @@ class CartTest extends TestCase
      * Can add item to cart only with the valid id and title arguments.
      *
      * @testdox Can add item to cart only with the valid id and title arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_the_valid_id_and_title_arguments()
@@ -474,6 +499,7 @@ class CartTest extends TestCase
      * Can add item to cart only with the valid id, title and quantity arguments.
      *
      * @testdox Can add item to cart only with the valid id, title and quantity arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_the_valid_id_title_and_quantity_arguments()
@@ -492,6 +518,7 @@ class CartTest extends TestCase
      * Can add item to cart only with the valid id, title, quantity and price arguments.
      *
      * @testdox Can add item to cart only with the valid id, title, quantity and price arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_the_valid_id_title_quantity_and_price_arguments()
@@ -515,6 +542,7 @@ class CartTest extends TestCase
      * Can add item to cart only with the valid id, title, quantity, price and options arguments.
      *
      * @testdox Can add item to cart only with the valid id, title, quantity, price and options arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_the_valid_id_title_quantity_price_and_options_arguments()
@@ -537,6 +565,7 @@ class CartTest extends TestCase
      * Can add item to cart only with the valid id, title, quantity, price, options and extra_info arguments.
      *
      * @testdox Can add item to cart only with the valid id, title, quantity, price, options and extra_info arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_the_valid_id_title_quantity_price_options_and_extra_info_arguments()
@@ -558,6 +587,7 @@ class CartTest extends TestCase
      * Can add item to cart with all valid arguments.
      *
      * @testdox Can add item to cart with all valid arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_with_all_valid_arguments()
@@ -580,6 +610,7 @@ class CartTest extends TestCase
      * Can add item to cart only with an UseCartable model.
      *
      * @testdox Can add item to cart only with an UseCartable model.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_an__use_cartable_model()
@@ -598,6 +629,7 @@ class CartTest extends TestCase
      * Can add item to cart only with an UseCartable model and the valid quantity argument.
      *
      * @testdox Can add item to cart only with an UseCartable model and the valid quantity argument.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_an__use_cartable_model_and_the_valid_quantity_argument()
@@ -619,6 +651,7 @@ class CartTest extends TestCase
      * Can add item to cart only with an UseCartable model, the valid quantity and options arguments.
      *
      * @testdox Can add item to cart only with an UseCartable model, the valid quantity and options arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_an__use_cartable_model_the_valid_quantity_and_options_arguments()
@@ -641,6 +674,7 @@ class CartTest extends TestCase
      * Can add item to cart only with an UseCartable model, the valid quantity, options and extra_info arguments.
      *
      * @testdox Can add item to cart only with an UseCartable model, the valid quantity, options and extra_info arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_only_with_an__use_cartable_model_the_valid_quantity_options_and_extra_info_arguments()
@@ -664,6 +698,7 @@ class CartTest extends TestCase
      * Can add item to cart only with an UseCartable model and all valid arguments.
      *
      * @testdox Can add item to cart only with an UseCartable model and all valid arguments.
+     *
      * @test
      */
     public function can_add_item_to_cart_with_an__use_cartable_model_and_all_valid_arguments()
@@ -688,6 +723,7 @@ class CartTest extends TestCase
      * Cannot add item to cart with invalid id argument.
      *
      * @testdox Cannot add item to cart with invalid id argument.
+     *
      * @test
      */
     public function cannot_add_item_to_cart_with_invalid_id_argument()
@@ -706,6 +742,7 @@ class CartTest extends TestCase
      * Cannot add item to cart with invalid title argument.
      *
      * @testdox Cannot add item to cart with invalid title argument.
+     *
      * @test
      */
     public function cannot_add_item_to_cart_with_invalid_title_argument()
@@ -724,6 +761,7 @@ class CartTest extends TestCase
      * Cannot add item to cart with invalid quantity argument.
      *
      * @testdox Cannot add item to cart with invalid quantity argument.
+     *
      * @test
      */
     public function cannot_add_item_to_cart_with_invalid_quantity_argument()
@@ -743,6 +781,7 @@ class CartTest extends TestCase
      * Cannot add item to cart with invalid price argument.
      *
      * @testdox Cannot add item to cart with invalid price argument.
+     *
      * @test
      */
     public function cannot_add_item_to_cart_with_invalid_price_argument()
@@ -762,6 +801,7 @@ class CartTest extends TestCase
      * Cannot add item to cart with invalid options argument.
      *
      * @testdox Cannot add item to cart with invalid options argument.
+     *
      * @test
      */
     public function cannot_add_item_to_cart_with_invalid_options_argument()
@@ -781,6 +821,7 @@ class CartTest extends TestCase
      * Cannot add item to cart with invalid extra_info argument.
      *
      * @testdox Cannot add item to cart with invalid extra_info argument.
+     *
      * @test
      */
     public function cannot_add_item_to_cart_with_invalid_extra_info_argument()
@@ -800,6 +841,7 @@ class CartTest extends TestCase
      * Cannot add item to cart with invalid taxable argument.
      *
      * @testdox Cannot add item to cart with invalid taxable argument.
+     *
      * @test
      */
     public function cannot_add_item_to_cart_with_invalid_taxable_argument()
@@ -819,6 +861,7 @@ class CartTest extends TestCase
      * Can count the number of items in the cart as an integer number.
      *
      * @testdox Can count the number of items in the cart as an integer number.
+     *
      * @test
      */
     public function can_count_the_number_of_items_in_the_cart_as_an_integer_number()
@@ -840,6 +883,7 @@ class CartTest extends TestCase
      * Adding the same item to the cart more than once will only increase the quantities of that item in the cart.
      *
      * @testdox Adding the same item to the cart more than once will only increase the quantities of that item in the cart.
+     *
      * @test
      */
     public function adding_the_same_item_to_the_cart_more_than_once_will_only_increase_the_quantities_of_that_item_in_the_cart()
@@ -879,6 +923,7 @@ class CartTest extends TestCase
      * Can calculate the quantities of all items in the cart using the sumItemsQuantity() method.
      *
      * @testdox Can calculate the quantities of all items in the cart using the sumItemsQuantity() method.
+     *
      * @test
      */
     public function can_calculate_the_sum_quantities_of_all_items_in_the_cart_using_the_sum_items_quantity_method()
@@ -900,6 +945,7 @@ class CartTest extends TestCase
      * Can calculate the sum subtotals of all items in the cart using the getItemsSubtotal() method.
      *
      * @testdox Can calculate the sum subtotals of all items in the cart using the getItemsSubtotal() method.
+     *
      * @test
      */
     public function can_calculate_the_sum_subtotals_of_all_items_in_the_cart_using_the_get_items_subtotal_method()
@@ -924,6 +970,7 @@ class CartTest extends TestCase
      * Can retrieve an added item using the getItem() method with a given hash code.
      *
      * @testdox Can retrieve an added item using the getItem() method with a given hash code.
+     *
      * @test
      */
     public function can_retrieve_an_added_item_using_the_get_item_method_with_a_given_hash_code()
@@ -942,6 +989,7 @@ class CartTest extends TestCase
      * Can get an array of added items using the getItems() method.
      *
      * @testdox Can get an array of added items using the getItems() method.
+     *
      * @test
      */
     public function can_get_an_array_of_added_items_using_the_get_items_method()
@@ -967,6 +1015,7 @@ class CartTest extends TestCase
      * Can remove an added item using the removeItem() method with a given hash code.
      *
      * @testdox Can remove an added item using the removeItem() method with a given hash code.
+     *
      * @test
      */
     public function can_remove_an_added_item_using_the_remove_item_method_with_a_given_hash_code()
@@ -985,6 +1034,7 @@ class CartTest extends TestCase
      * Can remove all items in the cart using the clearItems() method.
      *
      * @testdox Can remove all items in the cart using the clearItems() method.
+     *
      * @test
      */
     public function can_remove_all_items_in_the_cart_using_the_clear_items_method()
@@ -1003,6 +1053,7 @@ class CartTest extends TestCase
      * Can apply a tax to the cart with the minimum of valid attributes.
      *
      * @testdox Can apply a tax to the cart with the minimum of valid attributes.
+     *
      * @test
      */
     public function can_apply_a_tax_to_the_cart_with_the_minimum__of_valid_attributes()
@@ -1020,6 +1071,7 @@ class CartTest extends TestCase
      * Applying a tax to the cart has disabled built-in tax system is ineffective.
      *
      * @testdox Applying a tax to the cart has disabled built-in tax system is ineffective.
+     *
      * @test
      */
     public function applying_a_tax_to_the_cart_has_disabled_builtin_tax_system_is_ineffective()
@@ -1041,6 +1093,7 @@ class CartTest extends TestCase
      * Cannot apply a tax to the cart with invalid id attribute.
      *
      * @testdox Cannot apply a tax to the cart with invalid id attribute.
+     *
      * @test
      */
     public function cannot_apply_a_tax_to_the_cart_with_invalid_id_attribute()
@@ -1058,6 +1111,7 @@ class CartTest extends TestCase
      * Cannot apply a tax to the cart with invalid title attribute.
      *
      * @testdox Cannot apply a tax to the cart with invalid title attribute.
+     *
      * @test
      */
     public function cannot_apply_a_tax_to_the_cart_with_invalid_title_attribute()
@@ -1075,6 +1129,7 @@ class CartTest extends TestCase
      * Cannot apply a tax to the cart with invalid rate attribute.
      *
      * @testdox Cannot apply a tax to the cart with invalid rate attribute.
+     *
      * @test
      */
     public function cannot_apply_a_tax_to_the_cart_with_invalid_rate_attribute()
@@ -1093,6 +1148,7 @@ class CartTest extends TestCase
      * Cannot apply a tax to the cart with invalid extra_info attribute.
      *
      * @testdox Cannot apply a tax to the cart with invalid extra_info attribute.
+     *
      * @test
      */
     public function cannot_apply_a_tax_to_the_cart_with_invalid_extra_info_attribute()
@@ -1112,6 +1168,7 @@ class CartTest extends TestCase
      * Can count number of taxes that has been applied to the cart by the countTaxes() method.
      *
      * @testdox Can count number of taxes that has been applied to the cart by the countTaxes() method.
+     *
      * @test
      */
     public function can_count_number_of_taxes_that_has_been_applied_to_the_cart_by_the_count_taxes_method()
@@ -1135,6 +1192,7 @@ class CartTest extends TestCase
      * Can retrieve an applied tax using the getTax() method with a given hash code.
      *
      * @testdox Can retrieve an applied tax using the getTax() method with a given hash code.
+     *
      * @test
      */
     public function can_retrieve_an_applied_tax_using_the_get_tax_method_with_a_given_hash_code()
@@ -1150,6 +1208,7 @@ class CartTest extends TestCase
      * Can get an array of applied taxes using the getTaxes() method.
      *
      * @testdox Can get an array of applied taxes using the getTaxes() method.
+     *
      * @test
      */
     public function can_get_an_array_of_applied_taxes_using_the_get_taxes_method()
@@ -1169,6 +1228,7 @@ class CartTest extends TestCase
      * Can update an applied tax using the updateTax() method with a given hash code.
      *
      * @testdox Can update an applied tax using the updateTax() method with a given hash code.
+     *
      * @test
      */
     public function can_update_an_applied_tax_using_the_update_tax_method_with_a_given_hash_code()
@@ -1190,6 +1250,7 @@ class CartTest extends TestCase
      * Can remove an applied tax using the removeTax() method with a given hash code.
      *
      * @testdox Can remove an applied tax using the removeTax() method with a given hash code.
+     *
      * @test
      */
     public function can_remove_an_applied_tax_using_the_remove_tax_method_with_a_given_hash_code()
@@ -1208,6 +1269,7 @@ class CartTest extends TestCase
      * Can remove all applied taxes using the clearTaxes() method.
      *
      * @testdox Can remove all applied taxes using the clearTaxes() method.
+     *
      * @test
      */
     public function can_remove_all_applied_taxes_using_the_clear_taxes_method()
@@ -1226,6 +1288,7 @@ class CartTest extends TestCase
      * Can apply an action to the cart with the minimum of valid attributes.
      *
      * @testdox Can apply an action to the cart with the minimum of valid attributes.
+     *
      * @test
      */
     public function can_apply_an_action_to_the_cart_with_the_minimum_of_valid_attributes()
@@ -1244,6 +1307,7 @@ class CartTest extends TestCase
      * Applying an action to the non-commercial cart is ineffective.
      *
      * @testdox Applying an action to the non-commercial cart is ineffective.
+     *
      * @test
      */
     public function applying_an_action_to_the_non_commercial_cart_is_ineffective()
@@ -1265,6 +1329,7 @@ class CartTest extends TestCase
      * Cannot apply an action to the cart with invalid id attribute.
      *
      * @testdox Cannot apply an action to the cart with invalid id attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_cart_with_invalid_id_attribute()
@@ -1282,6 +1347,7 @@ class CartTest extends TestCase
      * Cannot apply an action to the cart with invalid title attribute.
      *
      * @testdox Cannot apply an action to the cart with invalid title attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_cart_with_invalid_title_attribute()
@@ -1299,6 +1365,7 @@ class CartTest extends TestCase
      * Cannot apply an action to the cart with invalid value attribute.
      *
      * @testdox Cannot apply an action to the cart with invalid value attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_cart_with_invalid_value_attribute()
@@ -1317,6 +1384,7 @@ class CartTest extends TestCase
      * Cannot apply an action to the cart with invalid group attribute.
      *
      * @testdox Cannot apply an action to the cart with invalid group attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_cart_with_invalid_group_attribute()
@@ -1336,6 +1404,7 @@ class CartTest extends TestCase
      * Cannot apply an action to the cart with invalid rules attribute.
      *
      * @testdox Cannot apply an action to the cart with invalid rules attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_cart_with_invalid_rules_attribute()
@@ -1356,6 +1425,7 @@ class CartTest extends TestCase
      * Cannot apply an action to the cart with invalid extra_info attribute.
      *
      * @testdox Cannot apply an action to the cart with invalid extra_info attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_cart_with_invalid_extra_info_attribute()
@@ -1377,6 +1447,7 @@ class CartTest extends TestCase
      * Can count number of actions that has been applied to the cart by the countActions() method.
      *
      * @testdox Can count number of actions that has been applied to the cart by the countActions() method.
+     *
      * @test
      */
     public function can_count_number_of_actions_that_has_been_applied_to_the_cart_by_the_count_actions_method()
@@ -1406,6 +1477,7 @@ class CartTest extends TestCase
      * Can retrieve an applied action using the getAction() method with a given hash code.
      *
      * @testdox Can retrieve an applied action using the getAction() method with a given hash code.
+     *
      * @test
      */
     public function can_retrieve_an_applied_action_using_the_get_action_method_with_a_given_hash_code()
@@ -1421,6 +1493,7 @@ class CartTest extends TestCase
      * Can get an array of applied actions using the getActions() method.
      *
      * @testdox Can get an array of applied actions using the getActions() method.
+     *
      * @test
      */
     public function can_get_an_array_of_applied_actions_using_the_get_actions_method()
@@ -1440,6 +1513,7 @@ class CartTest extends TestCase
      * Can update an applied action using the updateAction() method with a given hash code.
      *
      * @testdox Can update an applied action using the updateAction() method with a given hash code.
+     *
      * @test
      */
     public function can_update_an_applied_action_using_the_update_action_method_with_a_given_hash_code()
@@ -1461,6 +1535,7 @@ class CartTest extends TestCase
      * Can remove an applied action using the removeAction() method with a given hash code.
      *
      * @testdox Can remove an applied action using the removeAction() method with a given hash code.
+     *
      * @test
      */
     public function can_remove_an_applied_action_using_the_remove_action_method_with_a_given_hash_code()
@@ -1476,6 +1551,7 @@ class CartTest extends TestCase
      * Can remove all applied actions using the clearActions() method.
      *
      * @testdox Can remove all applied actions using the clearActions() method.
+     *
      * @test
      */
     public function can_remove_all_applied_actions_using_the_clear_actions_method()
@@ -1494,6 +1570,7 @@ class CartTest extends TestCase
      * Can calculate the sum amount of applied actions using the sumActionsAmount() method.
      *
      * @testdox Can calculate the sum amount of applied actions using the sumActionsAmount() method.
+     *
      * @test
      */
     public function can_calculate_the_sum_amount_of_applied_actions_using_the_sum_actions_amount_method()
@@ -1502,6 +1579,6 @@ class CartTest extends TestCase
         $action1 = $cart->applyAction(['id' => 1, 'title' => 'Demo action 1', 'value' => -5000]);
         $action2 = $cart->applyAction(['id' => 2, 'title' => 'Demo action 2', 'value' => -5000]);
 
-        $this->assertEquals(max((0 - $cart->getItemsSubtotal()), -10000), $cart->sumActionsAmount());
+        $this->assertEquals(max(0 - $cart->getItemsSubtotal(), -10000), $cart->sumActionsAmount());
     }
 }

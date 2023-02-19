@@ -2,11 +2,9 @@
 
 namespace Jackiedo\Cart\Traits;
 
-use BadMethodCallException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jackiedo\Cart\Cart;
-use ReflectionMethod;
 
 /**
  * The CanBeCartNode traits.
@@ -37,7 +35,7 @@ trait CanBeCartNode
             }
         }
 
-        throw new BadMethodCallException(sprintf(
+        throw new \BadMethodCallException(sprintf(
             'Method %s::%s does not exist.',
             static::class,
             $method
@@ -128,7 +126,7 @@ trait CanBeCartNode
             $getMethod = Str::camel('get_' . $attribute);
 
             if (method_exists($this, $getMethod)) {
-                $methodReflection       = new ReflectionMethod($this, $getMethod);
+                $methodReflection       = new \ReflectionMethod($this, $getMethod);
                 $isMethodPublic         = $methodReflection->isPublic();
                 $numberOfRequiredParams = $methodReflection->getNumberOfRequiredParameters();
 

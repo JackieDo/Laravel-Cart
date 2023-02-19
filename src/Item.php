@@ -198,9 +198,9 @@ class Item implements CartNode
     /**
      * Get the model instance to which this item is associated.
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidAssociatedException
-     *
      * @return null|\Illuminate\Database\Eloquent
+     *
+     * @throws \Jackiedo\Cart\Exceptions\InvalidAssociatedException
      */
     public function getModel()
     {
@@ -297,9 +297,9 @@ class Item implements CartNode
      *
      * @param array $attributes The cart item attributes
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
-     *
      * @return $this;
+     *
+     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
      */
     protected function initAttributes(array $attributes = [])
     {
@@ -472,9 +472,9 @@ class Item implements CartNode
      *
      * @param array $attributes The item attributes
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
-     *
      * @return void
+     *
+     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
      */
     protected function validate(array $attributes = [])
     {

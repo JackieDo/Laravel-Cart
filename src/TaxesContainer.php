@@ -131,7 +131,7 @@ class TaxesContainer extends Container
         }
 
         // If filter is a closure
-        if ($filter instanceof Closure) {
+        if ($filter instanceof \Closure) {
             return $this->filter($filter)->all();
         }
 

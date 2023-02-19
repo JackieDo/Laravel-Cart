@@ -2,8 +2,6 @@
 
 namespace Jackiedo\Cart\Exceptions;
 
-use Exception;
-
 /**
  * UnknownCreatorException.
  *
@@ -11,7 +9,7 @@ use Exception;
  *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class UnknownCreatorException extends Exception
+class UnknownCreatorException extends \Exception
 {
     //
 }

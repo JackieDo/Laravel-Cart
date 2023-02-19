@@ -212,9 +212,9 @@ class Tax implements CartNode
      *
      * @param array $attributes The tax attributes
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
-     *
      * @return void
+     *
+     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
      */
     protected function validate($attributes)
     {

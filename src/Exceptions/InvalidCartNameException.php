@@ -2,8 +2,6 @@
 
 namespace Jackiedo\Cart\Exceptions;
 
-use Exception;
-
 /**
  * InvalidCartNameException.
  *
@@ -11,7 +9,7 @@ use Exception;
  *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class InvalidCartNameException extends Exception
+class InvalidCartNameException extends \Exception
 {
     //
 }

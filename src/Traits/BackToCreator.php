@@ -2,7 +2,6 @@
 
 namespace Jackiedo\Cart\Traits;
 
-use Closure;
 use Illuminate\Support\Arr;
 use Jackiedo\Cart\Cart;
 use Jackiedo\Cart\Exceptions\UnknownCreatorException;
@@ -30,9 +29,9 @@ trait BackToCreator
     /**
      * Get the creator of this instance.
      *
-     * @throws \Jackiedo\Cart\Exceptions\UnknownCreatorException
-     *
      * @return object
+     *
+     * @throws \Jackiedo\Cart\Exceptions\UnknownCreatorException
      */
     public function getCreator()
     {
@@ -76,7 +75,7 @@ trait BackToCreator
         if (in_array($callerClass, $acceptedCreators) && is_object($callerObject)) {
             $this->creator = (Cart::class == $callerClass) ? clone $callerObject : $callerObject;
 
-            if ($laterJob instanceof Closure) {
+            if ($laterJob instanceof \Closure) {
                 call_user_func_array($laterJob, [$this->creator, $caller]);
             }
         }

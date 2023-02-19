@@ -2,8 +2,6 @@
 
 namespace Jackiedo\Cart\Exceptions;
 
-use Exception;
-
 /**
  * InvalidHashException.
  *
@@ -11,7 +9,7 @@ use Exception;
  *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class InvalidHashException extends Exception
+class InvalidHashException extends \Exception
 {
     //
 }

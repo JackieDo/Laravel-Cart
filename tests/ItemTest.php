@@ -15,6 +15,7 @@ require_once __DIR__ . '/Mocks/UseCartableProduct.php';
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class ItemTest extends TestCase
@@ -25,6 +26,7 @@ class ItemTest extends TestCase
      * The item attributes can be retrieved using a corresponding getter.
      *
      * @testdox The item attributes can be retrieved using a corresponding getter.
+     *
      * @test
      */
     public function the_item_attributes_can_be_retrieved_using_a_corresponding_getter()
@@ -62,6 +64,7 @@ class ItemTest extends TestCase
      * The item attributes can also be retrieved by the get() method.
      *
      * @testdox The item attributes can also be retrieved by the get() method.
+     *
      * @test
      */
     public function the_item_attributes_can_also_be_retrieved_by_the_get_method()
@@ -99,6 +102,7 @@ class ItemTest extends TestCase
      * Can retrieve details of item as Laravel collection using the getDetails() method.
      *
      * @testdox Can retrieve details of item as Laravel collection using the getDetails() method.
+     *
      * @test
      */
     public function can_retrieve_details_of_item_as_laravel_collection_using_the_get_details_method()
@@ -116,6 +120,7 @@ class ItemTest extends TestCase
      * Can retrieve the cart instance that item belongs to using the getCart() method.
      *
      * @testdox Can retrieve the cart instance that item belongs to using the getCart() method.
+     *
      * @test
      */
     public function can_retrieve_the_cart_instance_that_item_belongs_to_using_the_get_cart_method()
@@ -135,6 +140,7 @@ class ItemTest extends TestCase
      * Can also retrieve the cart instance that item belongs to using the getParentNode() method.
      *
      * @testdox Can also retrieve the cart instance that item belongs to using the getParentNode() method.
+     *
      * @test
      */
     public function can_also_retrieve_the_cart_instance_that_item_belongs_to_using_the_get_parent_node_method()
@@ -154,6 +160,7 @@ class ItemTest extends TestCase
      * Each item always has a hash code that can be retrieved by the getHash() method.
      *
      * @testdox Each item always has a hash code that can be retrieved by the getHash() method.
+     *
      * @test
      */
     public function each_item_always_has_a_hash_code_that_can_be_retrieved_by_the_get_hash_method()
@@ -172,6 +179,7 @@ class ItemTest extends TestCase
      * Items with different id, price, options and associated_class attributes will have different hash codes.
      *
      * @testdox Items with different id, price, options and associated_class attributes will have different hash codes.
+     *
      * @test
      */
     public function items_with_different_id_price_options_and_associated_class_attributes_will_have_different_hash_codes()
@@ -197,6 +205,7 @@ class ItemTest extends TestCase
      * Can retrieve associated_class model of item if it is instance of UseCartable before adding to cart.
      *
      * @testdox Can retrieve associated_class model of item if it is instance of UseCartable before adding to cart.
+     *
      * @test
      */
     public function can_retrieve_associated_class_model_of_item_if_it_is_instance_of__use_cartable_before_adding_to_cart()
@@ -212,6 +221,7 @@ class ItemTest extends TestCase
      * Cannot retrieve associated_class model of item if it is not instance of UseCartable before adding to cart.
      *
      * @testdox Cannot retrieve associated_class model of item if it is not instance of UseCartable before adding to cart.
+     *
      * @test
      */
     public function cannot_retrieve_associated_class_model_of_item_if_it_is_not_instance_of__use_cartable_before_adding_to_cart()
@@ -231,6 +241,7 @@ class ItemTest extends TestCase
      * Can apply an action to the item with the minimum of valid attributes.
      *
      * @testdox Can apply an action to the item with the minimum of valid attributes.
+     *
      * @test
      */
     public function can_apply_an_action_to_the_item_with_the_minimum_of_valid_attributes()
@@ -252,6 +263,7 @@ class ItemTest extends TestCase
      * Applying an action to the item in a non-commercial cart is ineffective.
      *
      * @testdox Applying an action to the item in a non-commercial cart is ineffective.
+     *
      * @test
      */
     public function applying_an_action_to_the_item_in_a_non_commercial_cart_is_ineffective()
@@ -277,6 +289,7 @@ class ItemTest extends TestCase
      * Cannot apply an action to the item with invalid id attribute.
      *
      * @testdox Cannot apply an action to the item with invalid id attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_item_with_invalid_id_attribute()
@@ -298,6 +311,7 @@ class ItemTest extends TestCase
      * Cannot apply an action to the item with invalid title attribute.
      *
      * @testdox Cannot apply an action to the item with invalid title attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_item_with_invalid_title_attribute()
@@ -319,6 +333,7 @@ class ItemTest extends TestCase
      * Cannot apply an action to the item with invalid value attribute.
      *
      * @testdox Cannot apply an action to the item with invalid value attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_item_with_invalid_value_attribute()
@@ -341,6 +356,7 @@ class ItemTest extends TestCase
      * Cannot apply an action to the item with invalid group attribute.
      *
      * @testdox Cannot apply an action to the item with invalid group attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_item_with_invalid_group_attribute()
@@ -364,6 +380,7 @@ class ItemTest extends TestCase
      * Cannot apply an action to the item with invalid rules attribute.
      *
      * @testdox Cannot apply an action to the item with invalid rules attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_item_with_invalid_rules_attribute()
@@ -388,6 +405,7 @@ class ItemTest extends TestCase
      * Cannot apply an action to the item with invalid extra_info attribute.
      *
      * @testdox Cannot apply an action to the item with invalid extra_info attribute.
+     *
      * @test
      */
     public function cannot_apply_an_action_to_the_item_with_invalid_extra_info_attribute()
@@ -413,6 +431,7 @@ class ItemTest extends TestCase
      * Can count number of actions that has been applied to the item by the countActions() method.
      *
      * @testdox Can count number of actions that has been applied to the item by the countActions() method.
+     *
      * @test
      */
     public function can_count_number_of_actions_that_has_been_applied_to_the_item_by_the_count_actions_method()
@@ -440,6 +459,7 @@ class ItemTest extends TestCase
      * Can retrieve an applied action using the getAction() method with a given hash code.
      *
      * @testdox Can retrieve an applied action using the getAction() method with a given hash code.
+     *
      * @test
      */
     public function can_retrieve_an_applied_action_using_the_get_action_method_with_a_given_hash_code()
@@ -462,6 +482,7 @@ class ItemTest extends TestCase
      * Can get an array of applied actions using the getActions() method.
      *
      * @testdox Can get an array of applied actions using the getActions() method.
+     *
      * @test
      */
     public function can_get_an_array_of_applied_actions_using_the_get_actions_method()
@@ -485,6 +506,7 @@ class ItemTest extends TestCase
      * Can update an applied action using the updateAction() method with a given hash code.
      *
      * @testdox Can update an applied action using the updateAction() method with a given hash code.
+     *
      * @test
      */
     public function can_update_an_applied_action_using_the_update_action_method_with_a_given_hash_code()
@@ -510,6 +532,7 @@ class ItemTest extends TestCase
      * Can remove an applied action using the removeAction() method with a given hash code.
      *
      * @testdox Can remove an applied action using the removeAction() method with a given hash code.
+     *
      * @test
      */
     public function can_remove_an_applied_action_using_the_remove_action_method_with_a_given_hash_code()
@@ -532,6 +555,7 @@ class ItemTest extends TestCase
      * Can remove all applied actions using the clearActions() method.
      *
      * @testdox Can remove all applied actions using the clearActions() method.
+     *
      * @test
      */
     public function can_remove_all_applied_actions_using_the_clear_actions_method()
@@ -554,6 +578,7 @@ class ItemTest extends TestCase
      * Can calculate the sum amount of applied actions using the sumActionsAmount() method.
      *
      * @testdox Can calculate the sum amount of applied actions using the sumActionsAmount() method.
+     *
      * @test
      */
     public function can_calculate_the_sum_amount_of_applied_actions_using_the_sum_actions_amount_method()
@@ -568,13 +593,14 @@ class ItemTest extends TestCase
         $action1 = $item->applyAction(['id' => 1, 'title' => 'Demo action 1', 'value' => -5000]);
         $action2 = $item->applyAction(['id' => 2, 'title' => 'Demo action 2', 'value' => -5000]);
 
-        $this->assertEquals(max((0 - $item->getTotalPrice()), -10000), $item->sumActionsAmount());
+        $this->assertEquals(max(0 - $item->getTotalPrice(), -10000), $item->sumActionsAmount());
     }
 
     /**
      * Item in non-commercial carts always has quantity attribute is 1.
      *
      * @testdox Item in non-commercial carts always has quantity attribute is 1.
+     *
      * @test
      */
     public function item_in_non_commercial_carts_always_has_quantity_attribute_is_1()
@@ -597,6 +623,7 @@ class ItemTest extends TestCase
      * Item in non-commercial carts always has price attribute is 0.
      *
      * @testdox Item in non-commercial carts always has price attribute is 0.
+     *
      * @test
      */
     public function item_in_non_commercial_carts_always_has_price_attribute_is_0()
@@ -620,6 +647,7 @@ class ItemTest extends TestCase
      * Item in non-commercial carts always has taxable attribute is false.
      *
      * @testdox Item in non-commercial carts always has taxable attribute is false.
+     *
      * @test
      */
     public function item_in_non_commercial_carts_always_has_taxable_attribute_is_false()
@@ -640,6 +668,7 @@ class ItemTest extends TestCase
      * Item in non-commercial carts always has options attribute is empty array.
      *
      * @testdox Item in non-commercial carts always has options attribute is empty array.
+     *
      * @test
      */
     public function item_in_non_commercial_carts_always_has_options_attribute_is_empty_array()
@@ -665,6 +694,7 @@ class ItemTest extends TestCase
      * The total_price attribute of the item is calculated by the product of quantity and price.
      *
      * @testdox The total_price attribute of the item is calculated by the product of quantity and price.
+     *
      * @test
      */
     public function the_total_price_attribute_of_the_item_is_calculated_by_the_product_of_quantity_and_price()
@@ -699,6 +729,7 @@ class ItemTest extends TestCase
      * The subtotal attribute of the item is calculated by the sum of total_price and all actions amount.
      *
      * @testdox The subtotal attribute of the item is calculated by the sum of total_price and all actions amount.
+     *
      * @test
      */
     public function the_subtotal_attribute_of_the_item_is_calculated_by_the_sum_of_total_price_and_all_actions_amount()
@@ -733,6 +764,7 @@ class ItemTest extends TestCase
      * The detailed of item always has the hash, associated_class, id, title and extra_info attributes.
      *
      * @testdox The detailed of item always has the hash, associated_class, id, title and extra_info attributes.
+     *
      * @test
      */
     public function the_detailed_of_item_always_has_the_hash_associated_class_id_title_and_extra_info_attributes()
@@ -761,6 +793,7 @@ class ItemTest extends TestCase
      * The detailed of item in commercial cart will have more attributes quantity, price, total_price, subtotal, options and actions_amount.
      *
      * @testdox The detailed of item in commercial cart will have more attributes quantity, price, total_price, subtotal, options and actions_amount.
+     *
      * @test
      */
     public function the_detailed_of_item_in_commercial_cart_will_have_more_attributes_quantity_price_total_price_subtotal_options_and_actions_amount()
@@ -793,6 +826,7 @@ class ItemTest extends TestCase
      * The detailed of item in taxable cart will have more attributes taxable and taxable_amount.
      *
      * @testdox The detailed of item in taxable cart will have more attributes taxable and taxable_amount.
+     *
      * @test
      */
     public function the_detailed_of_item_in_taxable_cart_will_have_more_attributes_taxable_and_taxable_amount()

@@ -904,9 +904,9 @@ class Cart
      *
      * @param null|string $name The cart name before standardized
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidCartNameException
-     *
      * @return string
+     *
+     * @throws \Jackiedo\Cart\Exceptions\InvalidCartNameException
      */
     protected function standardizeCartName($name = null)
     {

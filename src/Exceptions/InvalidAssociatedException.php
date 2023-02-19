@@ -2,8 +2,6 @@
 
 namespace Jackiedo\Cart\Exceptions;
 
-use Exception;
-
 /**
  * InvalidAssociatedException.
  *
@@ -11,7 +9,7 @@ use Exception;
  *
  * @author  Jackie Do <anhvudo@gmail.com>
  */
-class InvalidAssociatedException extends Exception
+class InvalidAssociatedException extends \Exception
 {
     //
 }

@@ -566,9 +566,9 @@ class Action implements CartNode
      *
      * @param array $attributes Array of input
      *
-     * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
-     *
      * @return void
+     *
+     * @throws Jackiedo\Cart\Exceptions\InvalidArgumentException
      */
     protected function validate(array $attributes = [])
     {
