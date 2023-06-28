@@ -19,7 +19,7 @@ return [
     |
     | This setting allows you to specify which carts (by the name) are not for
     | commercial use but used for other purposes such as storing recent viewed
-    | items, compared items... They are have no information regarding money.
+    | items, compared items... They have no information regarding money.
     |
     */
     'none_commercial_carts' => [
