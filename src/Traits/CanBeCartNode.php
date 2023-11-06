@@ -208,7 +208,7 @@ trait CanBeCartNode
      *
      * @return void
      */
-    protected function setExtraInfo(array $informations = [])
+    public function setExtraInfo(array $informations = [])
     {
         if (empty($informations)) {
             $this->attributes['extra_info'] = [];
