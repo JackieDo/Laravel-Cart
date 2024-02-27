@@ -2,8 +2,10 @@
 
 namespace Jackiedo\Cart\Traits;
 
+use Illuminate\Support\Collection;
 use Jackiedo\Cart\Cart;
 use Jackiedo\Cart\Facades\Cart as CartFacade;
+use Jackiedo\Cart\Item;
 
 /**
  * The CanUseCart traits.
@@ -17,11 +19,11 @@ trait CanUseCart
     /**
      * Add the UseCartable item to the cart.
      *
-     * @param \Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
-     * @param array                      $attributes The additional attributes
-     * @param bool                       $withEvent  Enable firing the event
+     * @param Cart|string $cartOrName The cart instance or the name of the cart
+     * @param array       $attributes The additional attributes
+     * @param bool        $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Item
+     * @return null|Item
      */
     public function addToCart($cartOrName, array $attributes = [], $withEvent = true)
     {
@@ -33,8 +35,8 @@ trait CanUseCart
     /**
      * Determines the UseCartable item has in the cart.
      *
-     * @param \Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
-     * @param array                      $filter     Array of additional filter
+     * @param Cart|string $cartOrName The cart instance or the name of the cart
+     * @param array       $filter     Array of additional filter
      *
      * @return bool
      */
@@ -48,7 +50,7 @@ trait CanUseCart
     /**
      * Get all the UseCartable item in the cart.
      *
-     * @param \Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
+     * @param Cart|string $cartOrName The cart instance or the name of the cart
      *
      * @return array
      */
@@ -60,8 +62,8 @@ trait CanUseCart
     /**
      * Get the UseCartable items in the cart with given additional options.
      *
-     * @param \Jackiedo\Cart\Cart|string $cartOrName The cart instance or the name of the cart
-     * @param array                      $filter     Array of additional filter
+     * @param Cart|string $cartOrName The cart instance or the name of the cart
+     * @param array       $filter     Array of additional filter
      *
      * @return array
      */
@@ -127,7 +129,7 @@ trait CanUseCart
      *
      * @param int $id The identifier of model
      *
-     * @return null|\Illuminate\Support\Collection|static
+     * @return null|Collection|static
      */
     public function findById($id)
     {

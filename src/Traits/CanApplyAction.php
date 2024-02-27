@@ -2,6 +2,8 @@
 
 namespace Jackiedo\Cart\Traits;
 
+use Jackiedo\Cart\Action;
+
 /**
  * The CanApplyAction traits.
  *
@@ -17,7 +19,7 @@ trait CanApplyAction
      * @param array $attributes The action attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Action
+     * @return null|Action
      */
     public function applyAction(array $attributes = [], $withEvent = true)
     {
@@ -35,7 +37,7 @@ trait CanApplyAction
      * @param array  $attributes The new attributes
      * @param bool   $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Action
+     * @return null|Action
      */
     public function updateAction($actionHash, array $attributes = [], $withEvent = true)
     {
@@ -59,7 +61,7 @@ trait CanApplyAction
      *
      * @param string $actionHash The unique identifier of the action
      *
-     * @return \Jackiedo\Cart\Action
+     * @return Action
      */
     public function getAction($actionHash)
     {

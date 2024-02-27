@@ -7,10 +7,10 @@ trait InitCartInstance
     /**
      * Create new cart instance.
      *
-     * @return \Jackiedo\Cart\Cart
+     * @return Cart
      */
     protected function initCart()
     {
-        return new Cart;
+        return new Cart();
     }
 }

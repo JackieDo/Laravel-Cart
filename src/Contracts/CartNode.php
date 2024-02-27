@@ -2,6 +2,8 @@
 
 namespace Jackiedo\Cart\Contracts;
 
+use Jackiedo\Cart\Cart;
+
 /**
  * The CartNode interface.
  *
@@ -28,7 +30,7 @@ interface CartNode
     /**
      * Get the cart instance that this node belong to.
      *
-     * @return \Jackiedo\Cart\Cart
+     * @return Cart
      */
     public function getCart();
 

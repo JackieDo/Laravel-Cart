@@ -2,12 +2,14 @@
 
 namespace Jackiedo\Cart\Contracts;
 
+use Jackiedo\Cart\Action;
+
 interface ActionHandler
 {
     /**
      * Control action rules.
      *
-     * @param \Jackiedo\Cart\Action $action The action
+     * @param Action $action The action
      *
      * @return array
      */

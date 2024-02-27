@@ -31,7 +31,7 @@ trait BackToCreator
      *
      * @return object
      *
-     * @throws \Jackiedo\Cart\Exceptions\UnknownCreatorException
+     * @throws UnknownCreatorException
      */
     public function getCreator()
     {

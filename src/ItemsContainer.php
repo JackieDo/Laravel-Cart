@@ -28,11 +28,11 @@ class ItemsContainer extends Container
      *
      * @param bool $withActions Include details of applied actions in the result
      *
-     * @return \Jackiedo\Cart\Details
+     * @return Details
      */
     public function getDetails($withActions = true)
     {
-        $details  = new Details;
+        $details  = new Details();
         $allItems = $this->all();
 
         foreach ($allItems as $hash => $item) {
@@ -48,7 +48,7 @@ class ItemsContainer extends Container
      * @param array $attributes The item attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Item
+     * @return null|Item
      */
     public function addItem(array $attributes = [], $withEvent = true)
     {
@@ -88,7 +88,7 @@ class ItemsContainer extends Container
      * @param array  $attributes The new item attributes
      * @param bool   $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Item
+     * @return null|Item
      */
     public function updateItem($itemHash, $attributes = [], $withEvent = true)
     {
@@ -198,7 +198,7 @@ class ItemsContainer extends Container
      *
      * @param string $itemHash The unique identifier of item
      *
-     * @return \Jackiedo\Cart\Item
+     * @return Item
      */
     public function getItem($itemHash)
     {

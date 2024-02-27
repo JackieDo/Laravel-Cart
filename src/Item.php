@@ -2,7 +2,9 @@
 
 namespace Jackiedo\Cart;
 
+use Illuminate\Database\Eloquent;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Jackiedo\Cart\Contracts\CartNode;
 use Jackiedo\Cart\Contracts\UseCartable;
 use Jackiedo\Cart\Exceptions\InvalidArgumentException;
@@ -51,7 +53,7 @@ class Item implements CartNode
     /**
      * Stores applied actions.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $appliedActions;
 
@@ -130,7 +132,7 @@ class Item implements CartNode
      *
      * @param bool $withActions Include details of applied actions in the result
      *
-     * @return \Jackiedo\Cart\Details
+     * @return Details
      */
     public function getDetails($withActions = true)
     {
@@ -198,9 +200,9 @@ class Item implements CartNode
     /**
      * Get the model instance to which this item is associated.
      *
-     * @return null|\Illuminate\Database\Eloquent
+     * @return null|Eloquent
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidAssociatedException
+     * @throws InvalidAssociatedException
      */
     public function getModel()
     {
@@ -211,7 +213,7 @@ class Item implements CartNode
             throw new InvalidAssociatedException('The [' . $associatedClass . '] class does not exist.');
         }
 
-        $model = with(new $associatedClass)->findById($id);
+        $model = with(new $associatedClass())->findById($id);
 
         if (!$model) {
             throw new InvalidModelException('The supplied associated model from [' . $associatedClass . '] does not exist.');
@@ -299,7 +301,7 @@ class Item implements CartNode
      *
      * @return $this;
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function initAttributes(array $attributes = [])
     {
@@ -330,7 +332,7 @@ class Item implements CartNode
         $this->setAttributes($attributes);
 
         // Creates the actions container
-        $this->appliedActions = new ActionsContainer;
+        $this->appliedActions = new ActionsContainer();
 
         return $this;
     }
@@ -442,7 +444,7 @@ class Item implements CartNode
     /**
      * Return the actions container.
      *
-     * @return \Jackiedo\Cart\ActionsContainer
+     * @return ActionsContainer
      */
     protected function getActionsContainer()
     {
@@ -450,7 +452,7 @@ class Item implements CartNode
             return $this->appliedActions;
         }
 
-        return new ActionsContainer;
+        return new ActionsContainer();
     }
 
     /**
@@ -474,7 +476,7 @@ class Item implements CartNode
      *
      * @return void
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function validate(array $attributes = [])
     {

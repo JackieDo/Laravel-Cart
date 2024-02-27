@@ -91,7 +91,7 @@ class Cart
             return clone $this;
         }
 
-        $newInstance = new static;
+        $newInstance = new static();
 
         $newInstance->name($name);
 
@@ -189,10 +189,10 @@ class Cart
             $this->setConfig('use_for_commercial', $status);
 
             if ($status) {
-                session()->put($this->getSessionPath('applied_actions'), new ActionsContainer);
+                session()->put($this->getSessionPath('applied_actions'), new ActionsContainer());
 
                 if ($this->getConfig('use_builtin_tax')) {
-                    session()->put($this->getSessionPath('applied_taxes'), new TaxesContainer);
+                    session()->put($this->getSessionPath('applied_taxes'), new TaxesContainer());
                 } else {
                     session()->forget($this->getSessionPath('applied_taxes'));
                 }
@@ -221,7 +221,7 @@ class Cart
             $this->setConfig('use_builtin_tax', $status);
 
             if ($status && $this->getConfig('use_for_commercial', false)) {
-                session()->put($this->getSessionPath('applied_taxes'), new TaxesContainer);
+                session()->put($this->getSessionPath('applied_taxes'), new TaxesContainer());
             } else {
                 session()->forget($this->getSessionPath('applied_taxes'));
             }
@@ -356,7 +356,7 @@ class Cart
      * @param array $attributes The item attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Item
+     * @return null|Item
      */
     public function addItem(array $attributes = [], $withEvent = true)
     {
@@ -370,7 +370,7 @@ class Cart
      * @param array|int $attributes New quantity of item or array of new attributes to update
      * @param bool      $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Item
+     * @return null|Item
      */
     public function updateItem($itemHash, $attributes = [], $withEvent = true)
     {
@@ -411,7 +411,7 @@ class Cart
      *
      * @param string $itemHash The unique identifier of the item
      *
-     * @return \Jackiedo\Cart\Item
+     * @return Item
      */
     public function getItem($itemHash)
     {
@@ -619,7 +619,7 @@ class Cart
      * @param array $attributes The tax attributes
      * @param bool  $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Tax
+     * @return null|Tax
      */
     public function applyTax(array $attributes = [], $withEvent = true)
     {
@@ -637,7 +637,7 @@ class Cart
      * @param array  $attributes The new attributes
      * @param bool   $withEvent  Enable firing the event
      *
-     * @return null|\Jackiedo\Cart\Tax
+     * @return null|Tax
      */
     public function updateTax($taxHash, array $attributes = [], $withEvent = true)
     {
@@ -649,7 +649,7 @@ class Cart
      *
      * @param string $taxHash The unique identifire of the tax instance
      *
-     * @return \Jackiedo\Cart\Tax
+     * @return Tax
      */
     public function getTax($taxHash)
     {
@@ -815,11 +815,11 @@ class Cart
      * @param bool $withActions Include details of applied actions in the result
      * @param bool $withTaxes   Include details of applied taxes in the result
      *
-     * @return \Jackiedo\Cart\Details
+     * @return Details
      */
     public function getDetails($withItems = true, $withActions = true, $withTaxes = true)
     {
-        $details           = new Details;
+        $details           = new Details();
         $isCommercialCart  = $this->isCommercialCart();
         $enabledBuiltinTax = $this->isEnabledBuiltinTax();
         $itemsContainer    = $this->getItemsContainer();
@@ -890,7 +890,7 @@ class Cart
      * @param bool        $withActions          Include details of applied actions in the result
      * @param bool        $withTaxes            Include details of applied taxes in the result
      *
-     * @return \Jackiedo\Cart\Details
+     * @return Details
      */
     public function getGroupDetails($groupName = null, $withCartsHaveNoItems = false, $withItems = true, $withActions = true, $withTaxes = true)
     {
@@ -906,7 +906,7 @@ class Cart
      *
      * @return string
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidCartNameException
+     * @throws InvalidCartNameException
      */
     protected function standardizeCartName($name = null)
     {
@@ -942,13 +942,13 @@ class Cart
             session()->put($this->getSessionPath('type'), 'cart');
             session()->put($this->getSessionPath('name'), $this->getName());
             session()->put($this->getSessionPath('extra_info'), []);
-            session()->put($this->getSessionPath('items'), new ItemsContainer);
+            session()->put($this->getSessionPath('items'), new ItemsContainer());
 
             if ($useForCommercial) {
-                session()->put($this->getSessionPath('applied_actions'), new ActionsContainer);
+                session()->put($this->getSessionPath('applied_actions'), new ActionsContainer());
 
                 if ($useBuiltinTax) {
-                    session()->put($this->getSessionPath('applied_taxes'), new TaxesContainer);
+                    session()->put($this->getSessionPath('applied_taxes'), new TaxesContainer());
                 }
             }
 
@@ -994,31 +994,31 @@ class Cart
     /**
      * Get the items container.
      *
-     * @return \Jackiedo\Cart\ItemsContainer
+     * @return ItemsContainer
      */
     protected function getItemsContainer()
     {
-        return session($this->getSessionPath('items'), new ItemsContainer);
+        return session($this->getSessionPath('items'), new ItemsContainer());
     }
 
     /**
      * Get the taxes container.
      *
-     * @return \Jackiedo\Cart\TaxesContainer
+     * @return TaxesContainer
      */
     protected function getTaxesContainer()
     {
-        return session($this->getSessionPath('applied_taxes'), new TaxesContainer);
+        return session($this->getSessionPath('applied_taxes'), new TaxesContainer());
     }
 
     /**
      * Get the actions container.
      *
-     * @return \Jackiedo\Cart\ActionsContainer
+     * @return ActionsContainer
      */
     protected function getActionsContainer()
     {
-        return session($this->getSessionPath('applied_actions'), new ActionsContainer);
+        return session($this->getSessionPath('applied_actions'), new ActionsContainer());
     }
 
     /**
@@ -1046,7 +1046,7 @@ class Cart
      * @param array  $moneyAmount          Information on cumulative amounts from the details of the subsections
      * @param array  $moneyAmounts
      *
-     * @return \Jackiedo\Cart\Details
+     * @return Details
      */
     protected function groupAnalysic($groupName, $withCartsHaveNoItems, $withItems, $withActions, $withTaxes, array $moneyAmounts = [])
     {
@@ -1056,8 +1056,8 @@ class Cart
         if ('cart' !== Arr::get($info, 'type')) {
             $extraInfo   = Arr::get($info, 'extra_info', []);
             $info        = Arr::except($info, ['extra_info']);
-            $details     = new Details;
-            $subsections = new Details;
+            $details     = new Details();
+            $subsections = new Details();
 
             $details->put('type', 'group');
             $details->put('name', $groupName);

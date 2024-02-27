@@ -38,11 +38,11 @@ class Container extends Collection
     /**
      * Get details information of this container as a collection.
      *
-     * @return \Jackiedo\Cart\Details
+     * @return Details
      */
     public function getDetails()
     {
-        $details    = new Details;
+        $details    = new Details();
         $allActions = $this->all();
 
         foreach ($allActions as $key => $value) {
@@ -59,7 +59,7 @@ class Container extends Collection
      *
      * @return void
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidHashException
+     * @throws InvalidHashException
      */
     protected function throwInvalidHashException($hash)
     {
