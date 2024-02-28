@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Collection;
 use Jackiedo\Cart\Contracts\UseCartable;
 use Jackiedo\Cart\Traits\CanUseCart;
 
@@ -66,7 +67,7 @@ class UseCartableProduct implements UseCartable
      *
      * @param int $id The identifier of model
      *
-     * @return null|\Illuminate\Support\Collection|static
+     * @return null|Collection|static
      */
     public function findById($id)
     {

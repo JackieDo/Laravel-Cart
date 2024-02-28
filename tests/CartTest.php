@@ -616,7 +616,7 @@ class CartTest extends TestCase
     public function can_add_item_to_cart_only_with_an__use_cartable_model()
     {
         $cart        = $this->initCart();
-        $useCartable = new UseCartableProduct;
+        $useCartable = new UseCartableProduct();
 
         $this->assertInstanceOf(UseCartable::class, $useCartable);
 
@@ -635,7 +635,7 @@ class CartTest extends TestCase
     public function can_add_item_to_cart_only_with_an__use_cartable_model_and_the_valid_quantity_argument()
     {
         $cart        = $this->initCart();
-        $useCartable = new UseCartableProduct;
+        $useCartable = new UseCartableProduct();
 
         $this->assertInstanceOf(UseCartable::class, $useCartable);
 
@@ -657,7 +657,7 @@ class CartTest extends TestCase
     public function can_add_item_to_cart_only_with_an__use_cartable_model_the_valid_quantity_and_options_arguments()
     {
         $cart        = $this->initCart();
-        $useCartable = new UseCartableProduct;
+        $useCartable = new UseCartableProduct();
 
         $this->assertInstanceOf(UseCartable::class, $useCartable);
 
@@ -680,7 +680,7 @@ class CartTest extends TestCase
     public function can_add_item_to_cart_only_with_an__use_cartable_model_the_valid_quantity_options_and_extra_info_arguments()
     {
         $cart        = $this->initCart();
-        $useCartable = new UseCartableProduct;
+        $useCartable = new UseCartableProduct();
 
         $this->assertInstanceOf(UseCartable::class, $useCartable);
 
@@ -704,7 +704,7 @@ class CartTest extends TestCase
     public function can_add_item_to_cart_with_an__use_cartable_model_and_all_valid_arguments()
     {
         $cart        = $this->initCart();
-        $useCartable = new UseCartableProduct;
+        $useCartable = new UseCartableProduct();
 
         $this->assertInstanceOf(UseCartable::class, $useCartable);
 

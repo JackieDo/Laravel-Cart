@@ -3,6 +3,7 @@
 namespace Jackiedo\Cart;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\HigherOrderCollectionProxy;
 use Jackiedo\Cart\Exceptions\InvalidAssociatedException;
 use Jackiedo\Cart\Exceptions\InvalidModelException;
 
@@ -25,7 +26,7 @@ class Details extends Collection
     public function __get($key)
     {
         if (class_exists('\Illuminate\Support\HigherOrderCollectionProxy') && in_array($key, static::$proxies)) {
-            return new \Illuminate\Support\HigherOrderCollectionProxy($this, $key);
+            return new HigherOrderCollectionProxy($this, $key);
         }
 
         return $this->get($key);
@@ -70,7 +71,7 @@ class Details extends Collection
                     throw new InvalidAssociatedException('The [' . $associatedClass . '] class does not exist.');
                 }
 
-                $model = with(new $associatedClass)->findById($id);
+                $model = with(new $associatedClass())->findById($id);
 
                 if (!$model) {
                     throw new InvalidModelException('The supplied associated model from [' . $associatedClass . '] does not exist.');

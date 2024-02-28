@@ -211,7 +211,7 @@ class ItemTest extends TestCase
     public function can_retrieve_associated_class_model_of_item_if_it_is_instance_of__use_cartable_before_adding_to_cart()
     {
         $cart        = $this->initCart();
-        $useCartable = new UseCartableProduct;
+        $useCartable = new UseCartableProduct();
         $addedItem   = $cart->addItem(['model' => $useCartable]);
 
         $this->assertEquals($useCartable, $addedItem->getModel());

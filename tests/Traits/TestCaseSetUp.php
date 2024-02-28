@@ -1,11 +1,13 @@
 <?php
 
+use Illuminate\Foundation\Application;
+
 trait TestCaseSetUp
 {
     /**
      * Get package providers.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      *
      * @return array
      */
@@ -17,7 +19,7 @@ trait TestCaseSetUp
     /**
      * Get package aliases.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      *
      * @return array
      */
@@ -29,7 +31,7 @@ trait TestCaseSetUp
     /**
      * Define environment setup.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      *
      * @return void
      */

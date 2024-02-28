@@ -90,7 +90,7 @@ class Tax implements CartNode
     /**
      * Get details of tha tax as a collection.
      *
-     * @return \Jackiedo\Cart\Details
+     * @return Details
      */
     public function getDetails()
     {
@@ -214,7 +214,7 @@ class Tax implements CartNode
      *
      * @return void
      *
-     * @throws \Jackiedo\Cart\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function validate($attributes)
     {
