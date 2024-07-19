@@ -28,6 +28,7 @@ Currently, the Laravel Cart has three branches that are compatible with the foll
 | [v1.0](https://github.com/JackieDo/Laravel-Cart/tree/v1.0) | 1.*          | 4.x only         |
 | [v2.0](https://github.com/JackieDo/Laravel-Cart/tree/v2.0) | 2.*          | 5.x only         |
 | [v3.0](https://github.com/JackieDo/Laravel-Cart/tree/v3.0) | 3.*          | 5.x or above     |
+| [v3.0.5](https://github.com/Justany/Laravel-Cart/releases/tag/v3.0.5) | 3.0.5          | 11.x or above     |
 
 Currently, versions `v1.0` and `v2.0` are no longer supported. Version `v3.0` was created with more advanced features, and has a completely different way of working from the old version.
 
